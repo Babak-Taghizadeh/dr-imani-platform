@@ -9,16 +9,16 @@ import {
 } from "../../ui/drawer";
 import Link from "next/link";
 
-import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAV_ITEMS } from "@/constants";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 
 const MobileHeader = () => {
   return (
     <Drawer>
       <DrawerTrigger className="md:hidden" asChild>
         <Button variant="ghost" size="icon">
-          <Menu className="h-5 w-5" />
+          <DotsHorizontalIcon />
         </Button>
       </DrawerTrigger>
 
