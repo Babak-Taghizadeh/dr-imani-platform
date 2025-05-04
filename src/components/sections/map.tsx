@@ -79,7 +79,7 @@ const NeshanMap = () => {
   };
 
   return (
-    <div className="relative h-[40dvh] w-full rounded-md lg:h-[50dvh]">
+    <div className="relative h-[40dvh] w-full rounded-md lg:h-[50dvh] lg:w-[80%]">
       {loading && (
         <Loader className="absolute top-0 right-0 bottom-0 left-0 z-50 m-auto h-11 w-11 animate-spin text-[#2f7df4]" />
       )}
