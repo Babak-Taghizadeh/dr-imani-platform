@@ -3,6 +3,7 @@ import {
   Link2Icon,
   SewingPinIcon,
 } from "@radix-ui/react-icons";
+import { MailIcon, MapPin, PhoneIcon } from "lucide-react";
 
 export const NAV_ITEMS: { title: string; path: string }[] = [
   {
@@ -126,5 +127,30 @@ export const ABOUT_ME_ITEMS: { title: string; desc?: string }[] = [
   {
     title: "افتخارات",
     desc: "یکی از بزرگترین عوامل تهدید کننده ی سلامتی",
+  },
+];
+
+export const CONTACT_ITEMS: {
+  title: string;
+  desc?: string;
+  icon?: React.ReactNode;
+}[] = [
+  {
+    title: "تماس با من",
+  },
+  {
+    title: "ایمیل",
+    desc: "vida.imani@gmail.con",
+    icon: <MailIcon />,
+  },
+  {
+    title: "شماره تماس",
+    desc: "+98-914-123-2526",
+    icon: <PhoneIcon />,
+  },
+  {
+    title: "آدرس",
+    desc: "آبرسان - نرسیده به قنادی تشریفات - طبقه 3",
+    icon: <MapPin />,
   },
 ];
