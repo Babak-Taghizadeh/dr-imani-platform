@@ -1,11 +1,10 @@
-import NeshanMap from "@/components/sections/map";
+import MapWrapper from "@/components/sections/map-wrapper";
 import { CONTACT_ITEMS } from "@/lib/constants";
-import React from "react";
 
 const Contact = () => {
   return (
     <section className="bg-foreground text-background flex flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row">
-      <NeshanMap />
+      <MapWrapper />
       <ul className="flex flex-col md:flex-1/2 md:gap-4">
         {CONTACT_ITEMS.map((item, index) =>
           index == 0 ? (
