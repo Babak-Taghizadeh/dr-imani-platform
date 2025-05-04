@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { NAV_ITEMS } from "@/constants";
+import { NAV_ITEMS } from "@/lib/constants";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 
 const MobileHeader = () => {

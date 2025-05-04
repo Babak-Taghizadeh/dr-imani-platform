@@ -1,4 +1,4 @@
-import { NAV_ITEMS } from "@/constants";
+import { NAV_ITEMS } from "@/lib/constants";
 import {
   NavigationMenu,
   NavigationMenuItem,
