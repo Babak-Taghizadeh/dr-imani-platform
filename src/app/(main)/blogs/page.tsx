@@ -14,6 +14,7 @@ import Link from "next/link";
 const BlogsPage = () => {
   return (
     <div className="bg-foreground grid grid-cols-1 gap-6 p-12 sm:grid-cols-2 lg:grid-cols-3">
+      <h1 className="text-background text-xl md:text-3xl font-bold col-span-full">اخبار و وبلاگ</h1>
       {mockBlogs.map((item, index) => (
         <Card key={index} className="bg-background text-foreground">
           <CardHeader>

@@ -23,10 +23,13 @@ const Hero = () => {
           از طراحان گرافیک است
         </p>
         <Button
-          variant="outline"
-          className="w-fit border-white bg-transparent hover:bg-white/10"
+          // variant="outline"
+          className="w-fit bg-orange-400/70 hover:bg-white/10"
         >
-          <Link href="https://doctoreto.com/doctor/dr-vida-imani/ZaEBBZ" target="_blank">
+          <Link
+            href="https://doctoreto.com/doctor/dr-vida-imani/ZaEBBZ"
+            target="_blank"
+          >
             رزور نوبت
           </Link>
         </Button>
