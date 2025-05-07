@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Sleep from "../../../public/sleep2.jpg";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -25,7 +26,9 @@ const Hero = () => {
           variant="outline"
           className="w-fit border-white bg-transparent hover:bg-white/10"
         >
-          رزرو نوبت
+          <Link href="https://doctoreto.com/doctor/dr-vida-imani/ZaEBBZ" target="_blank">
+            رزور نوبت
+          </Link>
         </Button>
       </div>
     </section>

@@ -3,7 +3,7 @@ import { CONTACT_ITEMS } from "@/lib/constants";
 
 const Contact = () => {
   return (
-    <section className="bg-foreground text-background flex flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row">
+    <section className="bg-foreground text-background flex min-h-[575px] flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row">
       <div className="relative z-50 min-h-[35dvh] w-full lg:min-h-[40dvh] lg:w-[80%]">
         <MapWrapper />
       </div>
