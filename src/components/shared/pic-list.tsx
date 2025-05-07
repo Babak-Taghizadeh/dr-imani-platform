@@ -15,7 +15,7 @@ const PicList = ({ items, pic, theme }: PicListProps) => {
   return (
     <section
       className={cn(
-        "flex min-h-[540px] flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row",
+        "flex min-h-[575px] flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row",
         theme == "dark"
           ? "bg-foreground text-background"
           : "bg-background text-foreground",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../(main)/globals.css";
+import { Toaster } from "sonner";
 
 const IRANSansXV = localFont({
   src: "../../../public/fonts/IRANSansXV.woff2",
@@ -18,7 +19,10 @@ export default function AdminLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${IRANSansXV.className} antialiased`}>{children}</body>
+      <body className={`${IRANSansXV.className} antialiased`}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

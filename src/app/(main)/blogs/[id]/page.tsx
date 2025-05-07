@@ -13,7 +13,7 @@ const BlogPage = () => {
   const { content, img, title, createdAt } = mockBlogs[0];
   return (
     <article className="bg-foreground p-12">
-      <Card className="bg-background text-foreground mx-auto max-w-3xl">
+      <Card className="bg-foreground border-none text-background mx-auto max-w-3xl">
         <CardHeader>
           <div className="relative h-64 w-full">
             <Image

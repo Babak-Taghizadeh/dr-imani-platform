@@ -13,10 +13,7 @@ const DesktopHeader = () => {
       <NavigationMenuList>
         {NAV_ITEMS.map((item) => (
           <NavigationMenuItem key={item.title}>
-            <NavigationMenuLink
-              className="hover:text-accent-foreground text-lg"
-              asChild
-            >
+            <NavigationMenuLink className="text-lg hover:bg-inherit hover:text-orange-400" asChild>
               <Link href={item.path} className="px-4">
                 {item.title}
               </Link>

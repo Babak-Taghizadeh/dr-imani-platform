@@ -14,7 +14,7 @@ import { mockBlogs } from "@/lib/mock-data";
 
 export default function BlogTable() {
   return (
-    <div className="w-1/2 rounded-md border mt-24">
+    <div className="mt-24 w-1/2 rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
