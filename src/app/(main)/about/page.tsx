@@ -1,5 +1,5 @@
 import PicList from "@/components/shared/pic-list";
-import Avatar from "../../../public/dr.jpg";
+import Avatar from "../../../../public/dr.jpg";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 
 const AboutMe = () => {
