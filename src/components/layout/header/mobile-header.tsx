@@ -25,7 +25,7 @@ const MobileHeader = () => {
       <DrawerContent className="bg-foreground text-background md:hidden">
         <DrawerHeader>
           <DrawerTitle className="text-lgtext-background text-center font-semibold">
-            منو
+            صفحات
           </DrawerTitle>
         </DrawerHeader>
         <nav className="flex flex-col gap-4 px-4">
@@ -38,12 +38,9 @@ const MobileHeader = () => {
           ))}
         </nav>
         <DrawerFooter className="items-center">
-          <Button className="w-1/2" variant="outline">
-            Login
-          </Button>
           <DrawerClose asChild>
-            <Button variant="ghost" className="w-1/2">
-              Close
+            <Button variant="outline" className="w-1/3">
+              بستن
             </Button>
           </DrawerClose>
         </DrawerFooter>
