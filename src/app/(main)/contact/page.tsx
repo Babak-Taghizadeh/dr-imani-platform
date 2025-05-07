@@ -4,7 +4,7 @@ import { CONTACT_ITEMS } from "@/lib/constants";
 const Contact = () => {
   return (
     <section className="bg-foreground text-background flex min-h-[575px] flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row">
-      <div className="relative z-50 min-h-[35dvh] w-full lg:min-h-[40dvh] lg:w-[80%]">
+      <div className="relative z-50 h-[40dvh] w-full self-center md:w-[80%] lg:min-h-[50dvh]">
         <MapWrapper />
       </div>
       <ul className="flex flex-col md:flex-1/2 md:gap-4">
