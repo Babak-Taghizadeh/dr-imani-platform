@@ -7,20 +7,24 @@ import { MailIcon, MapPin, PhoneIcon } from "lucide-react";
 
 export const NAV_ITEMS: { title: string; path: string }[] = [
   {
-    title: "وبلاگ",
-    path: "/blogs",
-  },
-  {
-    title: "تماس با ما",
-    path: "/contact",
+    title: "خانه",
+    path: "/",
   },
   {
     title: "درباره من",
     path: "/about",
   },
   {
-    title: "خانه",
-    path: "/",
+    title: "تماس با ما",
+    path: "/contact",
+  },
+  {
+    title: "مقالات",
+    path: "/articles",
+  },
+  {
+    title: "وبلاگ",
+    path: "/blogs",
   },
 ];
 
