@@ -13,7 +13,6 @@ const Hero = () => {
         priority
         className="object-cover brightness-[0.4]"
       />
-
       <div className="absolute top-6 right-6 z-10 flex flex-col items-start gap-4 text-white lg:top-16 lg:right-20">
         <h1 className="text-shadow text-xl font-bold lg:text-3xl">
           کمک به بهبود کیفیت و سلامت خواب
@@ -22,10 +21,7 @@ const Hero = () => {
           لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
           از طراحان گرافیک است
         </p>
-        <Button
-          // variant="outline"
-          className="w-fit bg-orange-400/70 hover:bg-white/10"
-        >
+        <Button asChild>
           <Link
             href="https://doctoreto.com/doctor/dr-vida-imani/ZaEBBZ"
             target="_blank"
