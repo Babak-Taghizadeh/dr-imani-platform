@@ -18,7 +18,7 @@ const Contact = () => {
               className="flex items-center gap-4 py-2 lg:p-5"
               key={item.title}
             >
-              <div className="rounded-md bg-orange-400 p-4">{item.icon}</div>
+              <div className="bg-primary rounded-md p-4">{item.icon}</div>
               <div>
                 <h5 className="text-xl font-semibold">{item.title}</h5>
                 <p className="mt-2 font-light text-gray-500">{item.desc}</p>

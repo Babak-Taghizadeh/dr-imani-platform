@@ -25,11 +25,11 @@ const PicList = ({ items, pic, theme }: PicListProps) => {
         <Image
           src={pic}
           alt="خواب"
-          className="rounded-lg object-cover md:w-3/4"
+          className="rounded-lg object-cover"
           priority
         />
       </div>
-      <ul className="flex flex-col md:flex-1/3 md:gap-4">
+      <ul className="flex flex-col rounded-md p-4 md:flex-1/2 md:gap-4">
         {items.map((item, index) =>
           index == 0 ? (
             <li key={item.title}>

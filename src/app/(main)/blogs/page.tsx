@@ -14,7 +14,9 @@ import Link from "next/link";
 const BlogsPage = () => {
   return (
     <div className="bg-foreground grid grid-cols-1 gap-6 p-12 sm:grid-cols-2 lg:grid-cols-3">
-      <h1 className="text-background text-xl md:text-3xl font-bold col-span-full">اخبار و وبلاگ</h1>
+      <h1 className="text-background col-span-full text-xl font-bold md:text-3xl">
+        اخبار و وبلاگ
+      </h1>
       {mockBlogs.map((item, index) => (
         <Card key={index} className="bg-background text-foreground">
           <CardHeader>
@@ -33,7 +35,7 @@ const BlogsPage = () => {
           </CardContent>
           <CardFooter className="mt-auto">
             <Link
-              className="flex items-center gap-1 text-orange-400 hover:underline"
+              className="text-primary flex items-center gap-1 hover:underline"
               href={`/blogs/1`}
             >
               ادامه مطلب

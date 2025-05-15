@@ -9,11 +9,17 @@ import Link from "next/link";
 
 const DesktopHeader = () => {
   return (
-    <NavigationMenu className="hidden md:flex">
+    <NavigationMenu
+      dir="rtl"
+      className="hidden md:flex xl:min-w-[400px] xl:justify-start"
+    >
       <NavigationMenuList>
         {NAV_ITEMS.map((item) => (
           <NavigationMenuItem key={item.title}>
-            <NavigationMenuLink className="text-lg hover:bg-inherit hover:text-orange-400" asChild>
+            <NavigationMenuLink
+              className="hover:text-primary hover:bg-primary-foreground text-lg font-semibold"
+              asChild
+            >
               <Link href={item.path} className="px-4">
                 {item.title}
               </Link>
