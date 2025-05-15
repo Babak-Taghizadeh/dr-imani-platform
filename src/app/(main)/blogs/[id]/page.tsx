@@ -7,13 +7,12 @@ import {
 } from "@/components/ui/card";
 import { mockBlogs } from "@/lib/mock-data";
 import Image from "next/image";
-import React from "react";
 
 const BlogPage = () => {
   const { content, img, title, createdAt } = mockBlogs[0];
   return (
-    <article className="bg-foreground p-12">
-      <Card className="bg-foreground border-none text-background mx-auto max-w-3xl">
+    <article className="bg-foreground p-12 min-h-[90dvh]">
+      <Card className="bg-foreground border border-white text-background mx-auto max-w-3xl border-none">
         <CardHeader>
           <div className="relative h-64 w-full">
             <Image
