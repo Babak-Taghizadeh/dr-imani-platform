@@ -80,10 +80,7 @@ export const FOOTER_ITEMS: Record<
   ],
 };
 
-export const SERVICES_ITEMS: { title: string; desc?: string }[] = [
-  {
-    title: "خدمات ما در کلینیک",
-  },
+export const SERVICES_ITEMS: { title: string; desc: string }[] = [
   {
     title: "درمان ریشه ای بی خوابی",
     desc: " با متد های بروز و تایید شده در مقیاس جهانی",
@@ -93,7 +90,7 @@ export const SERVICES_ITEMS: { title: string; desc?: string }[] = [
     desc: "یکی از بزرگترین عوامل تهدید کننده ی سلامتی",
   },
   {
-    title: "مانیتورینک و تحلیل شاخص های موثر در خواب",
+    title: "مانیتورینک و تحلیل",
     desc: "توسط بروزتزین و دقیق ترین ابزار موجود در بازار",
   },
 ];
@@ -116,10 +113,7 @@ export const FAQ_ITEMS: { title: string; desc?: string }[] = [
   },
 ];
 
-export const ABOUT_ME_ITEMS: { title: string; desc?: string }[] = [
-  {
-    title: "درباره من",
-  },
+export const ABOUT_ME_ITEMS: { title: string; desc: string }[] = [
   {
     title: "سوابق کاری",
     desc: " با متد های بروز و تایید شده در مقیاس جهانی",
