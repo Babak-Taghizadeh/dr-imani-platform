@@ -5,3 +5,5 @@ export interface Blog {
   content: string;
   createdAt: string;
 }
+
+export type Direction = "left" | "right";
