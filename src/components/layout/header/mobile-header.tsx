@@ -24,7 +24,7 @@ const MobileHeader = () => {
 
       <DrawerContent className="bg-foreground text-background md:hidden">
         <DrawerHeader>
-          <DrawerTitle className="text-lgtext-background text-center font-semibold">
+          <DrawerTitle className="text-background text-center text-xl font-bold">
             صفحات
           </DrawerTitle>
         </DrawerHeader>
@@ -39,9 +39,7 @@ const MobileHeader = () => {
         </nav>
         <DrawerFooter className="items-center">
           <DrawerClose asChild>
-            <Button variant="outline" className="w-1/3">
-              بستن
-            </Button>
+            <Button className="w-1/3">بستن</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
