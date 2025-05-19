@@ -86,8 +86,7 @@ const NeshanMap = () => {
       <div ref={mapContainerRef} className="h-full w-full rounded-md">
         <Button
           onClick={getDirections}
-          //   variant="custom"
-          className="absolute top-3 right-2 z-50 gap-2"
+          className="absolute top-3 right-2 z-50 gap-2 hover:text-primary hover:bg-primary-foreground"
         >
           <CornerUpRight size={20} />
           مسیریابی

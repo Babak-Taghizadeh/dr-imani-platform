@@ -9,7 +9,7 @@ import { FAQ_ITEMS } from "@/lib/constants";
 const Faq = () => {
   return (
     <section className="bg-foreground text-background p-10 md:p-14">
-      <h4 className="mb-8 text-4xl font-bold text-white lg:mb-12">
+      <h4 className="mb-8 text-xl font-bold text-background md:text-3xl lg:mb-12">
         {FAQ_ITEMS[0].title}
       </h4>
       <Accordion

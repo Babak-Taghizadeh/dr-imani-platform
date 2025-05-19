@@ -3,46 +3,30 @@ import Image, { StaticImageData } from "next/image";
 import React from "react";
 
 interface PicListProps {
-  items: {
-    title: string;
-    desc?: string;
-  }[];
   pic: StaticImageData;
   theme: "dark" | "light";
+  InfoElement: React.ReactNode;
 }
 
-const PicList = ({ items, pic, theme }: PicListProps) => {
+const PicList = ({ pic, theme, InfoElement }: PicListProps) => {
   return (
     <section
       className={cn(
-        "flex min-h-[540px] flex-col gap-12 px-8 py-12 md:justify-center md:gap-16 lg:flex-row",
+        "flex min-h-[575px] flex-col gap-12 p-4 md:justify-center md:gap-12 md:px-8 md:py-12 lg:flex-row",
         theme == "dark"
           ? "bg-foreground text-background"
           : "bg-background text-foreground",
       )}
     >
-      <div className="flex justify-center md:flex-1/2">
+      <div className="flex justify-center lg:w-1/2">
         <Image
           src={pic}
           alt="خواب"
-          className="rounded-lg object-cover md:w-3/4"
+          className="rounded-lg object-cover sm:w-5/6"
           priority
         />
       </div>
-      <ul className="flex flex-col md:flex-1/3 md:gap-4">
-        {items.map((item, index) =>
-          index == 0 ? (
-            <li key={item.title}>
-              <h4 className="mb-4 text-3xl font-bold">{item.title}</h4>
-            </li>
-          ) : (
-            <li className="py-2 lg:p-5" key={item.title}>
-              <h5 className="text-xl font-semibold">{item.title}</h5>
-              <p className="mt-2 font-light text-gray-500">{item.desc}</p>
-            </li>
-          ),
-        )}
-      </ul>
+      {InfoElement}
     </section>
   );
 };

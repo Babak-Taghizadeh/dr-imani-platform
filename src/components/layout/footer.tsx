@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mt-auto flex flex-col justify-center gap-8 bg-white p-6 text-black md:flex-row md:justify-evenly md:gap-14 md:py-16">
+    <footer className="from-background via-secondary to-primary/25 text-foreground mt-auto flex flex-col justify-center gap-8 bg-gradient-to-b p-6 md:flex-row md:justify-evenly md:gap-14 md:py-12">
       <div className="flex flex-col gap-3 md:gap-6">
         <h3 className="text-2xl font-bold">{FOOTER_ITEMS.brand[0].title}</h3>
         <p className="text-sm font-light">{FOOTER_ITEMS.brand[1].title}</p>
@@ -30,9 +30,22 @@ const Footer = () => {
               <h5 className="text-xl font-bold">{item.title}</h5>
             </li>
           ) : (
-            <li className="flex items-center gap-2" key={item.title}>
-              {item.icon}
-              <p className="font-light">{item.title}</p>
+            <li key={item.title}>
+              {item.value ? (
+                <Link
+                  className="flex items-center gap-2"
+                  href={item.value}
+                  target="_blank"
+                >
+                  {item.icon}
+                  {item.title}
+                </Link>
+              ) : (
+                <p className="flex items-center gap-2 font-light">
+                  {item.icon}
+                  {item.title}
+                </p>
+              )}
             </li>
           ),
         )}

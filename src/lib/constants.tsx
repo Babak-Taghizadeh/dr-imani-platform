@@ -3,30 +3,34 @@ import {
   Link2Icon,
   SewingPinIcon,
 } from "@radix-ui/react-icons";
-import { MailIcon, MapPin, PhoneIcon } from "lucide-react";
+import { MapPin, PhoneIcon } from "lucide-react";
 
 export const NAV_ITEMS: { title: string; path: string }[] = [
   {
-    title: "وبلاگ",
-    path: "/blogs",
-  },
-  {
-    title: "تماس با ما",
-    path: "/contact",
+    title: "خانه",
+    path: "/",
   },
   {
     title: "درباره من",
     path: "/about",
   },
   {
-    title: "خانه",
-    path: "/",
+    title: "تماس با ما",
+    path: "/contact",
+  },
+  {
+    title: "مقالات",
+    path: "/articles",
+  },
+  {
+    title: "وبلاگ",
+    path: "/blogs",
   },
 ];
 
 export const FOOTER_ITEMS: Record<
   string,
-  { title: string; path?: string; icon?: React.ReactNode }[]
+  { title: string; path?: string; icon?: React.ReactNode; value?: string }[]
 > = {
   brand: [
     {
@@ -64,22 +68,21 @@ export const FOOTER_ITEMS: Record<
     {
       title: "اینستاگرام",
       icon: <InstagramLogoIcon width={20} height={20} />,
+      value: "https://www.instagram.com/dr.imani.sleepclinic",
     },
     {
-      title: "912 345 6789",
+      title: "۰۴۱-۳۳۳۵۰۳۵۷",
       icon: <Link2Icon width={20} height={20} />,
+      value: "tel:041-3335-0357",
     },
     {
-      title: "آبرسان - نرسیده به قنادی تشریفات - طبقه 3",
+      title: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
       icon: <SewingPinIcon width={20} height={20} />,
     },
   ],
 };
 
-export const SERVICES_ITEMS: { title: string; desc?: string }[] = [
-  {
-    title: "خدمات ما در کلینیک",
-  },
+export const SERVICES_ITEMS: { title: string; desc: string }[] = [
   {
     title: "درمان ریشه ای بی خوابی",
     desc: " با متد های بروز و تایید شده در مقیاس جهانی",
@@ -89,7 +92,7 @@ export const SERVICES_ITEMS: { title: string; desc?: string }[] = [
     desc: "یکی از بزرگترین عوامل تهدید کننده ی سلامتی",
   },
   {
-    title: "مانیتورینک و تحلیل شاخص های موثر در خواب",
+    title: "مانیتورینک و تحلیل",
     desc: "توسط بروزتزین و دقیق ترین ابزار موجود در بازار",
   },
 ];
@@ -112,45 +115,130 @@ export const FAQ_ITEMS: { title: string; desc?: string }[] = [
   },
 ];
 
-export const ABOUT_ME_ITEMS: { title: string; desc?: string }[] = [
-  {
-    title: "درباره من",
-  },
-  {
-    title: "سوابق کاری",
-    desc: " با متد های بروز و تایید شده در مقیاس جهانی",
-  },
-  {
-    title: "سوابق تحصیلی",
-    desc: "ت بروزتزین و دقیق ترین ابزار موجود در بازار",
-  },
-  {
-    title: "افتخارات",
-    desc: "یکی از بزرگترین عوامل تهدید کننده ی سلامتی",
-  },
-];
+export const ABOUT_ME_ITEMS = {
+  experience: [
+    {
+      position: "فوق تخصص خواب",
+      hospital: "کلینیک خواب دکتر ایمانی",
+      years: "۲۰۱۷ - تا کنون",
+    },
+    {
+      position: "فوق تخصص خواب",
+      hospital: "ویزیت آنلاین",
+      years: "۲۰۲۲ - تا کنون",
+    },
+    {
+      position: "متخصص خواب",
+      hospital: "بیمارستان آجی بادم و 9 ایلول",
+      years: "۲۰۱۹ - ۲۰۲۲",
+    },
+    {
+      position: "متخصص کودکان",
+      hospital: "بیمارستان علوی",
+      years: "۲۰۱۳ - ۲۰۱۸",
+    },
+    {
+      position: "متخصص کودکان",
+      hospital: "بیمارستان علوی",
+      years: "۲۰۱۳ - ۲۰۱۸",
+    },
+  ],
+  education: [
+    {
+      degree: "فلوشیپ اختلالات خواب",
+      institution: "دانشگاه آجی بادم ترکیه",
+      years: "۲۰۱۹ - ۲۰۲۰",
+      description: "Specialized in interventional cardiology techniques",
+      details: "Specialized in interventional cardiology techniques",
+    },
+    {
+      degree: "فلوشیپ پزشکی خواب",
+      institution: "دانشگاه بابایی قزوین",
+      years: "۲۰۱۷ - ۲۰۱۸",
+      description: "Specialized in interventional cardiology techniques",
+      details: "Specialized in interventional cardiology techniques",
+    },
+    {
+      degree: "متخصص کودکان",
+      institution: "دانشگاه علوم پزشکی تبریز",
+      years: "2011 - 2014",
+      description: "Specialized in interventional cardiology techniques",
+      details: "Specialized in interventional cardiology techniques",
+    },
+    {
+      degree: "پزشک عمومی",
+      institution: "دانشگاه علوم پزشکی تبریز",
+      years: "2001 - 2008",
+      description: "Specialized in interventional cardiology techniques",
+      details: "Specialized in interventional cardiology techniques",
+    },
+  ],
+  honors: [
+    {
+      title: "یک درصد پژوهشگر و دانشمندان برتر",
+      year: "۲۰۲۴",
+    },
+    {
+      title: "بانوی موفق و کارافرین ایران در سال",
+      year: "۱۴۰۳",
+    },
+    {
+      title: "جزو پژوهشگران افتخاری",
+      year: "۲۲۲۲",
+      description: " دانشگاه استنفورد",
+    },
+    {
+      title: "نویسنده فصل خواب کتاب",
+      year: "۲۲۲۲",
+      description: "انتشارات Springer",
+    },
+    {
+      title: "جوانترین سخنران و پزشک شاخص و نویسنده برترین مقاله",
+      year: "۱۳۹۷",
+      description: "در بین متخصصین کودکان",
+    },
+    {
+      title: "پزشک پیشرو و نویسنده برترین مقاله پژوهشی",
+      year: "۱۳۹۷",
+      description: "چهلمین سالگرد دکتر محمد قریب",
+    },
+    {
+      title: "عضو‌کمیته علمی سمینار و سخنرانی",
+      year: "۱۳۹۷",
+      description: "استانبول - پکن - دهلی",
+    },
+    {
+      title: "برگزارکننده و دبیر سمینار",
+      year: "۱۴۰۴",
+      description: "تازه های بیماریهای قلبی و اختلالات خواب",
+    },
+  ],
+};
 
 export const CONTACT_ITEMS: {
   title: string;
   desc?: string;
+  value?: string;
   icon?: React.ReactNode;
 }[] = [
   {
-    title: "تماس با من",
+    title: "تماس با کلینیک",
   },
   {
-    title: "ایمیل",
-    desc: "vida.imani@gmail.con",
-    icon: <MailIcon />,
+    title: "اینستاگرام",
+    desc: "dr.imani.sleepclinic@",
+    value: "dr.imani.sleepclinic",
+    icon: <InstagramLogoIcon height={24} width={24} />,
   },
   {
     title: "شماره تماس",
-    desc: "+98-914-123-2526",
+    desc: "۰۴۱-۳۳۳۵۰۳۵۷",
+    value: "041-3335-0357",
     icon: <PhoneIcon />,
   },
   {
     title: "آدرس",
-    desc: "آبرسان - نرسیده به قنادی تشریفات - طبقه 3",
+    desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
     icon: <MapPin />,
   },
 ];
