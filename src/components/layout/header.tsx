@@ -1,7 +1,7 @@
 import Link from "next/link";
 import DesktopHeader from "./header/desktop-header";
 import MobileHeader from "./header/mobile-header";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import WhatsAppIcon from "../../../public/icons/whatsapp.svg";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
