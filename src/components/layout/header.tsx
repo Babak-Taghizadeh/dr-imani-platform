@@ -1,9 +1,10 @@
 import Link from "next/link";
 import DesktopHeader from "./header/desktop-header";
 import MobileHeader from "./header/mobile-header";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import WhatsAppIcon from "../../../public/icons/whatsapp.svg";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
   return (
@@ -17,10 +18,13 @@ const Header = () => {
         کلینیک خواب دکتر ایمانی
       </Link>
       <div className="flex justify-end xl:min-w-[400px]">
-      <Button className="p-2 md:px-4">
+        <Link
+          href={"https://wa.me/989302871635"}
+          className={cn(buttonVariants(), "p-2 md:px-4")}
+        >
           <Image src={WhatsAppIcon} alt="WhatsApp" width={20} height={20} />
           <span className="hidden md:inline-block">تماس از واتساپ</span>
-        </Button>
+        </Link>
       </div>
     </header>
   );

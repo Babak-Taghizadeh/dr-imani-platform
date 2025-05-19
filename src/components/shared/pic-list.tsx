@@ -12,17 +12,17 @@ const PicList = ({ pic, theme, InfoElement }: PicListProps) => {
   return (
     <section
       className={cn(
-        "flex min-h-[575px] flex-col gap-12 p-4 md:justify-center md:gap-16 md:px-8 md:py-12 lg:flex-row",
+        "flex min-h-[575px] flex-col gap-12 p-4 md:justify-center md:gap-12 md:px-8 md:py-12 lg:flex-row",
         theme == "dark"
           ? "bg-foreground text-background"
           : "bg-background text-foreground",
       )}
     >
-      <div className="flex justify-center md:w-5/6 lg:w-1/2">
+      <div className="flex justify-center lg:w-1/2">
         <Image
           src={pic}
           alt="خواب"
-          className="rounded-lg object-cover"
+          className="rounded-lg object-cover sm:w-5/6"
           priority
         />
       </div>

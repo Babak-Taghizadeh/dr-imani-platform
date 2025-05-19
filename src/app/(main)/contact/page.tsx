@@ -1,5 +1,8 @@
+"use client";
+
 import MapWrapper from "@/components/sections/map-wrapper";
 import { CONTACT_ITEMS } from "@/lib/constants";
+import { motion } from "motion/react";
 
 const Contact = () => {
   return (
@@ -9,20 +12,38 @@ const Contact = () => {
       </div>
       <ul className="flex flex-col md:flex-1/2 md:gap-4">
         {CONTACT_ITEMS.map((item, index) =>
-          index == 0 ? (
+          index === 0 ? (
             <li key={item.title}>
-              <h4 className="mb-4 text-3xl font-bold">{item.title}</h4>
+              <motion.h4
+                initial={{ y: -40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 200 }}
+                className="mb-4 text-3xl font-bold"
+              >
+                {item.title}
+              </motion.h4>
             </li>
           ) : (
             <li
               className="flex items-center gap-4 py-2 lg:p-5"
               key={item.title}
             >
-              <div className="bg-primary rounded-md p-4">{item.icon}</div>
-              <div>
-                <h5 className="text-xl font-semibold">{item.title}</h5>
-                <p className="mt-2 font-light text-gray-500">{item.desc}</p>
-              </div>
+              <motion.div
+                className="bg-primary rounded-md p-4"
+                whileHover={{ rotate: 45 }}
+              >
+                {item.icon}
+              </motion.div>
+              <motion.div
+                initial={{ x: -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: index * 0.3 }}
+              >
+                <h5 className="text-background text-xl font-semibold">
+                  {item.title}
+                </h5>
+                <p className="text-secondary/70 mt-2 font-light">{item.desc}</p>
+              </motion.div>
             </li>
           ),
         )}
