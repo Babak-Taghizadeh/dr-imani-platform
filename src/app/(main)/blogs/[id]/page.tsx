@@ -11,8 +11,8 @@ import Image from "next/image";
 const BlogPage = () => {
   const { content, img, title, createdAt } = mockBlogs[0];
   return (
-    <article className="bg-foreground p-12 min-h-[90dvh]">
-      <Card className="bg-foreground border border-white text-background mx-auto max-w-3xl border-none">
+    <article className="bg-foreground p-12">
+      <Card className="bg-foreground text-background mx-auto max-w-3xl border-none">
         <CardHeader>
           <div className="relative h-64 w-full">
             <Image
@@ -25,7 +25,7 @@ const BlogPage = () => {
           <CardTitle className="mt-4 text-2xl">{title}</CardTitle>
 
           <CardDescription className="mt-2">
-            تاریخ انتشار : {new Date(createdAt).toLocaleDateString()}
+            تاریخ انتشار : {new Date(createdAt).toLocaleDateString("fa-IR")}
           </CardDescription>
         </CardHeader>
         <CardContent>

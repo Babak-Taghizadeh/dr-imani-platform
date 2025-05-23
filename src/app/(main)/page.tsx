@@ -2,7 +2,7 @@ import Faq from "@/components/sections/faq";
 import Hero from "@/components/sections/hero";
 import ServicesSummary from "@/components/sections/services-summary";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <Hero />
@@ -10,4 +10,6 @@ export default function Home() {
       <Faq />
     </>
   );
-}
+};
+
+export default Home;

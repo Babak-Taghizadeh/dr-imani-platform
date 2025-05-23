@@ -23,7 +23,7 @@ const Header = () => {
           className={cn(buttonVariants(), "p-2 md:px-4")}
         >
           <Image src={WhatsAppIcon} alt="WhatsApp" width={20} height={20} />
-          <span className="hidden md:inline-block">تماس از واتساپ</span>
+          <span className="hidden font-bold md:inline-block">واتساپ</span>
         </Link>
       </div>
     </header>

@@ -3,8 +3,9 @@ import Pic2 from "../../public/images/pic2.jpg";
 import Pic3 from "../../public/images/pic3.webp";
 import Pic4 from "../../public/images/pic4.jpg";
 import Pic5 from "../../public/images/pic5.jpg";
+import { Article, Blog } from "./types";
 
-export const mockBlogs = [
+export const mockBlogs: Blog[] = [
   {
     id: "1",
     title: "درک چرخه های خواب",
@@ -49,5 +50,24 @@ export const mockBlogs = [
     content:
       "تحقیقات نشان می دهد که بین کیفیت خواب و سلامت روان رابطه مستقیمی وجود دارد. کم خوابی می تواند منجر به اضطراب و افسردگی شود.",
     createdAt: "2025-01-22T12:10:00Z",
+  },
+];
+
+export const mockArticles: Article[] = [
+  {
+    id: "1",
+    title: "نقش ریتم شبانه‌روزی در تنظیم خواب",
+    summary:
+      "بررسی جامع نحوه تأثیر ریتم‌های شبانه‌روزی بر الگوهای خواب انسان و کاربردهای بالینی آن در درمان بی‌خوابی.",
+    publishedAt: "2024-10-12",
+    fileUrl: "/downloads/circadian-sleep-study.pdf",
+  },
+  {
+    id: "2",
+    title: "درمان با ملاتونین و اختلالات خواب",
+    summary:
+      "این مقاله به بررسی اثربخشی مکمل‌های ملاتونین در درمان انواع مختلف اختلالات خواب می‌پردازد.",
+    publishedAt: "2023-08-30",
+    fileUrl: "/downloads/melatonin-therapy.pdf",
   },
 ];
