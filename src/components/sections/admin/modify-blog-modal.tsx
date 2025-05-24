@@ -32,23 +32,33 @@ import { modifyBlogSchema } from "@/lib/validation-schema";
 import { z } from "zod";
 import { Blog } from "@/lib/types";
 
-interface ModifyBlogProps {
-  onSave: (values: z.infer<typeof modifyBlogSchema>) => void;
+interface ModifyBlogModalProps {
+  onSave: (formData: FormData) => void;
   blog?: Blog;
 }
 
-export function ModifyBlog({ onSave, blog }: ModifyBlogProps) {
-  const form = useForm({
+const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
+  const form = useForm<z.infer<typeof modifyBlogSchema>>({
     resolver: zodResolver(modifyBlogSchema),
     defaultValues: {
-      title: blog?.title ?? "",
-      content: blog?.content ?? "",
-      status: blog?.status ?? "منتشر شده",
+      title: blog?.title,
+      content: blog?.content,
+      status: blog?.status,
     },
   });
 
   const onSubmit = (values: z.infer<typeof modifyBlogSchema>) => {
-    onSave(values);
+    const formData = new FormData();
+
+    formData.append("title", values.title);
+    formData.append("content", values.content);
+    formData.append("status", values.status);
+
+    if (values.image) {
+      formData.append("image", values.image);
+    }
+
+    onSave(formData);
   };
 
   return (
@@ -81,16 +91,17 @@ export function ModifyBlog({ onSave, blog }: ModifyBlogProps) {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="cover"
+              name="image"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>عکس کاور</FormLabel>
                   <FormControl>
                     <div>
                       <input
-                        id="cover-upload"
+                        id="image-upload"
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
@@ -102,7 +113,7 @@ export function ModifyBlog({ onSave, blog }: ModifyBlogProps) {
                         className="hidden"
                       />
                       <label
-                        htmlFor="cover-upload"
+                        htmlFor="image-upload"
                         className="bg-muted border-input hover:bg-accent inline-flex cursor-pointer items-center rounded-md border px-4 py-2 text-sm font-medium"
                       >
                         انتخاب فایل
@@ -136,6 +147,7 @@ export function ModifyBlog({ onSave, blog }: ModifyBlogProps) {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="status"
@@ -173,4 +185,6 @@ export function ModifyBlog({ onSave, blog }: ModifyBlogProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default ModifyBlogModal;
