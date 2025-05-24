@@ -1,13 +1,15 @@
 import BlogCard from "@/components/sections/blog-card";
-import { mockBlogs } from "@/lib/mock-data";
+import getBlogs from "@/utils/get-blogs";
 
-const BlogsPage = () => {
+const BlogsPage = async () => {
+  const blogs = await getBlogs();
+
   return (
     <div className="bg-foreground grid grid-cols-1 gap-6 p-12 sm:grid-cols-2 lg:grid-cols-3">
       <h1 className="text-background col-span-full text-xl font-bold md:text-3xl">
         وبلاگ
       </h1>
-      {mockBlogs.map((blog, index) => (
+      {blogs.map((blog, index) => (
         <BlogCard blog={blog} key={index} />
       ))}
     </div>
