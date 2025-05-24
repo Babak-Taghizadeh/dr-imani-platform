@@ -6,8 +6,10 @@ export const loginSchema = z.object({
 });
 
 export const modifyBlogSchema = z.object({
-  title: z.string().min(3, "Title is too short"),
-  cover: z.any().optional(),
-  content: z.string().min(10, "Content is too short"),
+  title: z.string().min(1, "عنوان الزامی است"),
+  content: z.string().min(1, "محتوا الزامی است"),
   status: z.enum(["منتشر شده", "ذخیره شده"]),
+  image: z.custom<File>((file) => file instanceof File, {
+    message: "تصویر الزامی است",
+  }),
 });
