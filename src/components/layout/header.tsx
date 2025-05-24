@@ -5,17 +5,18 @@ import { buttonVariants } from "../ui/button";
 import WhatsAppIcon from "../../../public/icons/whatsapp.svg";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Logo from "../../../public/Logo.png";
 
 const Header = () => {
   return (
-    <header className="bg-foreground text-background flex h-16 w-full items-center justify-between border-b px-4 md:px-10">
+    <header className="bg-foreground text-background flex h-24 w-full items-center justify-between border-b px-4 md:px-10">
       <MobileHeader />
       <DesktopHeader />
       <Link
         href="/"
         className="font-black sm:block md:hidden md:text-xl lg:block"
       >
-        کلینیک خواب دکتر ایمانی
+        <Image width={90} src={Logo} alt="logo" />
       </Link>
       <div className="flex justify-end xl:min-w-[400px]">
         <Link
