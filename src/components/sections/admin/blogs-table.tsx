@@ -8,11 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ModifyBlog } from "./modify-blog-modal";
-import { mockBlogs } from "@/lib/mock-data";
 import SureDeleteModal from "./sure-delete-modal";
+import { Blog } from "@/lib/types";
+import ModifyBlogModal from "./modify-blog-modal";
 
-export default function BlogTable() {
+const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
   return (
     <div className="mt-24 w-full overflow-auto px-4 lg:w-1/2">
       <Table className="rounded-lg border">
@@ -25,16 +25,17 @@ export default function BlogTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {mockBlogs.length > 0 ? (
-            mockBlogs.map((blog) => (
+          {blogs.length > 0 ? (
+            blogs.map((blog) => (
               <TableRow key={blog.id}>
                 <TableCell className="font-medium">{blog.title}</TableCell>
                 <TableCell>{blog.status}</TableCell>
                 <TableCell>
-                  {new Date(blog.createdAt).toLocaleDateString()}
+                  {new Date(blog.createdAt).toLocaleDateString("fa-IR")}
                 </TableCell>
                 <TableCell className="space-x-2 text-right">
-                  <ModifyBlog blog={blog} onSave={() => {}} />
+                  {/* Must split CTA to prevent unnecessary use client */}
+                  <ModifyBlogModal blog={blog} onSave={() => {}} />
                   <SureDeleteModal />
                 </TableCell>
               </TableRow>
@@ -53,4 +54,6 @@ export default function BlogTable() {
       </Table>
     </div>
   );
-}
+};
+
+export default BlogTable;
