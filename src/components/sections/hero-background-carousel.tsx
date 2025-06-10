@@ -50,7 +50,10 @@ const HeroBackgroundCarousel = () => {
                 src={image.src}
                 alt={image.alt}
                 fill
-                priority
+                priority={index === 0}
+                sizes="100vw"
+                quality={90}
+                placeholder="blur"
                 className="object-cover brightness-[0.4]"
               />
             </div>
