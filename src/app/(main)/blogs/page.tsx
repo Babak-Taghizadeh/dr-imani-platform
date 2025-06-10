@@ -10,7 +10,7 @@ const BlogsPage = async () => {
         وبلاگ
       </h1>
       {blogs.map((blog, index) => (
-        <BlogCard blog={blog} key={index} />
+        blog.status === "منتشر شده" && <BlogCard blog={blog} key={index} />
       ))}
     </div>
   );
