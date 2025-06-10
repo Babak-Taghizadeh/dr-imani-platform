@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,20 +13,38 @@ import ServiceCard from "../sections/service-card";
 const ServiceCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [direction, setDirection] = useState<Direction>("right");
+  const [isPaused, setIsPaused] = useState(false);
   const totalProjects = SERVICES_ITEMS.length;
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setDirection("left");
     setCurrentIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
-  };
+  }, [totalProjects]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setDirection("right");
     setCurrentIndex((prev) => (prev + 1) % totalProjects);
-  };
+  }, [totalProjects]);
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      handleNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, handleNext, handlePrev]);
+
+  const handleMouseEnter = () => setIsPaused(true);
+  const handleMouseLeave = () => setIsPaused(false);
 
   return (
-    <div className="flex h-[300px] w-full flex-col items-center justify-between overflow-hidden rounded-2xl lg:h-auto lg:w-1/2 lg:justify-around">
+    <div
+      className="flex h-[300px] w-full flex-col items-center justify-between overflow-hidden rounded-2xl lg:h-auto lg:w-1/2 lg:justify-around"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <h1 className="text-xl font-bold md:text-3xl">
         خدمات و سرویس های کلینیک
       </h1>
@@ -47,14 +65,23 @@ const ServiceCarousel = () => {
                   totalProjects,
                 )}
                 animate={style}
-                exit={{ opacity: 0 }}
-                transition={{
-                  type: "tween",
-                  stiffness: 300,
-                  damping: 30,
-                  duration: 0.5,
+                exit={{
+                  opacity: 0,
+                  scale: 0.8,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
                 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                transition={{
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  mass: 1,
+                  duration: 0.6,
+                  ease: [0.32, 0.72, 0, 1],
+                }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 will-change-transform"
               >
                 <ServiceCard {...project} />
               </motion.div>
