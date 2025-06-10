@@ -1,3 +1,5 @@
+"use client";
+
 import { NAV_ITEMS } from "@/lib/constants";
 import {
   NavigationMenu,
@@ -6,8 +8,12 @@ import {
   NavigationMenuList,
 } from "../../ui/navigation-menu";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const DesktopHeader = () => {
+  const pathname = usePathname();
+
   return (
     <NavigationMenu
       dir="rtl"
@@ -17,7 +23,10 @@ const DesktopHeader = () => {
         {NAV_ITEMS.map((item) => (
           <NavigationMenuItem key={item.title}>
             <NavigationMenuLink
-              className="hover:text-primary hover:bg-primary-foreground text-lg font-semibold"
+              className={cn(
+                "rounded-sm text-lg font-semibold",
+                pathname === item.path && "border-background/60 border-b",
+              )}
               asChild
             >
               <Link href={item.path} className="px-4">
