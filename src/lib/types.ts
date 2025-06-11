@@ -18,3 +18,32 @@ export interface Article {
 }
 
 export type Direction = "left" | "right";
+
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  years: string;
+  description?: string;
+  details?: string;
+}
+
+export interface ExperienceItem {
+  position: string;
+  hospital: string;
+  years: string;
+}
+
+export interface HonorItem {
+  title: string;
+  year: string;
+  description?: string;
+}
+
+export type TabType = "تحصیلات" | "سوابق کاری" | "افتخارات";
+
+export interface TabConfig {
+  value: TabType;
+  label: string;
+  icon: React.ReactNode;
+  component: React.ReactNode;
+}

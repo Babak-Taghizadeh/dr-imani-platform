@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { motion } from "motion/react";
 import { Briefcase, Calendar, Building2 } from "lucide-react";
-import { ExperienceItem } from "./types";
+import { ExperienceItem } from "@/lib/types";
 
 const ExperienceList = () => {
   const experienceItems: ExperienceItem[] = ABOUT_ME_ITEMS.experience;
