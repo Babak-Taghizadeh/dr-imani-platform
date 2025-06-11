@@ -1,9 +1,25 @@
+import EducationList from "@/components/sections/about/education-list";
+import ExperienceList from "@/components/sections/about/experience-list";
+import HonorsList from "@/components/sections/about/honors-list";
+
 import {
   InstagramLogoIcon,
   Link2Icon,
   SewingPinIcon,
 } from "@radix-ui/react-icons";
-import { MapPin, PhoneIcon } from "lucide-react";
+import {
+  Activity,
+  Bed,
+  BookOpen,
+  Briefcase,
+  Clock,
+  GraduationCap,
+  MapPin,
+  Monitor,
+  PhoneIcon,
+  Trophy,
+} from "lucide-react";
+import { TabConfig } from "./types";
 
 export const NAV_ITEMS: { title: string; path: string }[] = [
   {
@@ -19,12 +35,12 @@ export const NAV_ITEMS: { title: string; path: string }[] = [
     path: "/contact",
   },
   {
-    title: "مقالات",
-    path: "/articles",
-  },
-  {
     title: "وبلاگ",
     path: "/blogs",
+  },
+  {
+    title: "مقالات",
+    path: "/articles",
   },
 ];
 
@@ -34,10 +50,10 @@ export const FOOTER_ITEMS: Record<
 > = {
   brand: [
     {
-      title: "متخصص خواب - سلامت خواب",
+      title: "دکتر ویدا ایمانی",
     },
     {
-      title: "کمک به بهبود کیفیت خواب و یک زندگی سالم تر",
+      title: "فلوشیپ فوق تخصصی اختلالات خواب کودکان و بزرگسالان",
     },
   ],
   nav: [
@@ -82,18 +98,65 @@ export const FOOTER_ITEMS: Record<
   ],
 };
 
-export const SERVICES_ITEMS: { title: string; desc: string }[] = [
+export const SERVICES_ITEMS: {
+  title: string;
+  desc: string;
+  icon?: React.ReactNode;
+  details?: string[];
+  cta?: { label: string; url: string };
+}[] = [
   {
-    title: "درمان ریشه ای بی خوابی",
-    desc: " با متد های بروز و تایید شده در مقیاس جهانی",
+    title: "درمان ریشه‌ای بی‌خوابی",
+    desc: "با متدهای بروز و تاییدشده در مقیاس جهانی",
+    icon: <Bed className="h-8 w-8 text-blue-500" />,
+    details: [
+      "بررسی دقیق الگوهای خواب",
+      "استفاده از روان‌درمانی رفتاری (CBT-I)",
+      "درمان بدون وابستگی به دارو",
+    ],
+    cta: { label: "مشاوره رایگان", url: "/contact" },
   },
   {
-    title: "درمان آپنه",
-    desc: "یکی از بزرگترین عوامل تهدید کننده ی سلامتی",
+    title: "درمان آپنه خواب",
+    desc: "یکی از بزرگ‌ترین عوامل تهدیدکننده‌ی سلامتی",
+    icon: <Activity className="h-8 w-8 text-red-500" />,
+    details: [
+      "تشخیص دقیق با کمک دستگاه‌های مانیتورینگ خواب",
+      "استفاده از ماسک‌های CPAP و متدهای جایگزین",
+      "کاهش فشار خون و خستگی مزمن",
+    ],
+    cta: { label: "اطلاعات بیشتر", url: "/services/apnea" },
   },
   {
-    title: "مانیتورینک و تحلیل",
-    desc: "توسط بروزتزین و دقیق ترین ابزار موجود در بازار",
+    title: "مانیتورینگ و تحلیل خواب",
+    desc: "توسط بروزترین و دقیق‌ترین ابزار موجود در بازار",
+    icon: <Monitor className="h-8 w-8 text-green-500" />,
+    details: [
+      "استفاده از دستگاه‌های قابل حمل و خانگی",
+      "تحلیل سیگنال‌های مغزی، تنفس، ضربان قلب و حرکات",
+      "ارائه‌ی گزارش تخصصی برای هر بیمار",
+    ],
+    cta: { label: "رزرو تست خواب", url: "/booking" },
+  },
+  {
+    title: "درمان اختلالات ریتم شبانه‌روزی",
+    desc: "برای شیفت‌کاران و کسانی که ساعت بیولوژیکی‌شان دچار اختلال شده",
+    icon: <Clock className="h-8 w-8 text-purple-500" />,
+    details: [
+      "تنظیم ساعت خواب با نوردرمانی",
+      "ارزیابی سطح ملاتونین بدن",
+      "پیشنهاد برنامه‌ خوابی شخصی‌سازی‌شده",
+    ],
+  },
+  {
+    title: "مشاوره و آموزش خواب سالم",
+    desc: "برای همه‌ی افراد در هر سن و موقعیت شغلی",
+    icon: <BookOpen className="h-8 w-8 text-indigo-500" />,
+    details: [
+      "آموزش به خانواده‌ها، دانش‌آموزان و مدیران",
+      "پیشگیری از مشکلات خواب قبل از حاد شدن",
+      "ارائه‌ی بروشورها و دوره‌های آموزشی",
+    ],
   },
 ];
 
@@ -215,6 +278,27 @@ export const ABOUT_ME_ITEMS = {
   ],
 };
 
+export const ABOUT_TABS: TabConfig[] = [
+  {
+    value: "تحصیلات",
+    label: "تحصیلات",
+    icon: <GraduationCap className="h-4 w-4" />,
+    component: <EducationList />,
+  },
+  {
+    value: "سوابق کاری",
+    label: "سوابق کاری",
+    icon: <Briefcase className="h-4 w-4" />,
+    component: <ExperienceList />,
+  },
+  {
+    value: "افتخارات",
+    label: "افتخارات",
+    icon: <Trophy className="h-4 w-4" />,
+    component: <HonorsList />,
+  },
+];
+
 export const CONTACT_ITEMS: {
   title: string;
   desc?: string;
@@ -222,23 +306,23 @@ export const CONTACT_ITEMS: {
   icon?: React.ReactNode;
 }[] = [
   {
-    title: "تماس با کلینیک",
+    title: "در تماس باشید",
   },
   {
     title: "اینستاگرام",
     desc: "dr.imani.sleepclinic@",
-    value: "dr.imani.sleepclinic",
-    icon: <InstagramLogoIcon height={24} width={24} />,
+    value: "https://www.instagram.com/dr.imani.sleepclinic",
+    icon: <InstagramLogoIcon height={30} width={30} />,
   },
   {
     title: "شماره تماس",
     desc: "۰۴۱-۳۳۳۵۰۳۵۷",
-    value: "041-3335-0357",
-    icon: <PhoneIcon />,
+    value: "tel:041-3335-0357",
+    icon: <PhoneIcon height={30} width={30} />,
   },
   {
     title: "آدرس",
     desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
-    icon: <MapPin />,
+    icon: <MapPin height={30} width={30} />,
   },
 ];

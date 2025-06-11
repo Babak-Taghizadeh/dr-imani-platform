@@ -21,20 +21,22 @@ const SureDeleteModal = () => {
       </DialogTrigger>
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="sm:max-w-sm"
+        className="py-8 sm:max-w-sm"
       >
         <DialogHeader>
           <DialogTitle className="text-center">
             آیا از حذف بلاگ اطمینان دارید؟
           </DialogTitle>
         </DialogHeader>
-        <DialogFooter className="flex w-full justify-center!">
+        <DialogFooter className="mt-4 flex w-full justify-center!">
           <DialogClose asChild>
             <Button variant="outline" type="button">
               خیر
             </Button>
           </DialogClose>
-          <Button type="submit">بله</Button>
+          <Button variant="destructive" type="submit">
+            بله
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

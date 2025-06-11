@@ -14,11 +14,13 @@ const AddBlog = () => {
         const errorData = await response.json();
         throw new Error(errorData.error || "خطا در ذخیره بلاگ");
       }
-      toast("بلاگ با موفقیت ذخیره شد");
+
+      toast.success("بلاگ با موفقیت ذخیره شد");
       // Optionally refresh your blog list or update UI here
+      window.location.reload(); // Simple refresh for now
     } catch (error) {
       console.error("Error saving blog:", error);
-      alert("خطا در ذخیره بلاگ، دوباره تلاش کنید");
+      toast.error("خطا در ذخیره بلاگ، دوباره تلاش کنید");
     }
   };
   return <ModifyBlogModal onSave={onSave} />;

@@ -55,7 +55,6 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async () => {
   try {
-    // Optimized query with explicit column selection
     const allBlogs = await db
       .select({
         id: blogs.id,
@@ -67,13 +66,12 @@ export const GET = async () => {
       })
       .from(blogs)
       .orderBy(desc(blogs.createdAt))
-      .execute(); // Explicit execution for clarity
+      .execute();
 
     return NextResponse.json(allBlogs);
   } catch (error) {
     console.error("Failed to fetch blogs:", error);
 
-    // Enhanced error logging
     if (error instanceof Error) {
       console.error("Error details:", {
         message: error.message,
