@@ -14,8 +14,31 @@ import ModifyBlogModal from "./modify-blog-modal";
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { faIR } from "date-fns/locale";
+import { toast } from "sonner";
 
 const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
+  const handleUpdateBlog = async (blogId: string, formData: FormData) => {
+    try {
+      const response = await fetch(`/api/blogs/${blogId}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "خطا در بروزرسانی بلاگ");
+      }
+
+      toast("بلاگ با موفقیت بروزرسانی شد");
+      // Optionally refresh your blog list or update UI here
+      // You might want to trigger a refetch of the blogs data
+      window.location.reload(); // Simple refresh for now
+    } catch (error) {
+      console.error("Error updating blog:", error);
+      toast.error("خطا در بروزرسانی بلاگ، دوباره تلاش کنید");
+    }
+  };
+
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -53,7 +76,10 @@ const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
                     })}
                   </TableCell>
                   <TableCell className="space-x-2 text-right">
-                    <ModifyBlogModal blog={blog} onSave={() => {}} />
+                    <ModifyBlogModal
+                      blog={blog}
+                      onSave={(formData) => handleUpdateBlog(blog.id, formData)}
+                    />
                     <SureDeleteModal />
                   </TableCell>
                 </TableRow>

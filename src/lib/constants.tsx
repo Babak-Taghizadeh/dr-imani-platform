@@ -311,13 +311,13 @@ export const CONTACT_ITEMS: {
   {
     title: "اینستاگرام",
     desc: "dr.imani.sleepclinic@",
-    value: "dr.imani.sleepclinic",
+    value: "https://www.instagram.com/dr.imani.sleepclinic",
     icon: <InstagramLogoIcon height={30} width={30} />,
   },
   {
     title: "شماره تماس",
     desc: "۰۴۱-۳۳۳۵۰۳۵۷",
-    value: "041-3335-0357",
+    value: "tel:041-3335-0357",
     icon: <PhoneIcon height={30} width={30} />,
   },
   {

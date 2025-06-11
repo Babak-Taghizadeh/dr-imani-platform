@@ -5,7 +5,7 @@ import getBlogs from "@/utils/get-blogs";
 const AdminPage = async () => {
   const blogs = await getBlogs();
   return (
-    <main className="min-h-screen ">
+    <main className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-5xl space-y-8">
           <AdminHeader />
