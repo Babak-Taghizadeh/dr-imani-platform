@@ -1,10 +1,61 @@
 import { FOOTER_ITEMS } from "@/lib/constants";
 import Link from "next/link";
+import {
+  Pill,
+  Moon,
+  Bed,
+  Activity,
+  Brain,
+  Stethoscope,
+  Clock,
+  Zap,
+  Star,
+  Shield,
+  Leaf,
+  Sparkles,
+  Droplets,
+  Sun,
+  Cloud,
+  Waves,
+  Lightbulb,
+} from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="from-background via-secondary/50 to-primary/10 mt-auto border-t bg-gradient-to-b">
-      <div className="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:px-8">
+    <footer className="from-background via-secondary/50 to-primary/10 relative mt-auto overflow-hidden border-t bg-gradient-to-b">
+      {/* Background Icons */}
+      <div className="pointer-events-none absolute inset-0 opacity-10">
+        {/* Large icons */}
+        <Pill className="text-primary absolute top-8 left-24 h-8 w-16" />
+        <Moon className="text-primary absolute top-16 right-12 h-12 w-12" />
+
+        {/* Medium icons */}
+        <Bed className="text-primary absolute top-32 left-1/3 h-5 w-5" />
+        <Activity className="text-primary absolute top-28 right-1/4 h-5 w-5" />
+        <Brain className="text-primary absolute bottom-32 left-1/3 h-5 w-5" />
+        <Stethoscope className="text-primary absolute right-1/4 bottom-28 h-5 w-5" />
+        <Clock className="text-primary absolute top-40 left-1/4 h-4 w-4" />
+        <Zap className="text-primary absolute top-36 right-1/3 h-4 w-4" />
+
+        {/* Small icons */}
+        <Star className="text-primary absolute top-24 left-1/2 h-3 w-3" />
+        <Shield className="text-primary absolute top-20 right-1/2 h-3 w-3" />
+        <Leaf className="text-primary absolute bottom-24 left-1/2 h-3 w-3" />
+        <Sparkles className="text-primary absolute right-1/2 bottom-20 h-3 w-3" />
+        <Droplets className="text-primary absolute top-44 left-1/6 h-3 w-3" />
+        <Sun className="text-primary absolute top-48 right-1/6 h-3 w-3" />
+        <Cloud className="text-primary absolute bottom-16 left-1/6 h-3 w-3" />
+        <Waves className="text-primary absolute right-1/6 bottom-12 h-3 w-3" />
+        <Lightbulb className="text-primary absolute top-1/2 left-1/6 h-3 w-3" />
+        <Moon className="text-primary absolute bottom-1/3 left-1/4 h-3 w-3" />
+        <Pill className="text-primary absolute right-1/4 bottom-1/3 h-3 w-3" />
+        <Activity className="text-primary absolute top-1/3 left-1/5 h-3 w-3" />
+        <Brain className="text-primary absolute top-1/3 right-1/5 h-3 w-3" />
+        <Bed className="text-primary absolute bottom-1/4 left-1/5 h-3 w-3" />
+        <Stethoscope className="text-primary absolute right-1/5 bottom-1/4 h-3 w-3" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 md:px-6 lg:px-8">
         <div className="flex flex-col gap-16 md:flex-row md:justify-between">
           <div className="flex flex-col gap-4">
             <h3 className="text-primary text-3xl font-bold">
