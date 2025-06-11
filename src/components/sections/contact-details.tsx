@@ -2,6 +2,7 @@
 
 import { CONTACT_ITEMS } from "@/lib/constants";
 import { motion } from "motion/react";
+import Link from "next/link";
 
 const ContactDetails = () => {
   return (
@@ -37,9 +38,19 @@ const ContactDetails = () => {
                 duration: 0.5,
               }}
             >
-              <h5 className="text-background text-lg font-medium md:text-xl">
-                {item.title}
-              </h5>
+              {item.value ? (
+                <Link
+                  href={item.value}
+                  target="_blank"
+                  className="text-background text-lg font-medium md:text-xl"
+                >
+                  {item.title}
+                </Link>
+              ) : (
+                <div className="text-background text-lg font-medium md:text-xl">
+                  {item.title}
+                </div>
+              )}
               <p className="text-secondary/70 mt-1 text-sm md:text-lg!">
                 {item.desc}
               </p>
