@@ -5,13 +5,13 @@ import { motion } from "motion/react";
 
 const HonorsList = () => {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 mt-10">
+    <div className="mt-10 grid gap-6 sm:grid-cols-2">
       {ABOUT_ME_ITEMS.honors.map((item, index) => (
         <motion.div
           key={index}
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.05 }}
+          transition={{ delay: index * 0.1 }}
           className="hover:bg-accent/50 flex items-start gap-4 rounded-lg p-4 transition-colors"
         >
           <div className="bg-primary/10 text-primary rounded-full p-2">
@@ -20,7 +20,9 @@ const HonorsList = () => {
           <div className="flex-1">
             <div className="flex justify-between">
               <h3 className="font-semibold">{item.title}</h3>
-              <Badge className="h-fit" variant="secondary">{item.year}</Badge>
+              <Badge className="h-fit" variant="secondary">
+                {item.year}
+              </Badge>
             </div>
             {item.description && (
               <p className="text-muted-foreground mt-1 text-sm">
