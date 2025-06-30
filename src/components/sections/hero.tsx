@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 
 const Hero = () => {
   return (
-    <section className="relative h-[300px] w-full lg:h-[500px]">
+    <section className="relative h-[300px] w-full lg:h-[600px]">
       <HeroBackgroundCarousel />
       <div className="text-background absolute top-5 right-4 z-10 flex flex-col items-start gap-3 lg:top-10 lg:right-14 lg:gap-6">
         <motion.h1

@@ -42,7 +42,7 @@ const HeroBackgroundCarousel = () => {
       ]}
       className="h-full w-full"
     >
-      <CarouselContent className="h-[300px] lg:h-[500px]">
+      <CarouselContent className="h-[300px] lg:h-[600px]">
         {heroImages.map((image, index) => (
           <CarouselItem key={index}>
             <div dir="rtl" className="relative h-full w-full">

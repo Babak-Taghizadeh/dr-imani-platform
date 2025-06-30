@@ -18,7 +18,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <Card className="bg-background text-foreground">
+    <Card className="bg-background/95 text-foreground">
       <CardHeader>
         <div className="relative h-48 w-full">
           {isLoading && (

@@ -23,10 +23,8 @@ const SectionHeader = ({
         transition={{ delay: 0.2, duration: 0.5 }}
         viewport={{ once: true }}
         className={cn(
-          "bg-gradient-to-r bg-clip-text pb-6 text-3xl font-bold tracking-tight text-transparent md:text-4xl",
-          theme === "dark"
-            ? "from-background via-primary to-background"
-            : "from-foreground via-primary to-foreground",
+          "pb-6 text-3xl font-bold tracking-tight md:text-4xl",
+          theme === "dark" ? "text-background" : "text-foreground",
         )}
       >
         {title}

@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 const HonorsList = () => {
   return (
-    <div className="mt-10 grid gap-6 sm:grid-cols-2">
+    <div className="grid gap-6 sm:grid-cols-2">
       {ABOUT_ME_ITEMS.honors.map((item, index) => (
         <motion.div
           key={index}

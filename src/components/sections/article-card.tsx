@@ -11,7 +11,10 @@ import Link from "next/link";
 
 const ArticleCard = ({ article }: { article: Article }) => {
   return (
-    <Card className="max-w-4xl gap-4 md:gap-6" key={article.id}>
+    <Card
+      className="bg-background/95 max-w-4xl gap-4 md:gap-6"
+      key={article.id}
+    >
       <CardHeader className="text-right">
         <CardTitle className="text-lg md:text-xl">{article.title}</CardTitle>
         <CardDescription className="text-muted-foreground text-sm">

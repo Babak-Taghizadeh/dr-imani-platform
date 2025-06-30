@@ -14,13 +14,13 @@ const AboutCycle = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden px-2 lg:w-1/2">
+    <div className="overflow-hidden px-2 lg:w-3/4">
       <Tabs
         value={activeTab}
         onValueChange={handleTabChange}
         className="h-full"
       >
-        <TabsList className="bg-background/90 border-border/50 mb-6 w-full rounded-xl border shadow-lg backdrop-blur-sm">
+        <TabsList className="bg-background/90 border-border/50 mb-6 w-full self-center rounded-xl border shadow-lg backdrop-blur-sm md:w-3/4">
           {ABOUT_TABS.map((tab) => (
             <TabsTrigger
               key={tab.value}
