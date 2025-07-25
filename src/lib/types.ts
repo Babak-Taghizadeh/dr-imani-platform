@@ -7,6 +7,7 @@ export interface Blog {
   img: StaticImageData;
   content: string;
   createdAt: string;
+  excerpt?: string;
 }
 
 export interface Article {

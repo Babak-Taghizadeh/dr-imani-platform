@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   description: "Portfolio",
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="fa" dir="rtl">
       <body className={`${IRANSansXV.className} antialiased`}>
@@ -24,4 +24,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

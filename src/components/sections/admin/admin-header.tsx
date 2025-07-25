@@ -1,15 +1,19 @@
-import React from "react";
-import AddBlog from "./add-blog";
+import Image from "next/image";
+import Logo from "../../../../public/Logo.png";
 
 const AdminHeader = () => {
   return (
-    <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight">پنل مدیریت</h1>
-        <p className="text-muted-foreground">مدیریت و ویرایش محتوای وبسایت</p>
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+          داشبورد مدیریت
+        </h1>
+        <p className="text-muted-foreground text-sm md:text-lg">
+          مدیریت و ویرایش محتوای سایت کلینیک دکتر ایمانی
+        </p>
       </div>
-      <div className="flex items-center">
-        <AddBlog />
+      <div className="bg-primary hover:bg-primary/90 flex items-center justify-center rounded-lg p-2 transition-colors">
+        <Image width={90} src={Logo} alt="logo" />
       </div>
     </div>
   );

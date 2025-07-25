@@ -1,25 +1,48 @@
-import BlogCard from "@/components/sections/blog-card";
-import BlogsLoader from "@/components/sections/blogs-loader";
-import SectionHeader from "@/components/shared/section-header";
-import getBlogs from "@/utils/get-blogs";
 import { Suspense } from "react";
+import BlogCard from "@/components/sections/blogs/blog-card";
+import BlogsLoader from "@/components/sections/blogs/blogs-loader";
+import PaginationControls from "@/components/shared/pagination-controls";
+import SectionHeader from "@/components/shared/section-header";
+import fetchBlogs from "@/utils/fetch-blogs";
+import NoContent from "@/components/shared/no-content";
 
-const BlogsPage = async () => {
-  const blogs = await getBlogs();
+interface BlogsPageProps {
+  searchParams?: { page?: string };
+}
+
+const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
+  const params = await searchParams;
+  const page = parseInt(params?.page || "1", 10);
+
+  const { blogs, totalPages } = await fetchBlogs(page);
+
+  const publishedBlogs = blogs.filter((b) => b.status === "منتشر شده");
 
   return (
-    <div className="bg-foreground grid grid-cols-1 gap-6 px-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-foreground grid grid-cols-1 gap-10 px-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
       <SectionHeader
-        title="وبلاگ و مقالات"
+        title="دانش خواب و سلامت"
+        description="مطالب تخصصی درباره اختلالات خواب، بهبود کیفیت خواب، و ارتباط آن با سلامت جسم و روان. راهنمایی‌هایی علمی برای خوابی بهتر."
         className="col-span-full"
         theme="dark"
       />
-      <Suspense fallback={<BlogsLoader />}>
-        {blogs.map(
-          (blog, index) =>
-            blog.status === "منتشر شده" && <BlogCard blog={blog} key={index} />,
-        )}
-      </Suspense>
+
+      {!blogs || publishedBlogs.length === 0 ? (
+        <NoContent />
+      ) : (
+        <Suspense fallback={<BlogsLoader />}>
+          {publishedBlogs.map((blog, index) => (
+            <BlogCard blog={blog} key={index} />
+          ))}
+        </Suspense>
+      )}
+
+      <PaginationControls
+        currentPage={page}
+        totalPages={totalPages}
+        className="col-span-full"
+        theme="dark"
+      />
     </div>
   );
 };

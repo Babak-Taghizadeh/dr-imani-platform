@@ -10,14 +10,17 @@ export const modifyBlogSchema = z.object({
   content: z.string().min(1, "محتوا الزامی است"),
   status: z.enum(["منتشر شده", "ذخیره شده"]),
   image: z
-    .custom<File>(
-      (file) => {
-        if (!file) return true; // Allow empty for editing
-        return file instanceof File;
-      },
-      {
-        message: "فایل انتخاب شده معتبر نیست",
-      },
+    .instanceof(File, {
+      message: "فایل انتخاب شده معتبر نیست",
+    })
+    .refine(
+      (file) => !file || file.size <= 5 * 1024 * 1024,
+      "حجم تصویر باید کمتر از ۵ مگابایت باشد",
+    )
+    .refine(
+      (file) =>
+        !file || ["image/jpeg", "image/png", "image/webp"].includes(file.type),
+      "فقط فرمت‌های JPEG, PNG و WebP پشتیبانی می‌شوند",
     )
     .optional(),
 });
