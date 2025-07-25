@@ -12,7 +12,6 @@ import Link from "next/link";
 import { Download } from "lucide-react";
 
 const ArticleCard = ({ article }: { article: Article }) => {
-  console.log(article)
   return (
     <Card className="bg-secondary text-foreground gap-4">
       <CardHeader className="text-right">

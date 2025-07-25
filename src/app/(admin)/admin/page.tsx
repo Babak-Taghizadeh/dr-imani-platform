@@ -20,7 +20,7 @@ const AdminPage = async ({ searchParams }: AdminPageProps) => {
     { blogs, totalPages: totalBlogs },
     { articles, totalPages: totalArticles },
   ] = await Promise.all([fetchBlogs(page), fetchArticles(page)]);
-  console.log(articles);
+  
   return (
     <main className="bg-background text-foreground min-h-screen">
       <div className="container mx-auto max-w-6xl space-y-10 px-6 py-12">
