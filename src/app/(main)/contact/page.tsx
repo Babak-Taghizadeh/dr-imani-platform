@@ -1,5 +1,5 @@
-import ContactDetails from "@/components/sections/contact-details";
-import MapWrapper from "@/components/sections/map-wrapper";
+import ContactDetails from "@/components/sections/contact-us/contact-details";
+import MapWrapper from "@/components/sections/contact-us/map-wrapper";
 
 const Contact = () => {
   return (
