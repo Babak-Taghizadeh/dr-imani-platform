@@ -6,7 +6,7 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "../../ui/navigation-menu";
+} from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -19,22 +19,28 @@ const DesktopHeader = () => {
       dir="rtl"
       className="hidden md:flex xl:min-w-[400px] xl:justify-start"
     >
-      <NavigationMenuList>
-        {NAV_ITEMS.map((item) => (
-          <NavigationMenuItem key={item.title}>
-            <NavigationMenuLink
-              className={cn(
-                "rounded-sm text-lg font-semibold",
-                pathname === item.path && "border-background/60 border-b",
-              )}
-              asChild
-            >
-              <Link href={item.path} className="px-4">
-                {item.title}
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        ))}
+      <NavigationMenuList className="flex gap-4">
+        {NAV_ITEMS.map((item) => {
+          const isActive = pathname === item.path;
+          return (
+            <NavigationMenuItem key={item.title}>
+              <NavigationMenuLink asChild>
+                <Link
+                  href={item.path}
+                  className={cn(
+                    "text-muted-foreground relative px-4 py-2 font-semibold transition-colors duration-200",
+                    "after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:bg-purple-500 after:transition-all after:duration-300",
+                    "hover:after:w-1/2",
+                    isActive &&
+                      "scale-110 text-purple-400 after:w-1/2 after:bg-purple-500",
+                  )}
+                >
+                  {item.title}
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          );
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   );
