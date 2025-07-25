@@ -20,7 +20,7 @@ const PicList = ({
   return (
     <section
       className={cn(
-        "flex min-h-[575px] flex-col gap-12 px-8 py-6 md:justify-center md:gap-12 md:px-8 md:py-12 lg:flex-row",
+        "flex flex-col gap-12 px-8 py-6 md:justify-center md:gap-12 md:px-8 md:py-12 lg:min-h-[780px] lg:flex-row xl:min-h-[710px]",
         theme == "dark"
           ? "bg-foreground text-background"
           : "bg-background text-foreground",
