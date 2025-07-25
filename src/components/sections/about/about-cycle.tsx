@@ -38,13 +38,13 @@ const AboutCycle = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="min-h-[400px]"
+          className="min-h-full"
         >
           {ABOUT_TABS.map((tab) => (
             <TabsContent
               key={tab.value}
               value={tab.value}
-              className="mt-0 focus-visible:ring-0 focus-visible:outline-none"
+              className="mt-0 h-full focus-visible:ring-0 focus-visible:outline-none"
             >
               {tab.component}
             </TabsContent>
