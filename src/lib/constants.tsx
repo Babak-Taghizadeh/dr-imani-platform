@@ -16,6 +16,7 @@ import {
   GraduationCap,
   MapPin,
   Monitor,
+  MonitorSmartphone,
   PhoneIcon,
   Trophy,
 } from "lucide-react";
@@ -157,6 +158,17 @@ export const SERVICES_ITEMS: {
       "پیشگیری از مشکلات خواب قبل از حاد شدن",
       "ارائه‌ی بروشورها و دوره‌های آموزشی",
     ],
+  },
+  {
+    title: "مشاوره آنلاین پزشکی خواب",
+    desc: "دسترسی آسان به خدمات درمانی از هرکجا که هستید",
+    icon: <MonitorSmartphone className="h-8 w-8 text-green-500" />,
+    details: [
+      "مشاوره و ارزیابی آنلاین از طریق واتساپ، گوگل میت و ...",
+      "ارسال مدارک و فرم‌ها به‌صورت دیجیتال",
+      "صرفه‌جویی در زمان و هزینه رفت‌و‌آمد",
+    ],
+    cta: { label: "شروع ویزیت آنلاین", url: "/contact" },
   },
 ];
 
@@ -307,6 +319,7 @@ export const CONTACT_ITEMS: {
 }[] = [
   {
     title: "در تماس باشید",
+    desc: "برای دریافت اطلاعات، رزرو نوبت یا ارتباط با کلینیک خواب، از طریق اطلاعات تماس زیر اقدام کنید.",
   },
   {
     title: "اینستاگرام",
