@@ -2,8 +2,8 @@ import AdminHeader from "@/components/sections/admin/admin-header";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BlogsManager from "@/components/sections/admin/blogs/blogs-manager";
 import ArticlesManager from "@/components/sections/admin/articles/articles-manager";
-import fetchArticles from "@/utils/fetch-articles";
-import fetchBlogs from "@/utils/fetch-blogs";
+import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
+import { Article, Blog } from "@/lib/types";
 
 interface AdminPageProps {
   searchParams?: {
@@ -19,8 +19,11 @@ const AdminPage = async ({ searchParams }: AdminPageProps) => {
   const [
     { blogs, totalPages: totalBlogs },
     { articles, totalPages: totalArticles },
-  ] = await Promise.all([fetchBlogs(page), fetchArticles(page)]);
-  
+  ] = await Promise.all([
+    fetchPaginatedData<Blog>("blogs", "blogs", page),
+    fetchPaginatedData<Article>("articles", "articles", page),
+  ]);
+
   return (
     <main className="bg-background text-foreground min-h-screen">
       <div className="container mx-auto max-w-6xl space-y-10 px-6 py-12">

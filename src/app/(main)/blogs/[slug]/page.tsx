@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import getBlog from "@/utils/fetch-blog";
 import { JSDOM } from "jsdom";
 import DOMPurify from "dompurify";
+import fetchBlog from "@/utils/fetch-blog";
 
 interface BlogPostPageProps {
   params: {
@@ -24,7 +24,7 @@ const window = new JSDOM("").window as unknown as Window & {
 const purify = DOMPurify(window);
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
   const { slug } = params;
-  const blog = await getBlog(slug);
+  const blog = await fetchBlog(slug);
   const cleanContent = purify.sanitize(blog.content);
   return (
     <article className="mx-auto max-w-4xl px-4 py-8 md:py-12">
