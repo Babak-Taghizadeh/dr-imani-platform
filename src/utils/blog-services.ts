@@ -4,9 +4,11 @@ import { desc, eq, sql } from "drizzle-orm";
 import { deleteFile, saveUploadedFile } from "@/lib/file-utils";
 import { BlogCreateSchema, BlogUpdateSchema } from "@/lib/api-validators";
 import { z } from "zod";
+import slugify from "slugify";
 
 export const createBlog = async (data: z.infer<typeof BlogCreateSchema>) => {
   const { filePath, mimeType, fileSize } = await saveUploadedFile(data.image);
+  const slug = slugify(data.title, { lower: true, strict: true });
 
   return db.transaction(async (tx) => {
     const [blog] = await tx
@@ -14,6 +16,7 @@ export const createBlog = async (data: z.infer<typeof BlogCreateSchema>) => {
       .values({
         title: data.title,
         content: data.content,
+        slug,
         status: data.status,
         imgPath: filePath,
         mimeType,
@@ -57,8 +60,8 @@ export const getBlogs = async (page = 1, limit = 6) => {
   };
 };
 
-export const getBlogById = async (id: number) => {
-  const [blog] = await db.select().from(blogs).where(eq(blogs.id, id));
+export const getBlogBySlug = async (slug: string) => {
+  const [blog] = await db.select().from(blogs).where(eq(blogs.slug, slug));
 
   if (!blog) {
     throw new Error("بلاگ پیدا نشد");
@@ -67,49 +70,68 @@ export const getBlogById = async (id: number) => {
   return blog;
 };
 
-export const updateBlog = async (data: z.infer<typeof BlogUpdateSchema>) => {
+export const updateBlog = async (
+  slug: string,
+  data: z.infer<typeof BlogUpdateSchema>,
+) => {
   return db.transaction(async (tx) => {
-    const current = await tx
+    const [current] = await tx
       .select({ imgPath: blogs.imgPath })
       .from(blogs)
-      .where(eq(blogs.id, data.id));
+      .where(eq(blogs.slug, slug));
 
-    if (!current[0]) {
-      throw new Error("بلاگ پیدا نشد");
+    if (!current) {
+      throw new Error("بلاگ مورد نظر پیدا نشد.");
     }
 
-    let filePath = current[0].imgPath;
+    let filePath = current.imgPath;
 
-    if (data.image) {
+    if (data.image instanceof File) {
       if (filePath) {
-        await deleteFile(filePath).catch(console.error);
+        try {
+          await deleteFile(filePath);
+        } catch (error) {
+          console.error("خطا در حذف تصویر قبلی:", error);
+        }
       }
 
-      const uploadResult = await saveUploadedFile(data.image);
-      filePath = uploadResult.filePath;
+      try {
+        const uploadResult = await saveUploadedFile(data.image);
+        filePath = uploadResult.filePath;
+      } catch (error) {
+        console.error("خطا در بارگذاری تصویر:", error);
+        throw new Error("بارگذاری تصویر با خطا مواجه شد.");
+      }
     }
 
-    const [blog] = await tx
+    if (!data.title) {
+      throw new Error("عنوان وارد نشده است.");
+    }
+
+    const newSlug = slugify(data.title, { lower: true, strict: true });
+
+    const [updatedBlog] = await tx
       .update(blogs)
       .set({
         title: data.title,
         content: data.content,
+        slug: newSlug,
         status: data.status,
         ...(filePath && { imgPath: filePath }),
       })
-      .where(eq(blogs.id, data.id))
+      .where(eq(blogs.slug, slug))
       .returning();
 
-    return blog;
+    return updatedBlog;
   });
 };
 
-export const deleteBlog = async (id: number) => {
+export const deleteBlogBySlug = async (slug: string) => {
   return db.transaction(async (tx) => {
     const [blog] = await tx
-      .select({ imgPath: blogs.imgPath })
+      .select({ id: blogs.id, imgPath: blogs.imgPath })
       .from(blogs)
-      .where(eq(blogs.id, id));
+      .where(eq(blogs.slug, slug));
 
     if (!blog) {
       throw new Error("بلاگ پیدا نشد");
@@ -119,6 +141,6 @@ export const deleteBlog = async (id: number) => {
       await deleteFile(blog.imgPath).catch(console.error);
     }
 
-    await tx.delete(blogs).where(eq(blogs.id, id));
+    await tx.delete(blogs).where(eq(blogs.id, blog.id));
   });
 };

@@ -1,15 +1,18 @@
-import { errorResponse, successResponse, validateId } from "@/lib/api-utils";
+import { errorResponse, successResponse } from "@/lib/api-utils";
 import { BlogUpdateSchema } from "@/lib/api-validators";
-import { deleteBlog, getBlogById, updateBlog } from "@/utils/blog-services";
+import {
+  deleteBlogBySlug,
+  getBlogBySlug,
+  updateBlog,
+} from "@/utils/blog-services";
 import { NextRequest } from "next/server";
 
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { slug: string } },
 ) => {
   try {
-    const id = validateId(params.id);
-    const blog = await getBlogById(id);
+    const blog = await getBlogBySlug(params.slug);
     return successResponse(blog);
   } catch (err) {
     console.error("Get blog error:", err);
@@ -21,14 +24,12 @@ export const GET = async (
 
 export const PUT = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { slug: string } },
 ) => {
   try {
-    const id = validateId(params.id);
     const formData = await req.formData();
 
     const data = {
-      id,
       title: formData.get("title"),
       content: formData.get("content"),
       status: formData.get("status"),
@@ -36,8 +37,8 @@ export const PUT = async (
     };
 
     const validated = BlogUpdateSchema.parse(data);
-    const blog = await updateBlog(validated);
-    return successResponse(blog);
+    const updated = await updateBlog(params.slug, validated);
+    return successResponse(updated);
   } catch (err) {
     console.error("Update blog error:", err);
     return errorResponse(
@@ -53,11 +54,10 @@ export const PUT = async (
 
 export const DELETE = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { slug: string } },
 ) => {
   try {
-    const id = validateId(params.id);
-    await deleteBlog(id);
+    await deleteBlogBySlug(params.slug);
     return successResponse({ success: true });
   } catch (err) {
     console.error("Delete blog error:", err);
