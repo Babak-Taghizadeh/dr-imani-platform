@@ -92,3 +92,7 @@ body {
 button {
   cursor: pointer;
 }
+
+.prose h2 {
+  @apply mb-2 text-xl font-bold;
+}

@@ -10,6 +10,7 @@ import {
 export const blogs = pgTable("blogs", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
   status: varchar("status", { length: 20 }).notNull(),
   imgPath: text("img_path").notNull(),
   mimeType: varchar("mime_type", { length: 50 }).notNull(),

@@ -15,7 +15,7 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { modifyBlogSchema } from "@/lib/validation-schema";
 import { z } from "zod";
 import { Blog } from "@/lib/types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { BlogFormFields } from "./blog-form-fields";
@@ -27,9 +27,9 @@ interface ModifyBlogModalProps {
 }
 
 export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
+  const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof modifyBlogSchema>>({
     resolver: zodResolver(modifyBlogSchema),
@@ -61,26 +61,25 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
   };
 
   const onSubmit = async (values: z.infer<typeof modifyBlogSchema>) => {
-    setIsSubmitting(true);
-    try {
-      const formData = new FormData();
-      formData.append("title", values.title);
-      formData.append("content", values.content);
-      formData.append("status", values.status);
+    startTransition(async () => {
+      try {
+        const formData = new FormData();
+        formData.append("title", values.title);
+        formData.append("content", values.content);
+        formData.append("status", values.status);
 
-      if (values.image instanceof File) {
-        formData.append("image", values.image);
+        if (values.image instanceof File) {
+          formData.append("image", values.image);
+        }
+
+        onSave(formData);
+      } catch (error) {
+        toast.error("خطا در ذخیره بلاگ", {
+          description:
+            error instanceof Error ? error.message : "لطفاً دوباره تلاش کنید",
+        });
       }
-
-      onSave(formData);
-    } catch (error) {
-      toast.error("خطا در ذخیره بلاگ", {
-        description:
-          error instanceof Error ? error.message : "لطفاً دوباره تلاش کنید",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
   };
 
   return (
@@ -117,8 +116,11 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
                   انصراف
                 </Button>
               </DialogClose>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting && (
+              <Button
+                type="submit"
+                disabled={isPending || form.formState.isSubmitting}
+              >
+                {(isPending || form.formState.isSubmitting) && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 ذخیره
