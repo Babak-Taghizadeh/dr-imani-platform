@@ -45,10 +45,10 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[40%]">عنوان</TableHead>
-              <TableHead className="w-[30%]">خلاصه</TableHead>
+              <TableHead className="w-[25%]">عنوان</TableHead>
+              <TableHead className="w-[40%]">خلاصه</TableHead>
               <TableHead className="w-[20%]">تاریخ انتشار</TableHead>
-              <TableHead className="w-[10%] text-right">عملیات</TableHead>
+              <TableHead className="w-[15%] text-right">عملیات</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -61,7 +61,7 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
                   <TableCell className="font-semibold">
                     {article.title}
                   </TableCell>
-                  <TableCell className="text-muted-foreground line-clamp-2">
+                  <TableCell className="text-accent-foreground max-w-[400px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {article.summary}
                   </TableCell>
                   <TableCell>
