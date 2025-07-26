@@ -16,7 +16,7 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="bg-gradient-to-r from-white via-blue-50 to-white bg-clip-text p-1 text-2xl font-extrabold tracking-tight text-transparent drop-shadow-lg lg:text-4xl xl:text-5xl"
         >
-          تشخیص و درمان اختلالات خواب
+          راهکارهای تخصصی برای خواب بهتر
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -24,8 +24,9 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="max-w-[300px] text-right text-sm leading-relaxed font-medium tracking-wide text-white/90 drop-shadow-md lg:max-w-[550px] lg:text-lg xl:text-xl"
         >
-          نخستین مرکز تخصصی اختلالات خواب در شمالغرب کشور دارای مجوز رسمی از
-          معاونت درمان دانشگاه علوم پزشکی تبریز
+          نخستین مرکز فوق‌تخصصی تشخیص و درمان اختلالات خواب در شمال‌غرب کشور،
+          دارای مجوز رسمی از معاونت درمان دانشگاه علوم پزشکی تبریز. همراه شما
+          برای بازگشت به خواب آرام.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
