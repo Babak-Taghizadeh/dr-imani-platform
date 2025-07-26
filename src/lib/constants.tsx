@@ -296,14 +296,14 @@ export const ABOUT_ME_ITEMS = {
     {
       degree: "متخصص کودکان",
       institution: "دانشگاه علوم پزشکی تبریز",
-      years: "2011 - 2014",
+      years: "۲۰۱۱ - ۲۰۱۴",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
     {
       degree: "پزشک عمومی",
       institution: "دانشگاه علوم پزشکی تبریز",
-      years: "2001 - 2008",
+      years: "۲۰۰۱ - ۲۰۰۸",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
