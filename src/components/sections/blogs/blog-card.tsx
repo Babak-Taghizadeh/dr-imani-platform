@@ -34,7 +34,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       <CardFooter className="mt-auto mr-auto">
         <Link
           className="text-primary flex items-center gap-1 hover:underline"
-          href={`/blogs/${blog.id}`}
+          href={`/blogs/${blog.slug}`}
         >
           ادامه مطلب
           <ArrowLeft size={15} />

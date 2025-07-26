@@ -7,7 +7,7 @@ import DOMPurify from "dompurify";
 
 interface BlogPostPageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 const window = new JSDOM("").window as unknown as Window & {
@@ -23,8 +23,8 @@ const window = new JSDOM("").window as unknown as Window & {
 
 const purify = DOMPurify(window);
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
-  const { id } = params;
-  const blog = await getBlog(id);
+  const { slug } = params;
+  const blog = await getBlog(slug);
   const cleanContent = purify.sanitize(blog.content);
   return (
     <article className="mx-auto max-w-4xl px-4 py-8 md:py-12">

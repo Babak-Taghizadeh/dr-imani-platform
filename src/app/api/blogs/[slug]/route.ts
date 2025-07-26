@@ -12,7 +12,8 @@ export const GET = async (
   { params }: { params: { slug: string } },
 ) => {
   try {
-    const blog = await getBlogBySlug(params.slug);
+    const slug = await params.slug;
+    const blog = await getBlogBySlug(slug);
     return successResponse(blog);
   } catch (err) {
     console.error("Get blog error:", err);
