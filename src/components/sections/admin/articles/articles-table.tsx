@@ -31,11 +31,11 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
         throw new Error(errorData.error || "خطا در بروزرسانی مقاله");
       }
 
-      toast("مقاله با موفقیت بروزرسانی شد");
+      toast.success("مقاله با موفقیت بروزرسانی شد.");
       router.refresh();
     } catch (error) {
       console.error("Error updating article:", error);
-      toast.error("خطا در بروزرسانی مقاله، دوباره تلاش کنید");
+      toast.error("خطا در بروزرسانی مقاله، دوباره تلاش کنید.");
     }
   };
 
@@ -45,10 +45,10 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[40%]">عنوان</TableHead>
-              <TableHead className="w-[30%]">خلاصه</TableHead>
+              <TableHead className="w-[25%]">عنوان</TableHead>
+              <TableHead className="w-[40%]">خلاصه</TableHead>
               <TableHead className="w-[20%]">تاریخ انتشار</TableHead>
-              <TableHead className="w-[10%] text-right">عملیات</TableHead>
+              <TableHead className="w-[15%] text-right">عملیات</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -61,7 +61,7 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
                   <TableCell className="font-semibold">
                     {article.title}
                   </TableCell>
-                  <TableCell className="text-muted-foreground line-clamp-2">
+                  <TableCell className="text-accent-foreground max-w-[400px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {article.summary}
                   </TableCell>
                   <TableCell>
@@ -78,7 +78,7 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
                       }
                     />
                     <SureDeleteModal
-                      itemId={article.id}
+                      itemPath={article.id}
                       itemType="article"
                       apiPath="/api/articles"
                     />

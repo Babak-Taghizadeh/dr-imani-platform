@@ -68,9 +68,9 @@ export const ModifyArticleModal = ({
 
         await onSave(formData);
       } catch (error) {
-        toast.error("خطا در ذخیره مقاله", {
+        toast.error("خطا در ذخیره مقاله.", {
           description:
-            error instanceof Error ? error.message : "لطفاً دوباره تلاش کنید",
+            error instanceof Error ? error.message : "لطفاً دوباره تلاش کنید.",
         });
       }
     });
@@ -79,9 +79,14 @@ export const ModifyArticleModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">{article ? "ویرایش" : "افزودن مقاله"}</Button>
+        <Button variant="outline">
+          {article ? "ویرایش" : "افزودن مقاله"}
+        </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="max-h-[90vh] overflow-y-auto sm:max-w-2xl"
+      >
         <DialogHeader>
           <DialogTitle className="text-center">
             {article ? "ویرایش مقاله" : "افزودن مقاله"}

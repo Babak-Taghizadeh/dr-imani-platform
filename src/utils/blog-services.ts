@@ -38,7 +38,7 @@ export const getBlogs = async (page = 1, limit = 6) => {
       title: blogs.title,
       slug: blogs.slug,
       status: blogs.status,
-      img: blogs.imgPath,
+      imgPath: blogs.imgPath,
       content: blogs.content,
       excerpt: sql<string>`
         CASE 

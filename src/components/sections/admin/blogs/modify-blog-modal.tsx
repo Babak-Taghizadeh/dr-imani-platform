@@ -102,7 +102,7 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
             <BlogFormFields control={form.control} />
 
             <ImageUploadField
-              blogImg={blog?.img.toString()}
+              blogImg={blog?.imgPath.toString()}
               previewUrl={previewUrl}
               selectedImage={selectedImage}
               onImageChange={handleImageChange}

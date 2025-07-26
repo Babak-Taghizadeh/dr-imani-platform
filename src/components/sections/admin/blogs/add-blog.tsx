@@ -18,11 +18,11 @@ const AddBlog = () => {
         throw new Error(errorData.error || "خطا در ذخیره بلاگ");
       }
 
-      toast.success("بلاگ با موفقیت ذخیره شد");
+      toast.success("بلاگ با موفقیت ذخیره شد.");
       router.refresh();
     } catch (error) {
       console.error("Error saving blog:", error);
-      toast.error("خطا در ذخیره بلاگ، دوباره تلاش کنید");
+      toast.error("خطا در ذخیره بلاگ، دوباره تلاش کنید.");
     }
   };
   return <ModifyBlogModal onSave={onSave} />;

@@ -17,7 +17,7 @@ const DesktopHeader = () => {
   return (
     <NavigationMenu
       dir="rtl"
-      className="hidden md:flex xl:min-w-[400px] xl:justify-start"
+      className="hidden md:flex xl:min-w-[400px] xl:justify-start xl:absolute xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:transform"
     >
       <NavigationMenuList className="flex gap-4">
         {NAV_ITEMS.map((item) => {

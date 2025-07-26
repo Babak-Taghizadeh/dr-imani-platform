@@ -11,14 +11,14 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { NAV_ITEMS } from "@/lib/constants";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 const MobileHeader = () => {
   return (
     <Drawer>
       <DrawerTrigger className="md:hidden" asChild>
         <Button variant="ghost" size="icon">
-          <DotsHorizontalIcon />
+          <HamburgerMenuIcon className="h-5 w-5" />
         </Button>
       </DrawerTrigger>
 
