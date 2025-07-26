@@ -4,7 +4,7 @@ export interface Blog {
   id: string;
   title: string;
   status: "ذخیره شده" | "منتشر شده";
-  img: StaticImageData;
+  imgPath: StaticImageData;
   content: string;
   createdAt: string;
   excerpt?: string;

@@ -17,7 +17,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       <CardHeader className="px-4">
         <div className="relative h-64 w-full">
           <Image
-            src={blog.img}
+            src={blog.imgPath}
             alt={blog.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
