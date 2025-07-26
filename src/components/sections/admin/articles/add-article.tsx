@@ -15,14 +15,14 @@ const AddArticle = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "خطا در ذخیره مقاله");
+        throw new Error(errorData.error || "خطا در ذخیره مقاله.");
       }
 
-      toast.success("مقاله با موفقیت ذخیره شد");
+      toast.success("مقاله با موفقیت ذخیره شد.");
       router.refresh();
     } catch (error) {
       console.error("Error saving article:", error);
-      toast.error("خطا در ذخیره مقاله، دوباره تلاش کنید");
+      toast.error("خطا در ذخیره مقاله، دوباره تلاش کنید.");
     }
   };
 
