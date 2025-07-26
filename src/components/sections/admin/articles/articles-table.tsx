@@ -31,11 +31,11 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
         throw new Error(errorData.error || "خطا در بروزرسانی مقاله");
       }
 
-      toast("مقاله با موفقیت بروزرسانی شد");
+      toast.success("مقاله با موفقیت بروزرسانی شد.");
       router.refresh();
     } catch (error) {
       console.error("Error updating article:", error);
-      toast.error("خطا در بروزرسانی مقاله، دوباره تلاش کنید");
+      toast.error("خطا در بروزرسانی مقاله، دوباره تلاش کنید.");
     }
   };
 
@@ -78,7 +78,7 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
                       }
                     />
                     <SureDeleteModal
-                      itemId={article.id}
+                      itemPath={article.id}
                       itemType="article"
                       apiPath="/api/articles"
                     />

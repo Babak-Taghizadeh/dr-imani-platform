@@ -29,14 +29,14 @@ const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "خطا در بروزرسانی بلاگ");
+        throw new Error(errorData.error || "خطا در بروزرسانی بلاگ.");
       }
 
-      toast("بلاگ با موفقیت بروزرسانی شد");
+      toast.success("بلاگ با موفقیت بروزرسانی شد.");
       router.refresh();
     } catch (error) {
       console.error("Error updating blog:", error);
-      toast.error("خطا در بروزرسانی بلاگ، دوباره تلاش کنید");
+      toast.error("خطا در بروزرسانی بلاگ، دوباره تلاش کنید.");
     }
   };
 
@@ -82,7 +82,7 @@ const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
                       onSave={(formData) => handleUpdateBlog(blog.id, formData)}
                     />
                     <SureDeleteModal
-                      itemId={blog.id}
+                      itemPath={blog.slug}
                       itemType="blog"
                       apiPath="/api/blogs"
                     />
