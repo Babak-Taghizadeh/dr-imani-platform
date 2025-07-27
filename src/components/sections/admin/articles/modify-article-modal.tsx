@@ -19,11 +19,10 @@ import { z } from "zod";
 import { Article } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { ArticleCreateSchema } from "@/lib/api-validators";
 import { useState, useTransition } from "react";
 import { DialogModalWrapper } from "@/components/shared/modal-wrapper";
+import { ArticleCreateSchema } from "@/lib/validation-schema";
 
-// Create a modified schema that makes file optional
 const ArticleEditSchema = ArticleCreateSchema.extend({
   file: z.instanceof(File).optional(),
 });

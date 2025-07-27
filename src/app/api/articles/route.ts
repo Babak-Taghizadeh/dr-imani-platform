@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api-utils";
-import { ArticleCreateSchema } from "@/lib/api-validators";
+import { ArticleCreateSchema } from "@/lib/validation-schema";
 import { createArticle, getArticles } from "@/utils/articles-services";
 import { NextRequest } from "next/server";
 

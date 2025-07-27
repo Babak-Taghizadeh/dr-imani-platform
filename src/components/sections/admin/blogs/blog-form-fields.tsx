@@ -15,11 +15,9 @@ import {
 } from "@/components/ui/form";
 import RichTextEditor from "../text-editor";
 import { Control } from "react-hook-form";
-import { z } from "zod";
-import { modifyBlogSchema } from "@/lib/validation-schema";
 
 interface BlogFormFieldsProps {
-  control: Control<z.infer<typeof modifyBlogSchema>>;
+  control: Control<any>;
 }
 
 export const BlogFormFields = ({ control }: BlogFormFieldsProps) => {

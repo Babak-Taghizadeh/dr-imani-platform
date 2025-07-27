@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { modifyBlogSchema } from "@/lib/validation-schema";
-import { z } from "zod";
+import {
+  createModifyBlogSchema,
+  ModifyBlogFormValues,
+} from "@/lib/validation-schema";
 import { Blog } from "@/lib/types";
 import { useState, useEffect, useTransition } from "react";
 import { Loader2 } from "lucide-react";
@@ -23,11 +25,13 @@ interface ModifyBlogModalProps {
 export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const form = useForm<z.infer<typeof modifyBlogSchema>>({
-    resolver: zodResolver(modifyBlogSchema),
+  const isEditing = !!blog;
+  const { schema } = createModifyBlogSchema(isEditing);
+
+  const form = useForm<ModifyBlogFormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
       title: blog?.title || "",
       content: blog?.content || "",
@@ -43,19 +47,17 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
 
   const handleImageChange = (file: File) => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setSelectedImage(file);
     setPreviewUrl(URL.createObjectURL(file));
     form.setValue("image", file);
   };
 
   const removeImage = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setSelectedImage(null);
     setPreviewUrl(null);
     form.setValue("image", undefined);
   };
 
-  const onSubmit = async (values: z.infer<typeof modifyBlogSchema>) => {
+  const onSubmit = async (values: ModifyBlogFormValues) => {
     startTransition(async () => {
       try {
         const formData = new FormData();
@@ -66,11 +68,9 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
         if (values.image instanceof File) {
           formData.append("image", values.image);
         }
-
         await onSave(formData);
 
         form.reset();
-        setSelectedImage(null);
         setPreviewUrl(null);
         setOpen(false);
       } catch (error) {
@@ -94,17 +94,20 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
           <BlogFormFields control={form.control} />
 
           <ImageUploadField
+            control={form.control}
             blogImg={blog?.imgPath.toString()}
             previewUrl={previewUrl}
-            selectedImage={selectedImage}
             onImageChange={handleImageChange}
             onRemoveImage={removeImage}
-            isEditing={!!blog}
           />
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline" type="button">
+              <Button
+                onClick={() => form.reset()}
+                variant="outline"
+                type="button"
+              >
                 انصراف
               </Button>
             </DialogClose>

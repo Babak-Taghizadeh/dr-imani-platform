@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api-utils";
-import { BlogCreateSchema } from "@/lib/api-validators";
+import { BlogCreateSchema } from "@/lib/validation-schema";
 import { createBlog, getBlogs } from "@/utils/blog-services";
 import { NextRequest } from "next/server";
 

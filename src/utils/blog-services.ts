@@ -2,10 +2,10 @@ import { db } from "@/db/db";
 import { blogs } from "@/db/schema";
 import { desc, eq, sql } from "drizzle-orm";
 import { deleteFile, saveUploadedFile } from "@/lib/file-utils";
-import { BlogCreateSchema, BlogUpdateSchema } from "@/lib/api-validators";
 import { z } from "zod";
 import slugify from "slugify";
 import customSlugGenerator from "./custom-slug-generator";
+import { BlogCreateSchema, BlogUpdateSchema } from "@/lib/validation-schema";
 
 export const createBlog = async (data: z.infer<typeof BlogCreateSchema>) => {
   const { filePath, mimeType, fileSize } = await saveUploadedFile(data.image);
