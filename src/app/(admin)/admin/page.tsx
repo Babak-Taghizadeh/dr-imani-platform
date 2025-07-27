@@ -7,21 +7,22 @@ import { Article, Blog } from "@/lib/types";
 
 interface AdminPageProps {
   searchParams?: {
-    page?: string;
+    blogsPage?: string;
+    articlesPage?: string;
   };
 }
 
-//TODO: WATCH OUT PAGINATION CONFLICT BETWEEN BLOGS AND ARTICLES
 const AdminPage = async ({ searchParams }: AdminPageProps) => {
   const params = await searchParams;
-  const page = parseInt(params?.page || "1", 10);
+  const blogsPage = parseInt(params?.blogsPage || "1", 10);
+  const articlesPage = parseInt(params?.articlesPage || "1", 10);
 
   const [
     { blogs, totalPages: totalBlogs },
     { articles, totalPages: totalArticles },
   ] = await Promise.all([
-    fetchPaginatedData<Blog>("blogs", "blogs", page),
-    fetchPaginatedData<Article>("articles", "articles", page),
+    fetchPaginatedData<Blog>("blogs", "blogs", blogsPage),
+    fetchPaginatedData<Article>("articles", "articles", articlesPage),
   ]);
 
   return (
@@ -36,14 +37,18 @@ const AdminPage = async ({ searchParams }: AdminPageProps) => {
           </TabsList>
 
           <TabsContent value="blogs" className="space-y-6">
-            <BlogsManager blogs={blogs} page={page} totalPages={totalBlogs} />
+            <BlogsManager
+              blogs={blogs}
+              page={blogsPage}
+              totalPages={totalBlogs}
+            />
           </TabsContent>
 
           <TabsContent value="articles">
             <ArticlesManager
               articles={articles}
               totalPages={totalArticles}
-              page={page}
+              page={articlesPage}
             />
           </TabsContent>
         </Tabs>
