@@ -22,7 +22,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="from-background via-secondary/50 to-primary/10 relative mt-auto overflow-hidden border-t bg-gradient-to-b">
+    <footer className="from-secondary via-secondary/70 to-primary/10 relative mt-auto overflow-hidden border-t bg-gradient-to-b">
       {/* Background Icons */}
       <div className="pointer-events-none absolute inset-0 opacity-10">
         {/* Large icons */}
@@ -61,7 +61,7 @@ const Footer = () => {
             <h3 className="text-primary text-3xl font-bold">
               {FOOTER_ITEMS.brand[0].title}
             </h3>
-            <p className="text-muted-foreground text-sm font-light tracking-tighter md:text-lg!">
+            <p className="text-accent-foreground text-sm font-light tracking-tighter md:text-lg!">
               {FOOTER_ITEMS.brand[1].title}
             </p>
           </div>
@@ -78,7 +78,7 @@ const Footer = () => {
                 <li key={item.title}>
                   <Link
                     href={item.path!}
-                    className="text-muted-foreground hover:text-primary transition-colors hover:underline"
+                    className="text-accent-foreground hover:text-primary transition-colors hover:underline"
                   >
                     {item.title}
                   </Link>
@@ -99,7 +99,7 @@ const Footer = () => {
                 <li key={item.title}>
                   {item.value ? (
                     <Link
-                      className="group text-muted-foreground hover:text-primary flex items-center gap-3 transition-colors"
+                      className="group text-accent-foreground hover:text-primary flex items-center gap-3 transition-colors"
                       href={item.value}
                       target="_blank"
                     >
@@ -109,7 +109,7 @@ const Footer = () => {
                       <span className="hover:underline">{item.title}</span>
                     </Link>
                   ) : (
-                    <p className="text-muted-foreground flex items-center gap-3">
+                    <p className="text-accent-foreground flex items-center gap-3">
                       <span>{item.icon}</span>
                       {item.title}
                     </p>
@@ -120,7 +120,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="border-primary/10 text-muted-foreground mt-12 border-t pt-8 text-center text-sm">
+        <div className="border-primary/10 text-accent-foreground mt-12 border-t pt-8 text-center text-sm">
           <p dir="ltr">
             © {new Date().getFullYear()} Dr. Imani. All rights reserved.
           </p>
