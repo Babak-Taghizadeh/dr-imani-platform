@@ -15,12 +15,22 @@ export const BlogUpdateSchema = BlogCreateSchema.partial().extend({
 });
 
 export const ArticleCreateSchema = z.object({
-  title: z.string().min(3).max(255),
-  summary: z.string().min(10),
-  publishedAt: z.string().datetime(),
+  title: z
+    .string({ required_error: "عنوان مقاله الزامی است" })
+    .min(3, "عنوان باید حداقل ۳ کاراکتر باشد")
+    .max(255, "عنوان نباید بیش از ۲۵۵ کاراکتر باشد"),
+
+  summary: z
+    .string({ required_error: "خلاصه مقاله الزامی است" })
+    .min(10, "خلاصه باید حداقل ۱۰ کاراکتر باشد"),
+
+  publishedAt: z
+    .string({ required_error: "تاریخ انتشار الزامی است" })
+    .datetime("تاریخ انتشار معتبر نیست"),
+
   file: z
-    .instanceof(File)
-    .refine((file) => file.size > 0, "آپلود فایل الزامی است"),
+    .instanceof(File, { message: "فایل انتخاب نشده است" })
+    .refine((file) => file.size > 0, { message: "آپلود فایل الزامی است" }),
 });
 
 export const ArticleUpdateSchema = ArticleCreateSchema.omit({
