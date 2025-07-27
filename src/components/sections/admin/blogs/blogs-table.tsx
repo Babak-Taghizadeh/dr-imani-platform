@@ -20,9 +20,9 @@ import { SureDeleteModal } from "../sure-delete-modal";
 const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
   const router = useRouter();
 
-  const handleUpdateBlog = async (blogId: string, formData: FormData) => {
+  const handleUpdateBlog = async (blogSlug: string, formData: FormData) => {
     try {
-      const response = await fetch(`/api/blogs/${blogId}`, {
+      const response = await fetch(`/api/blogs/${blogSlug}`, {
         method: "PUT",
         body: formData,
       });
@@ -79,7 +79,9 @@ const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
                   <TableCell className="space-x-2 text-right">
                     <ModifyBlogModal
                       blog={blog}
-                      onSave={(formData) => handleUpdateBlog(blog.id, formData)}
+                      onSave={(formData) =>
+                        handleUpdateBlog(blog.slug, formData)
+                      }
                     />
                     <SureDeleteModal
                       itemPath={blog.slug}

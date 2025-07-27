@@ -3,6 +3,7 @@ import { StaticImageData } from "next/image";
 export interface Blog {
   id: string;
   title: string;
+  slug: string;
   status: "ذخیره شده" | "منتشر شده";
   imgPath: StaticImageData;
   content: string;

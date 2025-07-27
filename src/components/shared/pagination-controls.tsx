@@ -16,6 +16,7 @@ interface PaginationControlsProps {
   totalPages: number;
   className?: string;
   theme?: "light" | "dark";
+  queryKey: string;
 }
 
 const PaginationControls = ({
@@ -23,6 +24,7 @@ const PaginationControls = ({
   totalPages,
   className,
   theme = "light",
+  queryKey,
 }: PaginationControlsProps) => {
   const maxVisiblePages = 5;
   const halfVisible = Math.floor(maxVisiblePages / 2);
@@ -49,7 +51,7 @@ const PaginationControls = ({
   if (startPage > 1) {
     pages.push(
       <PaginationItem key={1}>
-        <PaginationLink href={`?page=1`} className={linkBaseClass}>
+        <PaginationLink href={`?${queryKey}=1`} className={linkBaseClass}>
           1
         </PaginationLink>
       </PaginationItem>,
@@ -67,7 +69,7 @@ const PaginationControls = ({
     pages.push(
       <PaginationItem key={i}>
         <PaginationLink
-          href={`?page=${i}`}
+          href={`?${queryKey}=${i}`}
           className={i === currentPage ? activeLinkClass : linkBaseClass}
         >
           {i}
@@ -86,7 +88,10 @@ const PaginationControls = ({
     }
     pages.push(
       <PaginationItem key={totalPages}>
-        <PaginationLink href={`?page=${totalPages}`} className={linkBaseClass}>
+        <PaginationLink
+          href={`?${queryKey}=${totalPages}`}
+          className={linkBaseClass}
+        >
           {totalPages}
         </PaginationLink>
       </PaginationItem>,
@@ -98,7 +103,7 @@ const PaginationControls = ({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={`?page=${Math.max(currentPage - 1, 1)}`}
+            href={`?${queryKey}=${Math.max(currentPage - 1, 1)}`}
             aria-disabled={currentPage === 1}
             className={cn(
               linkBaseClass,
@@ -111,7 +116,7 @@ const PaginationControls = ({
 
         <PaginationItem>
           <PaginationNext
-            href={`?page=${Math.min(currentPage + 1, totalPages)}`}
+            href={`?${queryKey}=${Math.min(currentPage + 1, totalPages)}`}
             aria-disabled={currentPage >= totalPages}
             className={cn(
               linkBaseClass,

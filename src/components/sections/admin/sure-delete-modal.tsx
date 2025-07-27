@@ -9,59 +9,61 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useTransition } from "react";
+import { Loader2 } from "lucide-react";
 
 interface SureDeleteModalProps {
-  itemId: string;
+  itemPath: string | number;
   itemType: "blog" | "article";
   apiPath: string;
 }
 
 export const SureDeleteModal = ({
-  itemId,
+  itemPath,
   itemType,
   apiPath,
 }: SureDeleteModalProps) => {
-  const [open, setOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    try {
-      const response = await fetch(`${apiPath}/${itemId}`, {
-        method: "DELETE",
-      });
+  const handleDelete = () => {
+    startTransition(async () => {
+      try {
+        const response = await fetch(`${apiPath}/${itemPath}`, {
+          method: "DELETE",
+        });
 
-      if (!response.ok) {
-        throw new Error("خطا در حذف");
+        if (!response.ok) throw new Error("خطا در حذف");
+
+        toast.success(
+          itemType === "blog"
+            ? "بلاگ با موفقیت حذف شد."
+            : "مقاله با موفقیت حذف شد.",
+        );
+
+        router.refresh();
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          itemType === "blog" ? "خطا در حذف بلاگ." : "خطا در حذف مقاله.",
+        );
       }
-
-      toast.success(
-        itemType === "blog"
-          ? "بلاگ با موفقیت حذف شد"
-          : "مقاله با موفقیت حذف شد",
-      );
-      router.refresh();
-    } catch (error) {
-      console.error(error);
-      toast.error(itemType === "blog" ? "خطا در حذف بلاگ" : "خطا در حذف مقاله");
-    } finally {
-      setIsDeleting(false);
-      setOpen(false);
-    }
+    });
   };
 
   return (
     <>
-      <Button variant="destructive" size="sm" onClick={() => setOpen(true)}>
-        حذف
-      </Button>
-      <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive" size="sm">
+            حذف
+          </Button>
+        </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>آیا مطمئن هستید؟</AlertDialogTitle>
@@ -72,13 +74,14 @@ export const SureDeleteModal = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>انصراف</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              disabled={isPending}
+              className="bg-destructive hover:bg-destructive/90 text-background"
             >
-              {isDeleting ? "در حال حذف..." : "تایید و حذف"}
+              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              تایید و حذف
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

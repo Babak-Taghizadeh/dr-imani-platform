@@ -1,5 +1,5 @@
 import { errorResponse, successResponse, validateId } from "@/lib/api-utils";
-import { ArticleUpdateSchema } from "@/lib/api-validators";
+import { ArticleUpdateSchema } from "@/lib/validation-schema";
 import { deleteArticle, updateArticle } from "@/utils/articles-services";
 import { NextRequest } from "next/server";
 

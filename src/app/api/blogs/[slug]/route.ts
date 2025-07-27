@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api-utils";
-import { BlogUpdateSchema } from "@/lib/api-validators";
+import { BlogUpdateSchema } from "@/lib/validation-schema";
 import {
   deleteBlogBySlug,
   getBlogBySlug,
@@ -12,7 +12,8 @@ export const GET = async (
   { params }: { params: { slug: string } },
 ) => {
   try {
-    const blog = await getBlogBySlug(params.slug);
+    const slug = await params.slug;
+    const blog = await getBlogBySlug(slug);
     return successResponse(blog);
   } catch (err) {
     console.error("Get blog error:", err);
@@ -28,16 +29,17 @@ export const PUT = async (
 ) => {
   try {
     const formData = await req.formData();
+    const slug = await params.slug;
 
     const data = {
       title: formData.get("title"),
       content: formData.get("content"),
       status: formData.get("status"),
-      image: formData.get("image"),
+      image: formData.get("image") || undefined,
     };
 
     const validated = BlogUpdateSchema.parse(data);
-    const updated = await updateBlog(params.slug, validated);
+    const updated = await updateBlog(slug, validated);
     return successResponse(updated);
   } catch (err) {
     console.error("Update blog error:", err);
