@@ -15,7 +15,7 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const page = parseInt(params?.page || "1", 10);
 
   const { articles, totalPages } = await fetchArticles(page);
-  
+
   return (
     <main className="bg-foreground grid grid-cols-1 items-center gap-10 px-8 py-12 md:grid-cols-2 xl:grid-cols-3">
       <SectionHeader
@@ -28,8 +28,8 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         <NoContent />
       ) : (
         <Suspense fallback={<ArticlesLoader />}>
-          {articles?.map((article) => (
-            <ArticleCard article={article} key={article.id} />
+          {articles?.map((article, index) => (
+            <ArticleCard article={article} key={article.id} index={index} />
           ))}
         </Suspense>
       )}

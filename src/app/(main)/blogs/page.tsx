@@ -32,7 +32,7 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
       ) : (
         <Suspense fallback={<BlogsLoader />}>
           {publishedBlogs.map((blog, index) => (
-            <BlogCard blog={blog} key={index} />
+            <BlogCard blog={blog} key={blog.id} index={index} />
           ))}
         </Suspense>
       )}
