@@ -39,7 +39,7 @@ const LoginForm = () => {
     });
     console.log(res);
     if (res?.status === 401) {
-      toast("نام کاربری یا رمز عبور اشتباه است.", {
+      toast.error("نام کاربری یا رمز عبور اشتباه است.", {
         description: "لطفا دوباره امتحان کنید.",
         action: {
           label: "متوجه شدم",
@@ -47,10 +47,10 @@ const LoginForm = () => {
         },
       });
     } else if (res?.status === 200) {
-      toast("خوش آمدید.");
+      toast.success("خوش آمدید.");
       router.push("/admin");
     } else if (res?.status !== 200) {
-      toast("خطایی در سرور رخ داده.", {
+      toast.error("خطایی در سرور رخ داده.", {
         description: "لطفا دوباره امتحان کنید.",
         action: {
           label: "متوجه شدم",

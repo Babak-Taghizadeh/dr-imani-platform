@@ -21,7 +21,7 @@ export default function AdminLayout({
     <html lang="fa" dir="rtl">
       <body className={`${IRANSansXV.className} antialiased`}>
         {children}
-        <Toaster />
+        <Toaster expand={true} position="top-center" richColors />
       </body>
     </html>
   );

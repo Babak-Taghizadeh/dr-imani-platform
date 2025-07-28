@@ -1,8 +1,8 @@
-import Faq from "@/components/sections/faq";
-import Hero from "@/components/sections/hero";
-import ServicesSummary from "@/components/sections/services-summary";
+import Faq from "@/components/sections/home/faq";
+import Hero from "@/components/sections/home/hero";
+import ServicesSummary from "@/components/sections/home/services-summary";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <Hero />
@@ -10,4 +10,6 @@ export default function Home() {
       <Faq />
     </>
   );
-}
+};
+
+export default Home;

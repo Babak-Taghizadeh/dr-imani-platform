@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+drizzle/meta/_journal.json
 
 # debug
 npm-debug.log*

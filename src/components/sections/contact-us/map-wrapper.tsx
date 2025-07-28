@@ -6,6 +6,7 @@ const DynamicMap = dynamic(() => import("./map"), {
   ssr: false,
 });
 
-export default function MapWrapper() {
+const MapWrapper = () => {
   return <DynamicMap />;
-}
+};
+export default MapWrapper;

@@ -1,49 +1,54 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { mockBlogs } from "@/lib/mock-data";
-import { ArrowLeft } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Suspense } from "react";
+import BlogCard from "@/components/sections/blogs/blog-card";
+import BlogsLoader from "@/components/sections/blogs/blogs-loader";
+import PaginationControls from "@/components/shared/pagination-controls";
+import SectionHeader from "@/components/shared/section-header";
+import NoContent from "@/components/shared/no-content";
+import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
+import { Blog } from "@/lib/types";
 
-const BlogsPage = () => {
+interface BlogsPageProps {
+  searchParams?: { page?: string };
+}
+
+const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
+  const params = await searchParams;
+  const page = parseInt(params?.page || "1", 10);
+
+  const { blogs, totalPages } = await fetchPaginatedData<Blog>(
+    "blogs",
+    "blogs",
+    page,
+  );
+
+  const publishedBlogs = blogs.filter((b) => b.status === "منتشر شده");
+
   return (
-    <div className="bg-foreground grid grid-cols-1 gap-6 p-12 sm:grid-cols-2 lg:grid-cols-3">
-      <h1 className="text-background col-span-full text-xl font-bold md:text-3xl">
-        اخبار و وبلاگ
-      </h1>
-      {mockBlogs.map((item, index) => (
-        <Card key={index} className="bg-background text-foreground">
-          <CardHeader>
-            <div className="relative h-48 w-full">
-              <Image
-                src={item.img}
-                alt={item.title}
-                fill
-                className="rounded-md object-cover transition-all duration-300 hover:scale-105"
-              />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardTitle className="text-lg">{item.title}</CardTitle>
-            <CardDescription>{item.content}</CardDescription>
-          </CardContent>
-          <CardFooter className="mt-auto">
-            <Link
-              className="text-primary flex items-center gap-1 hover:underline"
-              href={`/blogs/1`}
-            >
-              ادامه مطلب
-              <ArrowLeft size={15} />
-            </Link>
-          </CardFooter>
-        </Card>
-      ))}
+    <div className="bg-foreground grid grid-cols-1 gap-10 px-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+      <SectionHeader
+        title="دانش خواب و سلامت"
+        description="مطالب تخصصی درباره اختلالات خواب، بهبود کیفیت خواب، و ارتباط آن با سلامت جسم و روان. راهنمایی‌هایی علمی برای خوابی بهتر."
+        className="col-span-full"
+        theme="dark"
+      />
+
+      {!blogs || publishedBlogs.length === 0 ? (
+        <NoContent />
+      ) : (
+        <Suspense fallback={<BlogsLoader />}>
+          {publishedBlogs.map((blog, index) => (
+            <BlogCard blog={blog} key={index} />
+          ))}
+        </Suspense>
+      )}
+
+      <PaginationControls
+        currentPage={page}
+        totalPages={totalPages}
+        className="col-span-full"
+        theme="dark"
+        queryKey="blogsPage"
+      />
     </div>
   );
 };

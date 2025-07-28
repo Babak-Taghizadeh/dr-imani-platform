@@ -4,7 +4,7 @@ import mapboxgl from "@neshan-maps-platform/mapbox-gl";
 import "@neshan-maps-platform/mapbox-gl/dist/NeshanMapboxGl.css";
 import { useEffect, useRef, useState } from "react";
 import { CornerUpRight, Loader } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 const NeshanMap = () => {
   const [apiKeyLoaded, setApiKeyLoaded] = useState(false);
@@ -61,7 +61,7 @@ const NeshanMap = () => {
   }, [apiKeyLoaded]);
 
   // Function to draw marker on map
-  function drawMarkerOnMap() {
+  const drawMarkerOnMap = () => {
     const map = mapRef.current;
 
     if (map) {
@@ -69,7 +69,7 @@ const NeshanMap = () => {
         .setLngLat([46.318, 38.059])
         .addTo(map);
     }
-  }
+  };
 
   // Handle directions button click
   const getDirections = () => {
@@ -86,7 +86,7 @@ const NeshanMap = () => {
       <div ref={mapContainerRef} className="h-full w-full rounded-md">
         <Button
           onClick={getDirections}
-          className="absolute top-3 right-2 z-50 gap-2 hover:text-primary hover:bg-primary-foreground"
+          className="hover:text-primary hover:bg-primary-foreground absolute top-3 right-2 z-50 gap-2"
         >
           <CornerUpRight size={20} />
           مسیریابی
