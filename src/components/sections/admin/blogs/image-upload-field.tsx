@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
+import { ModifyBlogFormValues } from "@/lib/validation-schema";
 
 interface ImageUploadFieldProps {
-  control: Control<any>;
+  control: Control<ModifyBlogFormValues>;
   blogImg?: string;
   previewUrl?: string | null;
   onImageChange: (file: File) => void;

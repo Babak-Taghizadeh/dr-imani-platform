@@ -5,14 +5,15 @@ import { NextRequest } from "next/server";
 
 export const PUT = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const id = validateId(params.id);
+    const id = (await params).id;
+    const validId = validateId(id);
     const formData = await req.formData();
 
     const data = {
-      id,
+      validId,
       title: formData.get("title"),
       summary: formData.get("summary"),
       publishedAt: formData.get("publishedAt"),
@@ -34,11 +35,12 @@ export const PUT = async (
 
 export const DELETE = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const id = validateId(params.id);
-    await deleteArticle(id);
+    const id = (await params).id;
+    const validId = validateId(id);
+    await deleteArticle(validId);
     return successResponse({ success: true });
   } catch (err) {
     return errorResponse(

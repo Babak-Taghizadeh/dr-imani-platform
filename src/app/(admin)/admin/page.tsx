@@ -7,10 +7,10 @@ import { Article, Blog } from "@/lib/types";
 import { PenSquare, FileText } from "lucide-react";
 
 interface AdminPageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     blogsPage?: string;
     articlesPage?: string;
-  };
+  }>;
 }
 
 const AdminPage = async ({ searchParams }: AdminPageProps) => {

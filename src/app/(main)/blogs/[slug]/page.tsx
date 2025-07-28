@@ -6,9 +6,9 @@ import DOMPurify from "dompurify";
 import fetchBlog from "@/utils/fetch-blog";
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 const window = new JSDOM("").window as unknown as Window & {
   DocumentFragment: typeof DocumentFragment;
@@ -23,7 +23,7 @@ const window = new JSDOM("").window as unknown as Window & {
 
 const purify = DOMPurify(window);
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
-  const { slug } = params;
+  const { slug } = await params;
   const blog = await fetchBlog(slug);
   const cleanContent = purify.sanitize(blog.content);
   return (
