@@ -45,12 +45,17 @@ const HeroBackgroundCarousel = () => {
       <CarouselContent className="h-[300px] lg:h-[600px]">
         {heroImages.map((image, index) => (
           <CarouselItem key={index}>
-            <div dir="rtl" className="relative h-full w-full">
+            <div
+              dir="rtl"
+              className="relative h-full w-full"
+              aria-label={`اسلاید ${index + 1}: ${image.title}`}
+            >
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
-                priority={index === 0}
+                priority={index < 2}
+                loading={index < 2 ? "eager" : "lazy"}
                 sizes="100vw"
                 quality={90}
                 placeholder="blur"

@@ -23,7 +23,7 @@ const window = new JSDOM("").window as unknown as Window & {
 
 const purify = DOMPurify(window);
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
-  const { slug } = params;
+  const { slug } = await params;
   const blog = await fetchBlog(slug);
   const cleanContent = purify.sanitize(blog.content);
   return (
@@ -57,11 +57,14 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
       <div className="relative mb-8 aspect-[21/9] w-full overflow-hidden rounded-sm md:mb-12">
         <Image
           src={blog.imgPath}
-          alt={blog.title}
+          alt={`تصویر اصلی مطلب: ${blog.title}`}
           fill
-          priority
+          priority={true}
+          loading="eager"
+          quality={85}
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+          placeholder="blur"
         />
       </div>
       <div
