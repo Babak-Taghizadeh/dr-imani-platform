@@ -19,7 +19,7 @@ const Header = () => {
         <Image width={85} src={Logo} alt="logo" />
       </Link>
       <DesktopHeader />
-      <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
+      <div className="flex flex-col items-center gap-2 md:flex-row md:gap-3">
         <Link
           href="https://wa.me/989302871635"
           className={cn(

@@ -3,7 +3,7 @@ import Logo from "../../../../public/Logo.png";
 
 const AdminHeader = () => {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col gap-3">
         <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
           داشبورد مدیریت
@@ -12,7 +12,7 @@ const AdminHeader = () => {
           مدیریت و ویرایش محتوای سایت کلینیک دکتر ایمانی
         </p>
       </div>
-      <div className="bg-primary hover:bg-primary/90 flex items-center justify-center rounded-lg p-2 transition-colors">
+      <div className="bg-primary/90 hover:bg-primary/90 flex items-center justify-center rounded-lg p-2 transition-colors">
         <Image width={90} src={Logo} alt="logo" />
       </div>
     </div>

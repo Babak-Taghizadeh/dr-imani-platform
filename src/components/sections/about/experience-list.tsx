@@ -8,7 +8,7 @@ const ExperienceList = () => {
   const experienceItems: ExperienceItem[] = ABOUT_ME_ITEMS.experience;
 
   return (
-    <div className="space-y-2">
+    <div className="flex h-full flex-col justify-center space-y-4 py-4">
       {experienceItems.map((item, index) => (
         <motion.div
           key={index}
