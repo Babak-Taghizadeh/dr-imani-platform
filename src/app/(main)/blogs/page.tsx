@@ -8,7 +8,7 @@ import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Blog } from "@/lib/types";
 
 interface BlogsPageProps {
-  searchParams?: { page?: string };
+  searchParams?: Promise<{ page?: string }>;
 }
 
 const BlogsPage = async ({ searchParams }: BlogsPageProps) => {

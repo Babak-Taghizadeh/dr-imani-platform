@@ -62,7 +62,7 @@ const BlogCard = ({ blog, index }: BlogCardProps) => {
         <CardFooter className="justify-end">
           <Link
             className="text-primary flex items-center gap-1 text-sm transition-all hover:underline hover:underline-offset-4"
-            href={`/blogs/${blog.id}`}
+            href={`/blogs/${blog.slug}`}
           >
             <span>ادامه مطلب</span>
             <ArrowLeft

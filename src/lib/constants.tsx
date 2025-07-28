@@ -283,7 +283,6 @@ export const ABOUT_ME_ITEMS = {
       degree: "فلوشیپ اختلالات خواب",
       institution: "دانشگاه آجی بادم ترکیه",
       years: "۲۰۱۹ - ۲۰۲۰",
-      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -291,7 +290,6 @@ export const ABOUT_ME_ITEMS = {
       degree: "فلوشیپ پزشکی خواب",
       institution: "دانشگاه بابایی قزوین",
       years: "۲۰۱۷ - ۲۰۱۸",
-      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -299,7 +297,6 @@ export const ABOUT_ME_ITEMS = {
       degree: "متخصص کودکان",
       institution: "دانشگاه علوم پزشکی تبریز",
       years: "۲۰۱۱ - ۲۰۱۴",
-      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -307,7 +304,6 @@ export const ABOUT_ME_ITEMS = {
       degree: "پزشک عمومی",
       institution: "دانشگاه علوم پزشکی تبریز",
       years: "۲۰۰۱ - ۲۰۰۸",
-      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -381,10 +377,6 @@ export const CONTACT_ITEMS: {
   value?: string;
   icon?: React.ReactNode;
 }[] = [
-  {
-    title: "در تماس باشید",
-    desc: "برای دریافت اطلاعات، رزرو نوبت یا ارتباط با کلینیک خواب، از طریق اطلاعات تماس زیر اقدام کنید.",
-  },
   {
     title: "اینستاگرام",
     desc: "dr.imani.sleepclinic@",

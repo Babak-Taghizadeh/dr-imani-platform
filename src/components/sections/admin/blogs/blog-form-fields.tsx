@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/form";
 import RichTextEditor from "../text-editor";
 import { Control } from "react-hook-form";
+import { ModifyBlogFormValues } from "@/lib/validation-schema";
 
 interface BlogFormFieldsProps {
-  control: Control<any>;
+  control: Control<ModifyBlogFormValues>;
 }
 
 export const BlogFormFields = ({ control }: BlogFormFieldsProps) => {

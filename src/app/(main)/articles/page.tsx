@@ -8,7 +8,7 @@ import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Suspense } from "react";
 
 interface ArticlesPageProps {
-  searchParams?: { page?: string };
+  searchParams?: Promise<{ page?: string }>;
 }
 
 const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
