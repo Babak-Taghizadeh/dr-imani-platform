@@ -7,14 +7,14 @@ import {
   CardTitle,
 } from "../../ui/card";
 import { cn } from "@/lib/utils";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 interface CardProps {
   title: string;
   desc: string;
   icon?: React.ReactNode;
   details?: string[];
-  cta?: { label: string; url: string };
+  // cta?: { label: string; url: string };
   className?: string;
 }
 
@@ -23,7 +23,7 @@ const ServiceCard = ({
   desc,
   icon,
   details,
-  cta,
+  // cta,
   className,
 }: CardProps) => {
   return (
@@ -40,11 +40,10 @@ const ServiceCard = ({
     >
       <Card className="group relative h-full w-[280px] overflow-hidden border-0 bg-gradient-to-br from-slate-50 via-white to-slate-100 shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/20 sm:w-[320px] md:w-[380px] lg:w-[420px]">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
         <div className="absolute -top-4 -right-4 h-16 w-16 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-500/20 blur-xl transition-all duration-500 group-hover:scale-150 sm:h-20 sm:w-20 md:h-24 md:w-24" />
         <div className="absolute -bottom-4 -left-4 h-20 w-20 rounded-full bg-gradient-to-tr from-pink-400/20 to-orange-500/20 blur-xl transition-all duration-500 group-hover:scale-150 sm:h-24 sm:w-24 md:h-32 md:w-32" />
 
-        <CardHeader className="relative z-10 pb-3 sm:pb-4">
+        <CardHeader className="relative z-10 pb-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md sm:h-12 sm:w-12 sm:rounded-xl">
@@ -80,7 +79,7 @@ const ServiceCard = ({
             </div>
           )}
 
-          {cta && (
+          {/* {cta && (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-xs text-blue-600 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:gap-2">
                 <div className="h-1 w-1 rounded-full bg-blue-600" />
@@ -88,9 +87,9 @@ const ServiceCard = ({
                   {cta.label}
                 </span>
               </div>
-              <ArrowRight className="h-3 w-3 text-blue-600 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 sm:h-4 sm:w-4" />
+              <ArrowLeft className="h-3 w-3 text-blue-600 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 sm:h-4 sm:w-4" />
             </div>
-          )}
+          )} */}
         </CardContent>
 
         <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 group-hover:w-full" />

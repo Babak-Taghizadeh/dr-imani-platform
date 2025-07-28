@@ -4,6 +4,7 @@ import BlogsManager from "@/components/sections/admin/blogs/blogs-manager";
 import ArticlesManager from "@/components/sections/admin/articles/articles-manager";
 import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Article, Blog } from "@/lib/types";
+import { PenSquare, FileText } from "lucide-react";
 
 interface AdminPageProps {
   searchParams?: {
@@ -32,8 +33,14 @@ const AdminPage = async ({ searchParams }: AdminPageProps) => {
 
         <Tabs defaultValue="blogs" className="space-y-8">
           <TabsList className="bg-muted/20 flex justify-center gap-6 rounded-lg p-4 shadow-md">
-            <TabsTrigger value="blogs">📝 مدیریت بلاگ‌ها</TabsTrigger>
-            <TabsTrigger value="articles">📚 مدیریت مقالات</TabsTrigger>
+            <TabsTrigger value="blogs" className="flex items-center gap-2">
+              <PenSquare className="h-5 w-5 text-blue-600" />
+              مدیریت بلاگ‌ها
+            </TabsTrigger>
+            <TabsTrigger value="articles" className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-purple-600" />
+              مدیریت مقالات
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="blogs" className="space-y-6">

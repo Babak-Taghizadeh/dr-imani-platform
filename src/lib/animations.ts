@@ -7,9 +7,9 @@ interface StaggeredAnimationProps {
 
 export const createStaggeredAnimation = ({
   index = 0,
-  delayMultiplier = 0.3,
+  delayMultiplier = 0.2,
   yOffset = 60,
-  duration = 0.5,
+  duration = 0.3,
 }: StaggeredAnimationProps = {}) => ({
   initial: { opacity: 0, y: yOffset },
   animate: { opacity: 1, y: 0 },

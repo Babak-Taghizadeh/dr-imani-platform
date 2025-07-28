@@ -46,6 +46,8 @@ const PaginationControls = ({
     "bg-white text-black": theme === "dark",
   });
 
+  const disabledLinkClass = cn(linkBaseClass, "pointer-events-none opacity-50");
+
   const pages = [];
 
   if (startPage > 1) {
@@ -66,16 +68,31 @@ const PaginationControls = ({
   }
 
   for (let i = startPage; i <= endPage; i++) {
-    pages.push(
-      <PaginationItem key={i}>
-        <PaginationLink
-          href={`?${queryKey}=${i}`}
-          className={i === currentPage ? activeLinkClass : linkBaseClass}
-        >
-          {i}
-        </PaginationLink>
-      </PaginationItem>,
-    );
+    if (totalPages === 1) {
+      pages.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            href={`?${queryKey}=${i}`}
+            className={disabledLinkClass}
+            aria-disabled={true}
+            aria-current="page"
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>,
+      );
+    } else {
+      pages.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            href={`?${queryKey}=${i}`}
+            className={i === currentPage ? activeLinkClass : linkBaseClass}
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>,
+      );
+    }
   }
 
   if (endPage < totalPages) {
