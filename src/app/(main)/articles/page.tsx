@@ -3,7 +3,8 @@ import { ArticlesLoader } from "@/components/sections/articles/articles-loader";
 import NoContent from "@/components/shared/no-content";
 import PaginationControls from "@/components/shared/pagination-controls";
 import SectionHeader from "@/components/shared/section-header";
-import fetchArticles from "@/utils/fetch-articles";
+import { Article } from "@/lib/types";
+import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Suspense } from "react";
 
 interface ArticlesPageProps {
@@ -14,8 +15,11 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const params = await searchParams;
   const page = parseInt(params?.page || "1", 10);
 
-  const { articles, totalPages } = await fetchArticles(page);
-  
+  const { articles, totalPages } = await fetchPaginatedData<Article>(
+    "articles",
+    "articles",
+    page,
+  );
   return (
     <main className="bg-foreground grid grid-cols-1 items-center gap-10 px-8 py-12 md:grid-cols-2 xl:grid-cols-3">
       <SectionHeader
@@ -28,8 +32,8 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         <NoContent />
       ) : (
         <Suspense fallback={<ArticlesLoader />}>
-          {articles?.map((article) => (
-            <ArticleCard article={article} key={article.id} />
+          {articles?.map((article, index) => (
+            <ArticleCard article={article} key={article.id} index={index} />
           ))}
         </Suspense>
       )}
@@ -38,6 +42,7 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         totalPages={totalPages}
         className="col-span-full"
         theme="dark"
+        queryKey="articlesPage"
       />
     </main>
   );

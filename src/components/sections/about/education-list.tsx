@@ -1,73 +1,74 @@
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { motion } from "motion/react";
-import { GraduationCap, Calendar, Building2 } from "lucide-react";
+import { GraduationCap, Calendar, Building2, ArrowRight } from "lucide-react";
 import { EducationItem } from "@/lib/types";
 
 const EducationList = () => {
   const educationItems: EducationItem[] = ABOUT_ME_ITEMS.education;
 
   return (
-    <>
-      <div className="grid h-full items-center gap-4 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-        {educationItems.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              delay: index * 0.1,
-              duration: 0.4,
-              type: "spring",
-              stiffness: 100,
-            }}
-            whileHover={{
-              scale: 1.01,
-              transition: { duration: 0.2 },
-            }}
-            className="h-fit place-self-center"
-          >
-            <div className="border-primary/80 hover:border-primary/50 relative border-l-2 pb-4 pl-6 transition-colors duration-200">
-              <div className="bg-primary border-background absolute top-0 left-[-5px] h-3 w-3 rounded-full border-2 shadow-sm" />
-
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="bg-primary/10 text-primary flex-shrink-0 rounded-md p-1.5">
-                    <GraduationCap className="h-4 w-4" />
-                  </div>
-                  <div className="">
-                    <h3 className="text-background text-base font-semibold transition-colors duration-200">
-                      {item.degree}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="text-muted-foreground flex items-center gap-2">
-                  <Building2 className="h-3.5 w-3.5 flex-shrink-0" />
-                  <p className="text-sm">{item.institution}</p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Calendar className="text-muted-foreground h-3.5 w-3.5" />
-                  <Badge
-                    variant="secondary"
-                    className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 text-xs transition-colors duration-200"
-                  >
-                    {item.years}
-                  </Badge>
-                </div>
-
-                {item.description && (
-                  <p className="text-muted-foreground text-xs leading-relaxed">
-                    {item.description}
-                  </p>
-                )}
-              </div>
+    <div className="mt-10 grid h-full auto-rows-min place-items-center gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+      {educationItems.map((item, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: index * 0.1,
+            duration: 0.4,
+          }}
+          className="relative rounded-lg border p-5 backdrop-blur-sm"
+        >
+          <div className="mb-4 flex items-start gap-3">
+            <div className="bg-primary/10 text-primary rounded-lg p-2">
+              <GraduationCap className="h-5 w-5" />
             </div>
-          </motion.div>
-        ))}
-      </div>
-    </>
+            <div>
+              <h3 className="text-lg font-semibold">{item.degree}</h3>
+              {item.field && (
+                <p className="text-muted-foreground mt-1 text-sm">
+                  {item.field}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="mb-3 flex items-center gap-3">
+            <Building2 className="text-muted-foreground h-4 w-4 flex-shrink-0" />
+            <p className="text-sm">{item.institution}</p>
+          </div>
+          <div className="mb-4 flex items-center gap-3">
+            <Calendar className="text-muted-foreground h-4 w-4" />
+            <Badge
+              variant="outline"
+              className="border-primary/20 bg-primary/5 text-primary"
+            >
+              {item.years}
+            </Badge>
+          </div>
+          {item.description && (
+            <div className="mb-4">
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          )}
+          {item.link && (
+            <div className="mt-auto pt-2">
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 inline-flex items-center text-sm font-medium transition-colors"
+              >
+                View credentials <ArrowRight className="mr-1 h-4 w-4" />
+              </a>
+            </div>
+          )}
+          <div className="bg-primary/10 absolute top-0 left-0 h-full w-1 rounded-full" />
+        </motion.div>
+      ))}
+    </div>
   );
 };
 

@@ -14,7 +14,7 @@ const AboutCycle = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden px-2 lg:w-3/4">
+    <div className="min-h-full px-2 lg:w-1/2">
       <Tabs
         value={activeTab}
         onValueChange={handleTabChange}
@@ -44,7 +44,7 @@ const AboutCycle = () => {
             <TabsContent
               key={tab.value}
               value={tab.value}
-              className="mt-0 h-full focus-visible:ring-0 focus-visible:outline-none"
+              className="h-full focus-visible:ring-0 focus-visible:outline-none"
             >
               {tab.component}
             </TabsContent>

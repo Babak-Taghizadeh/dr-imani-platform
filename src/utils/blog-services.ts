@@ -2,13 +2,14 @@ import { db } from "@/db/db";
 import { blogs } from "@/db/schema";
 import { desc, eq, sql } from "drizzle-orm";
 import { deleteFile, saveUploadedFile } from "@/lib/file-utils";
-import { BlogCreateSchema, BlogUpdateSchema } from "@/lib/api-validators";
 import { z } from "zod";
 import slugify from "slugify";
+import customSlugGenerator from "./custom-slug-generator";
+import { BlogCreateSchema, BlogUpdateSchema } from "@/lib/validation-schema";
 
 export const createBlog = async (data: z.infer<typeof BlogCreateSchema>) => {
   const { filePath, mimeType, fileSize } = await saveUploadedFile(data.image);
-  const slug = slugify(data.title, { lower: true, strict: true });
+  const slug = customSlugGenerator(data.title);
 
   return db.transaction(async (tx) => {
     const [blog] = await tx
@@ -24,7 +25,6 @@ export const createBlog = async (data: z.infer<typeof BlogCreateSchema>) => {
         createdAt: new Date(),
       })
       .returning();
-
     return blog;
   });
 };
@@ -36,6 +36,7 @@ export const getBlogs = async (page = 1, limit = 6) => {
     .select({
       id: blogs.id,
       title: blogs.title,
+      slug: blogs.slug,
       status: blogs.status,
       imgPath: blogs.imgPath,
       content: blogs.content,

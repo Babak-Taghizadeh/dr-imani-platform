@@ -1,6 +1,7 @@
 import Faq from "@/components/sections/home/faq";
 import Hero from "@/components/sections/home/hero";
 import ServicesSummary from "@/components/sections/home/services-summary";
+import WhyChooseUs from "@/components/sections/home/why-choose-us";
 
 const Home = () => {
   return (
@@ -8,6 +9,7 @@ const Home = () => {
       <Hero />
       <ServicesSummary />
       <Faq />
+      <WhyChooseUs />
     </>
   );
 };

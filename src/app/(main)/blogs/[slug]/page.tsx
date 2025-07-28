@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import getBlog from "@/utils/fetch-blog";
 import { JSDOM } from "jsdom";
 import DOMPurify from "dompurify";
+import fetchBlog from "@/utils/fetch-blog";
 
 interface BlogPostPageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 const window = new JSDOM("").window as unknown as Window & {
@@ -23,13 +23,13 @@ const window = new JSDOM("").window as unknown as Window & {
 
 const purify = DOMPurify(window);
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
-  const { id } = params;
-  const blog = await getBlog(id);
+  const { slug } = params;
+  const blog = await fetchBlog(slug);
   const cleanContent = purify.sanitize(blog.content);
   return (
     <article className="mx-auto max-w-4xl px-4 py-8 md:py-12">
       <header className="mb-8 space-y-4 text-right md:mb-8">
-        <h1 className="text-center text-3xl font-bold tracking-tight md:text-5xl">
+        <h1 className="text-center text-2xl font-bold tracking-tight md:text-4xl">
           {blog.title}
         </h1>
         <div className="text-muted-foreground flex items-center justify-end gap-2">

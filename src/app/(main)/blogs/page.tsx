@@ -3,8 +3,9 @@ import BlogCard from "@/components/sections/blogs/blog-card";
 import BlogsLoader from "@/components/sections/blogs/blogs-loader";
 import PaginationControls from "@/components/shared/pagination-controls";
 import SectionHeader from "@/components/shared/section-header";
-import fetchBlogs from "@/utils/fetch-blogs";
 import NoContent from "@/components/shared/no-content";
+import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
+import { Blog } from "@/lib/types";
 
 interface BlogsPageProps {
   searchParams?: { page?: string };
@@ -14,7 +15,11 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
   const params = await searchParams;
   const page = parseInt(params?.page || "1", 10);
 
-  const { blogs, totalPages } = await fetchBlogs(page);
+  const { blogs, totalPages } = await fetchPaginatedData<Blog>(
+    "blogs",
+    "blogs",
+    page,
+  );
 
   const publishedBlogs = blogs.filter((b) => b.status === "منتشر شده");
 
@@ -32,7 +37,7 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
       ) : (
         <Suspense fallback={<BlogsLoader />}>
           {publishedBlogs.map((blog, index) => (
-            <BlogCard blog={blog} key={index} />
+            <BlogCard blog={blog} key={blog.id} index={index} />
           ))}
         </Suspense>
       )}
@@ -42,6 +47,7 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
         totalPages={totalPages}
         className="col-span-full"
         theme="dark"
+        queryKey="blogsPage"
       />
     </div>
   );

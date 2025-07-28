@@ -3,50 +3,59 @@
 import { Button } from "../../ui/button";
 import Link from "next/link";
 import HeroBackgroundCarousel from "./hero-background-carousel";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative h-[300px] w-full lg:h-[600px]">
+    <section className="relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px]">
       <HeroBackgroundCarousel />
-      <div className="text-background absolute top-5 right-4 z-10 flex flex-col items-start gap-3 lg:top-10 lg:right-14 lg:gap-6">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-gradient-to-r from-white via-blue-50 to-white bg-clip-text p-1 text-2xl font-extrabold tracking-tight text-transparent drop-shadow-lg lg:text-4xl xl:text-5xl"
-        >
-          راهکارهای تخصصی برای خواب بهتر
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="max-w-[300px] text-right text-sm leading-relaxed font-medium tracking-wide text-white/90 drop-shadow-md lg:max-w-[550px] lg:text-lg xl:text-xl"
-        >
-          نخستین مرکز فوق‌تخصصی تشخیص و درمان اختلالات خواب در شمال‌غرب کشور،
-          دارای مجوز رسمی از معاونت درمان دانشگاه علوم پزشکی تبریز. همراه شما
-          برای بازگشت به خواب آرام.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-        >
-          <Button
-            className="from-primary/60 to-primary hover:from-purple-400-700 transform bg-gradient-to-r text-lg font-bold shadow-lg transition-all duration-300 hover:scale-105 hover:to-purple-700 hover:shadow-xl"
-            size="lg"
-            asChild
+
+      <div className="absolute inset-0 z-10 flex flex-col items-end justify-center px-4 text-center sm:items-start sm:px-8 sm:text-right">
+        <div className="flex max-w-2xl flex-col items-center space-y-4 sm:space-y-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center text-3xl leading-tight font-extrabold text-white drop-shadow-lg sm:text-4xl md:text-5xl lg:text-6xl"
           >
-            <Link
-              href="https://boghrat.com/dr/vida-imani"
-              rel="noopener noreferrer"
-              target="_blank"
+            <span className="bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">
+              راهکارهای تخصصی
+            </span>
+            <br />
+            <span className="text-white">برای خواب بهتر</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="text-center text-sm leading-relaxed text-white/90 drop-shadow-md sm:text-base md:text-lg lg:max-w-[80%]"
+          >
+            نخستین مرکز فوق‌تخصصی تشخیص و درمان اختلالات خواب در شمال‌غرب کشور،
+            دارای مجوز رسمی از دانشگاه علوم پزشکی تبریز.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            className="pt-2"
+          >
+            <Button
+              className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl"
+              size="lg"
+              asChild
             >
-              نوبت دهی
-            </Link>
-          </Button>
-        </motion.div>
+              <Link
+                href="https://boghrat.com/dr/vida-imani"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                نوبت دهی اینترنتی
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

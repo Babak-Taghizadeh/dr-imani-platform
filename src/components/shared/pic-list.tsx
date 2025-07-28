@@ -20,25 +20,29 @@ const PicList = ({
   return (
     <section
       className={cn(
-        "flex flex-col gap-12 px-8 py-6 md:justify-center md:gap-12 md:px-8 md:py-12 lg:min-h-[780px] lg:flex-row xl:min-h-[710px]",
-        theme == "dark"
+        "flex flex-col gap-8 p-4 md:justify-center md:gap-12 md:px-8 md:py-12 lg:min-h-[780px] lg:flex-row lg:justify-evenly lg:gap-0 xl:min-h-[710px]",
+        theme === "dark"
           ? "bg-foreground text-background"
           : "bg-background text-foreground",
       )}
     >
-      <div className="flex items-center justify-center lg:w-1/2">
+      <div
+        className={cn(
+          "flex items-center justify-center lg:w-1/2 xl:w-[40%]",
+          "max-w-full",
+        )}
+      >
         <Image
           src={pic}
           alt={alt}
           className={cn(
-            "h-auto w-auto rounded-lg object-contain",
+            "max-h-full w-auto rounded-lg object-contain",
             orientation === "portrait" ? "max-h-[650px]" : "max-h-[450px]",
           )}
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 768px) 80vw, 50vw"
           quality={85}
           placeholder="blur"
           loading="lazy"
-          fill={false}
         />
       </div>
       {InfoElement}

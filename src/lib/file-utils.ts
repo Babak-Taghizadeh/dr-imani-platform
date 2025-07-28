@@ -26,9 +26,10 @@ export const saveUploadedFile = async (file: File) => {
     );
   }
 
+  const randomName = randomBytes(8).toString("hex");
   const fileExt = path.extname(file.name).toLowerCase();
-  const randomName = randomBytes(16).toString("hex");
-  const fileName = `${randomName}${fileExt}`;
+  const baseName = path.basename(file.name, fileExt);
+  const fileName = `${randomName}-${baseName}${fileExt}`;
 
   await mkdir(UPLOAD_DIR, { recursive: true });
 

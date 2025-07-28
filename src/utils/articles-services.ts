@@ -3,7 +3,7 @@ import { articles } from "@/db/schema";
 import { eq, desc, sql } from "drizzle-orm";
 import { saveUploadedFile, deleteFile } from "@/lib/file-utils";
 import { z } from "zod";
-import { ArticleCreateSchema, ArticleUpdateSchema } from "@/lib/api-validators";
+import { ArticleCreateSchema, ArticleUpdateSchema } from "@/lib/validation-schema";
 
 export const createArticle = async (
   data: z.infer<typeof ArticleCreateSchema>,

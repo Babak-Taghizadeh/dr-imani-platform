@@ -27,6 +27,7 @@ const ArticlesManager = ({
           currentPage={page}
           totalPages={totalPages}
           theme="light"
+          queryKey="articlesPage"
         />
       )}
     </div>
