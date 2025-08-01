@@ -37,3 +37,5 @@ NEXTAUTH_SECRET=your_nextauth_secret
 MAP_API_KEY=provided_by_neshan
 ADMIN_USERNAME=username
 ADMIN_PASSWORD=password
+
+Made with 🖤 by Babak Taghizadeh
