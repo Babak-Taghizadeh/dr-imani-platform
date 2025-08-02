@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api-utils";
-import { BlogCreateSchema } from "@/lib/validation-schema";
+import { blogFormSchema } from "@/lib/validation-schema";
 import { createBlog, getBlogs } from "@/utils/blog-services";
 import { NextRequest } from "next/server";
 
@@ -26,15 +26,10 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const formData = await req.formData();
-    const data = {
-      title: formData.get("title"),
-      content: formData.get("content"),
-      status: formData.get("status"),
-      image: formData.get("image"),
-    };
-    const validated = BlogCreateSchema.parse(data);
-    const blog = await createBlog(validated);
+    const body = await req.json();
+    const validatedData = blogFormSchema.parse(body);
+
+    const blog = await createBlog(validatedData);
     return successResponse(blog, 201);
   } catch (err) {
     console.error("Create blog error:", err);
