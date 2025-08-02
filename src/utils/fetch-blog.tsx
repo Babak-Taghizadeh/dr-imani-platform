@@ -1,13 +1,14 @@
 import { Blog } from "@/lib/types";
 import { notFound } from "next/navigation";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-
 const fetchBlog = async (slug: string): Promise<Blog> => {
   try {
-    const url = new URL(`${API_BASE_URL}/api/blogs/${slug}`);
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? `http://${process.env.HOSTNAME || "localhost"}:${process.env.PORT || 3000}`
+        : "http://localhost:3000";
 
+    const url = new URL(`${baseUrl}/api/blogs/${slug}`);
     const res = await fetch(url.toString(), {
       cache: "no-store",
       next: { tags: ["blog"] },
