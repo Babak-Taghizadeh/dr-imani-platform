@@ -1,3 +1,5 @@
+"use client"
+
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { motion } from "motion/react";
 import { GraduationCap, Building2, Calendar } from "lucide-react";

@@ -1,3 +1,5 @@
+"use client"
+
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { AwardIcon } from "lucide-react";
