@@ -35,9 +35,10 @@ const BlogCard = ({ blog, index }: BlogCardProps) => {
         <CardHeader className="relative">
           <div className="relative h-48 w-full overflow-hidden rounded-2xl lg:h-64">
             <Image
-              src={blog.imgPath}
+              src={`/api/upload/${blog.imageUrl}`}
               alt={blog.title}
               fill
+              unoptimized
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               quality={80}
               loading="lazy"

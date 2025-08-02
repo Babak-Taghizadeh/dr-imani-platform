@@ -56,7 +56,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
       </header>
       <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-sm md:mb-12 md:aspect-[20/9]">
         <Image
-          src={blog.imgPath}
+          src={`/api/upload/${blog.imageUrl}`}
           alt={blog.title}
           fill
           priority
