@@ -14,18 +14,10 @@ interface CardProps {
   desc: string;
   icon?: React.ReactNode;
   details?: string[];
-  // cta?: { label: string; url: string };
   className?: string;
 }
 
-const ServiceCard = ({
-  title,
-  desc,
-  icon,
-  details,
-  // cta,
-  className,
-}: CardProps) => {
+const ServiceCard = ({ title, desc, icon, details, className }: CardProps) => {
   return (
     <motion.div
       whileHover={{
@@ -78,18 +70,6 @@ const ServiceCard = ({
               ))}
             </div>
           )}
-
-          {/* {cta && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs text-blue-600 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:gap-2">
-                <div className="h-1 w-1 rounded-full bg-blue-600" />
-                <span className="text-xs font-medium sm:text-xs">
-                  {cta.label}
-                </span>
-              </div>
-              <ArrowLeft className="h-3 w-3 text-blue-600 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 sm:h-4 sm:w-4" />
-            </div>
-          )} */}
         </CardContent>
 
         <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 group-hover:w-full" />
