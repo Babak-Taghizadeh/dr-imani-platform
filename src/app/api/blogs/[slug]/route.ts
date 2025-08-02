@@ -1,11 +1,12 @@
 import { errorResponse, successResponse } from "@/lib/api-utils";
-import { BlogUpdateSchema } from "@/lib/validation-schema";
+import { blogFormSchema } from "@/lib/validation-schema";
 import {
   deleteBlogBySlug,
   getBlogBySlug,
   updateBlog,
 } from "@/utils/blog-services";
 import { NextRequest } from "next/server";
+import { z } from "zod";
 
 export const GET = async (
   req: NextRequest,
@@ -28,29 +29,19 @@ export const PUT = async (
   { params }: { params: Promise<{ slug: string }> },
 ) => {
   try {
-    const slug = (await params).slug;
-    const formData = await req.formData();
+    const blogSlug = (await params).slug;
+    const body = await req.json();
+    const validatedData = blogFormSchema.parse(body);
 
-    const data = {
-      title: formData.get("title"),
-      content: formData.get("content"),
-      status: formData.get("status"),
-      image: formData.get("image") || undefined,
-    };
+    const updated = await updateBlog(blogSlug, validatedData);
+    return successResponse(updated, 201);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return errorResponse("فایل نعتبر نیست", { status: 400 });
+    }
 
-    const validated = BlogUpdateSchema.parse(data);
-    const updated = await updateBlog(slug, validated);
-    return successResponse(updated);
-  } catch (err) {
-    console.error("Update blog error:", err);
-    return errorResponse(
-      err instanceof Error ? err.message : "خطا در به‌روزرسانی بلاگ",
-      {
-        status: 400,
-        details: err,
-        devDetails: true,
-      },
-    );
+    console.error("Error updating blog:", error);
+    return errorResponse("خطای سرور", { status: 500 });
   }
 };
 
