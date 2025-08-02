@@ -1,22 +1,22 @@
-import { StaticImageData } from "next/image";
-
 export interface Blog {
-  id: string;
+  id: number;
   title: string;
   slug: string;
   status: "ذخیره شده" | "منتشر شده";
-  imgPath: StaticImageData;
+  imageUrl: string;
+  imageKey: string;
   content: string;
   createdAt: string;
   excerpt?: string;
 }
 
 export interface Article {
-  id: string;
+  id: number;
   title: string;
   summary: string;
   publishedAt: string;
   fileUrl: string;
+  fileKey: string;
 }
 
 export type Direction = "left" | "right";
