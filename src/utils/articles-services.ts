@@ -1,22 +1,15 @@
 import { db } from "@/db/db";
 import { articles } from "@/db/schema";
 import { eq, desc, sql } from "drizzle-orm";
-import { saveUploadedFile, deleteFile } from "@/lib/file-utils";
-import { z } from "zod";
-import { ArticleCreateSchema, ArticleUpdateSchema } from "@/lib/validation-schema";
+import { deleteFile } from "@/lib/file-utils";
+import { ArticleFormData } from "@/lib/validation-schema";
 
-export const createArticle = async (
-  data: z.infer<typeof ArticleCreateSchema>,
-) => {
-  const { filePath } = await saveUploadedFile(data.file);
-
+export const createArticle = async (data: ArticleFormData) => {
   const [article] = await db
     .insert(articles)
     .values({
-      title: data.title,
-      summary: data.summary,
-      publishedAt: new Date(data.publishedAt),
-      fileUrl: filePath,
+      ...data,
+      publishedAt: new Date(),
     })
     .returning();
 
@@ -46,33 +39,17 @@ export const getArticles = async (page = 1, limit = 6) => {
   };
 };
 
-export const updateArticle = async (
-  data: z.infer<typeof ArticleUpdateSchema>,
-) => {
-  const current = await db
-    .select({ fileUrl: articles.fileUrl })
-    .from(articles)
-    .where(eq(articles.id, data.id));
+export const updateArticle = async (id: number, data: ArticleFormData) => {
+  const current = await db.select().from(articles).where(eq(articles.id, id));
 
   if (!current[0]) throw new Error("مقاله پیدا نشد");
-
-  let fileUrl = current[0].fileUrl;
-
-  if (data.file instanceof File && data.file.size > 0) {
-    if (fileUrl) await deleteFile(fileUrl).catch(console.error);
-    const uploadResult = await saveUploadedFile(data.file);
-    fileUrl = uploadResult.filePath;
-  }
 
   const [article] = await db
     .update(articles)
     .set({
-      title: data.title,
-      summary: data.summary,
-      ...(data.publishedAt && { publishedAt: new Date(data.publishedAt) }),
-      fileUrl,
+      ...data,
     })
-    .where(eq(articles.id, data.id))
+    .where(eq(articles.id, id))
     .returning();
 
   return article;
