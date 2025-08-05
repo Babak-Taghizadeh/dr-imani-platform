@@ -24,17 +24,6 @@ const stripHtmlTagsServer = (html: string): string => {
   return decoded.replace(/\s+/g, " ").replace(/\n+/g, " ").trim();
 };
 
-export const generateSlug = (input: string): string => {
-  return input
-    .normalize("NFKD")
-    .replace(/[\u200C\u200D]/g, "")
-    .replace(/[^\p{L}\p{N}\s-]/gu, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
-};
-
 export const generateExcerpt = (
   htmlContent: string,
   maxLength: number = 150,
