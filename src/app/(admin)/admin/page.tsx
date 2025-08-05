@@ -5,6 +5,28 @@ import ArticlesManager from "@/components/sections/admin/articles/articles-manag
 import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Article, Blog } from "@/lib/types";
 import { PenSquare, FileText } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "وبلاگ ها و مقالات",
+  description: "سیستم احراز هویت مدیریت محتوای کلینیک تخصصی خواب",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "none",
+    },
+  },
+  other: {
+    referrer: "no-referrer",
+    "cache-control": "no-store, max-age=0",
+  },
+};
 
 interface AdminPageProps {
   searchParams?: Promise<{
