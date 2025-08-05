@@ -7,7 +7,10 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px]">
+    <section
+      className="relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px]"
+      aria-label="معرفی کلینیک خواب دکتر ایمانی"
+    >
       <HeroBackgroundCarousel />
 
       <div className="absolute inset-0 z-10 flex flex-col items-end justify-center px-4 text-center sm:items-start sm:px-8 sm:text-right">
@@ -30,6 +33,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-center text-sm leading-relaxed text-white/90 drop-shadow-md sm:text-base md:text-lg lg:max-w-[80%]"
+            aria-label="توضیحات کلینیک"
           >
             نخستین مرکز فوق‌تخصصی تشخیص و درمان اختلالات خواب در شمال‌غرب کشور،
             دارای مجوز رسمی از دانشگاه علوم پزشکی تبریز.
@@ -45,6 +49,8 @@ const Hero = () => {
               className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl"
               size="lg"
               asChild
+              aria-label="دریافت نوبت اینترنتی"
+              tabIndex={0}
             >
               <Link
                 href="https://boghrat.com/dr/vida-imani"
