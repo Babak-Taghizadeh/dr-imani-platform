@@ -41,9 +41,9 @@ const PicList = ({
             orientation === "portrait" ? "max-h-[650px]" : "max-h-[450px]",
           )}
           sizes="(max-width: 768px) 80vw, 50vw"
-          quality={85}
+          quality={75}
           placeholder="blur"
-          loading="lazy"
+          priority
         />
       </div>
     </section>

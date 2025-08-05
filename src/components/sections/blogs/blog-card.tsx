@@ -38,9 +38,8 @@ const BlogCard = ({ blog, index }: BlogCardProps) => {
               src={`/api/upload/${blog.imageUrl}`}
               alt={blog.title}
               fill
-              unoptimized
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              quality={80}
+              quality={70}
               loading="lazy"
               className="object-cover transition-all duration-500 group-hover:scale-105"
             />
