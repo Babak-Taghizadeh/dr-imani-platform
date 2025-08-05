@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
@@ -10,7 +10,7 @@ const ExperienceList = () => {
   const experienceItems: ExperienceItem[] = ABOUT_ME_ITEMS.experience;
 
   return (
-    <div className="flex h-full flex-col justify-center space-y-4 py-4">
+    <div className="flex h-full flex-col gap-12 py-4 lg:mt-6">
       {experienceItems.map((item, index) => (
         <motion.div
           key={index}

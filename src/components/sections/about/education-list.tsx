@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { motion } from "motion/react";
@@ -9,14 +9,14 @@ const EducationList = () => {
   const educationItems: EducationItem[] = ABOUT_ME_ITEMS.education;
 
   return (
-    <div className="flex h-full flex-col gap-12 py-4 lg:mt-6">
+    <div className="flex h-full flex-col gap-16 py-4 lg:mt-6">
       {educationItems.map((item, index) => (
         <motion.div
           key={index}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1, duration: 0.3 }}
-          className="group relative pl-8"
+          className="group relative"
         >
           <div className="bg-primary/30 absolute top-1 left-0 h-[calc(100%-8px)] w-0.5" />
 
