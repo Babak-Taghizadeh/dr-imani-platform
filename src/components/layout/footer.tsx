@@ -101,6 +101,7 @@ const Footer = () => {
                     <Link
                       className="group text-accent-foreground hover:text-primary flex items-center gap-3 transition-colors"
                       href={item.value}
+                      rel="noopener noreferrer"
                       target="_blank"
                     >
                       <span className="transition-transform group-hover:scale-110">

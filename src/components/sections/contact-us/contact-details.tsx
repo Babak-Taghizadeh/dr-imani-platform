@@ -37,7 +37,8 @@ const ContactDetails = () => {
                 <Link
                   href={item.value}
                   target="_blank"
-                  className="text-background text-lg font-medium md:text-xl"
+                  rel="noopener noreferrer"
+                  className="text-background text-lg font-medium hover:underline md:text-xl"
                 >
                   {item.title}
                 </Link>
