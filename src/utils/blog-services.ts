@@ -2,12 +2,13 @@ import { db } from "@/db/db";
 import { blogs } from "@/db/schema";
 import { desc, eq, sql } from "drizzle-orm";
 import { deleteFile } from "@/lib/file-utils";
-import { generateExcerpt, generateSlug } from "./custom-slug-generator";
+import { generateSlug } from "./slug-generator";
 import { BlogFormData } from "@/lib/validation-schema";
+import { generateExcerpt } from "./excerpt-generator";
 
 export const createBlog = async (data: BlogFormData) => {
-  const slug = data.slug || generateSlug(data.title);
-  const excerpt = data.excerpt || generateExcerpt(data.content);
+  const slug = generateSlug(data.title);
+  const excerpt = generateExcerpt(data.content);
 
   const [blog] = await db
     .insert(blogs)
@@ -59,8 +60,8 @@ export const getBlogBySlug = async (slug: string) => {
 };
 
 export const updateBlog = async (slug: string, data: BlogFormData) => {
-  const newSlug = data.slug || generateSlug(data.title);
-  const excerpt = data.excerpt || generateExcerpt(data.content);
+  const newSlug = generateSlug(data.title);
+  const excerpt = generateExcerpt(data.content);
   const [blog] = await db
     .update(blogs)
     .set({
