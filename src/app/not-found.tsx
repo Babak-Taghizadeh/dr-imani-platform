@@ -1,4 +1,3 @@
-import "./(main)/globals.css";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Home } from "lucide-react";
