@@ -17,7 +17,7 @@ const SectionHeader = ({
 }) => {
   return (
     <section className={cn("text-center", className)}>
-      <motion.h1
+      <motion.h3
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
@@ -30,7 +30,7 @@ const SectionHeader = ({
         )}
       >
         {title}
-      </motion.h1>
+      </motion.h3>
       {description && (
         <motion.p
           initial={{ opacity: 0, y: 40 }}

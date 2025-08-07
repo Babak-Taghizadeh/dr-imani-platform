@@ -58,9 +58,9 @@ const Footer = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 md:px-6 lg:px-8">
         <div className="flex flex-col gap-16 md:flex-row md:justify-between">
           <div className="flex flex-col gap-4">
-            <h3 className="text-primary text-3xl font-bold">
+            <h6 className="text-primary text-3xl font-bold">
               {FOOTER_ITEMS.brand[0].title}
-            </h3>
+            </h6>
             <p className="text-accent-foreground text-sm font-light tracking-tighter md:text-lg!">
               {FOOTER_ITEMS.brand[1].title}
             </p>
