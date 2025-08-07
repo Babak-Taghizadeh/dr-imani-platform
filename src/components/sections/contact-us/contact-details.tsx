@@ -13,10 +13,10 @@ const ContactDetails = () => {
         description="برای دریافت اطلاعات، رزرو نوبت یا ارتباط با کلینیک خواب، از طریق اطلاعات تماس زیر اقدام کنید."
         theme="dark"
       />
-      <ul className="mt-8 flex flex-col md:flex-1/2 md:gap-4">
+      <ul className="flex flex-col md:flex-1/2">
         {CONTACT_ITEMS.map((item, index) => (
           <li
-            className="border-primary/60 flex items-center gap-5 border-b py-6 last:border-0"
+            className="border-primary/60 flex items-center gap-4 border-b py-5 last:border-0"
             key={item.title}
           >
             <motion.div

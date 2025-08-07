@@ -14,7 +14,7 @@ const AboutCycle = () => {
   }, []);
 
   return (
-    <div className="min-h-full px-2 lg:w-1/2">
+    <div className="min-h-full px-2 xl:w-1/2">
       <Tabs
         value={activeTab}
         onValueChange={handleTabChange}

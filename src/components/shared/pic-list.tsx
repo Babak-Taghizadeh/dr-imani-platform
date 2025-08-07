@@ -20,7 +20,7 @@ const PicList = ({
   return (
     <section
       className={cn(
-        "flex flex-col-reverse gap-8 px-4 py-8 md:justify-center md:gap-12 md:px-8 md:py-12 lg:min-h-[810px] lg:flex-row lg:justify-evenly lg:gap-0",
+        "flex flex-col-reverse gap-8 px-4 py-8 md:justify-center md:gap-12 md:px-8 md:py-12 xl:min-h-[810px] xl:flex-row xl:justify-evenly xl:gap-0",
         theme === "dark"
           ? "bg-foreground text-background"
           : "bg-background text-foreground",
@@ -29,7 +29,7 @@ const PicList = ({
       {InfoElement}
       <div
         className={cn(
-          "flex items-center justify-center lg:w-1/2 xl:w-[40%]",
+          "flex items-center justify-center xl:w-[40%]",
           "max-w-full",
         )}
       >
@@ -43,7 +43,7 @@ const PicList = ({
           sizes="(max-width: 768px) 80vw, 50vw"
           quality={75}
           placeholder="blur"
-          priority
+          loading={orientation === "portrait" ? "eager" : "lazy"}
         />
       </div>
     </section>

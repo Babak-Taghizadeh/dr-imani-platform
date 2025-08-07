@@ -46,7 +46,7 @@ const Hero = () => {
             className="pt-2"
           >
             <Button
-              className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl"
+              className="text-background bg-gradient-to-r from-blue-600 to-purple-600 font-bold shadow-lg transition-all duration-300 hover:scale-105 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl md:px-8 md:py-6 md:text-lg"
               size="lg"
               asChild
               aria-label="دریافت نوبت اینترنتی"
