@@ -1,11 +1,18 @@
 FROM node:18-alpine AS base
 
+RUN apk add --no-cache \
+    curl \
+    vips-dev \
+    vips \
+    python3 \
+    make \
+    g++ \
+    libc6-compat
+
 FROM base AS deps
-RUN apk add --no-cache libc6-compat vips-dev
 WORKDIR /app
 COPY package.json package-lock.json* ./
-
-COPY package.json package-lock.json* ./
+RUN npm install --os=linux --libc=musl --cpu=x64 sharp
 RUN npm ci
 
 FROM base AS builder

@@ -25,9 +25,7 @@ services:
           cpus: "0.5"
 
   nextjs:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: dr-imani-nextjs:latest
     container_name: clinic-app
     restart: unless-stopped
     depends_on:
