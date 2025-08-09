@@ -27,7 +27,6 @@ export interface EducationItem {
   years: string;
   description?: string;
   details?: string;
-  link?: string;
 }
 
 export interface ExperienceItem {
