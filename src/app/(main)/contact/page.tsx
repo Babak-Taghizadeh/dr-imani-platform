@@ -1,5 +1,6 @@
 import ContactDetails from "@/components/sections/contact-us/contact-details";
 import MapWrapper from "@/components/sections/contact-us/map-wrapper";
+import WorkingDays from "@/components/sections/contact-us/working-days";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -46,10 +47,13 @@ export const metadata: Metadata = {
 
 const Contact = () => {
   return (
-    <section className="bg-foreground text-background flex min-h-[700px] flex-col gap-12 px-8 py-12 md:justify-between md:gap-16 lg:flex-row xl:px-16">
+    <section className="bg-foreground text-background flex flex-col gap-12 px-8 py-12 md:justify-between md:gap-16 lg:flex-row xl:px-16">
       <ContactDetails />
-      <div className="relative z-50 h-[40dvh] w-full self-center md:w-[50%] lg:min-h-[50dvh]">
-        <MapWrapper />
+      <div className="flex min-h-[70dvh] w-full flex-col gap-6 lg:w-[50%]">
+        <WorkingDays />
+        <div className="relative z-50 h-[40dvh] w-full self-center lg:min-h-[50dvh]">
+          <MapWrapper />
+        </div>
       </div>
     </section>
   );

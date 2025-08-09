@@ -418,6 +418,18 @@ export const CONTACT_ITEMS: {
   },
 ];
 
+export const PERSIAN_WEEKDAYS = [
+  { id: 0, name: "شنبه", short: "ش" },
+  { id: 1, name: "یکشنبه", short: "ی" },
+  { id: 2, name: "دوشنبه", short: "د" },
+  { id: 3, name: "سه شنبه", short: "س" },
+  { id: 4, name: "چهارشنبه", short: "چ" },
+  { id: 5, name: "پنجشنبه", short: "پ" },
+  { id: 6, name: "جمعه", short: "ج" },
+];
+
+export const EVEN_DAYS = [0, 2, 4];
+
 export const REASONS_ITEMS = [
   {
     title: "تجربه و تخصص بالا",
