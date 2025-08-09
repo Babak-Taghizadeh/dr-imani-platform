@@ -72,12 +72,13 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
 
         form.reset();
         setPreviewUrl(null);
-        setOpen(false);
       } catch (error) {
         toast.error("خطا در ذخیره بلاگ", {
           description:
             error instanceof Error ? error.message : "لطفاً دوباره تلاش کنید",
         });
+      } finally {
+        setOpen(false);
       }
     });
   };

@@ -36,12 +36,13 @@ const BlogCard = ({ blog, index }: BlogCardProps) => {
           <div className="relative h-48 w-full overflow-hidden rounded-2xl lg:h-64">
             <Image
               src={blog.imgPath}
-              alt={blog.title}
+              alt={`تصویر کاور مقاله: ${blog.title}`}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              quality={80}
-              loading="lazy"
-              className="object-cover transition-all duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              quality={85}
+              loading={index < 3 ? "eager" : "lazy"}
+              placeholder="blur"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
           <div className="bg-card/90 text-accent-foreground/80 absolute top-4 right-8 rounded-full px-3 py-1 text-xs backdrop-blur-sm">
@@ -62,7 +63,7 @@ const BlogCard = ({ blog, index }: BlogCardProps) => {
         <CardFooter className="justify-end">
           <Link
             className="text-primary flex items-center gap-1 text-sm transition-all hover:underline hover:underline-offset-4"
-            href={`/blogs/${blog.id}`}
+            href={`/blogs/${blog.slug}`}
           >
             <span>ادامه مطلب</span>
             <ArrowLeft

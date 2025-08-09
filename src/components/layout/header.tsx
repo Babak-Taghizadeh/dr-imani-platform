@@ -16,7 +16,14 @@ const Header = () => {
         href="/"
         className="font-black sm:block md:hidden md:text-xl lg:block"
       >
-        <Image width={85} src={Logo} alt="logo" />
+        <Image
+          src={Logo}
+          alt="Clinic Logo"
+          priority
+          quality={90}
+          className="h-auto w-full"
+          sizes="(max-width: 768px) 80px, 95px"
+        />
       </Link>
       <DesktopHeader />
       <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
@@ -29,10 +36,12 @@ const Header = () => {
         >
           <Image
             src={WhatsAppIcon}
-            alt="WhatsApp"
+            alt="WhatsApp Icon"
             width={20}
             height={20}
+            priority
             className="brightness-0 invert"
+            aria-hidden="true"
           />
           <span className="hidden font-semibold md:inline-block">واتساپ</span>
           <span className="absolute -top-1 -right-1 h-2 w-2 animate-pulse rounded-full bg-white/80"></span>
