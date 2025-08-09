@@ -14,7 +14,7 @@ const AboutCycle = () => {
   }, []);
 
   return (
-    <div className="min-h-full px-2 lg:w-1/2">
+    <div className="min-h-full px-2 xl:w-1/2">
       <Tabs
         value={activeTab}
         onValueChange={handleTabChange}
@@ -36,7 +36,6 @@ const AboutCycle = () => {
           key={activeTab}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="min-h-full"
         >

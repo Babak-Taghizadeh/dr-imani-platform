@@ -37,7 +37,6 @@ const LoginForm = () => {
       callbackUrl: "/admin",
       redirect: false,
     });
-    console.log(res);
     if (res?.status === 401) {
       toast.error("نام کاربری یا رمز عبور اشتباه است.", {
         description: "لطفا دوباره امتحان کنید.",

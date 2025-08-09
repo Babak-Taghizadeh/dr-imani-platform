@@ -48,6 +48,13 @@ export const NAV_ITEMS: { title: string; path: string }[] = [
   },
 ];
 
+export const SUMMARY_INFO = [
+  "تأسیس و مدیریت کلینیک تخصصی خواب از ۱۳۹۶",
+  "همکاری با مراکز معتبر بین‌المللی در ترکیه، نروژ و کانادا",
+  "تدریس در دانشگاه‌های آجی بادم ترکیه و بوعلی سینا قزوین",
+  "طراحی پروتکل‌های درمانی مبتنی بر جدیدترین پژوهش‌های جهانی",
+];
+
 export const FOOTER_ITEMS: Record<
   string,
   { title: string; path?: string; icon?: React.ReactNode; value?: string }[]
@@ -89,6 +96,11 @@ export const FOOTER_ITEMS: Record<
       title: "اینستاگرام",
       icon: <InstagramLogoIcon width={20} height={20} />,
       value: "https://www.instagram.com/dr.imani.sleepclinic",
+    },
+    {
+      title: "واتساپ",
+      icon: <PhoneIcon width={20} height={20} />,
+      value: "https://wa.me/989302871635",
     },
     {
       title: "۰۴۱-۳۳۳۵۰۳۵۷",
@@ -253,103 +265,103 @@ export const FAQ_ITEMS: { title: string; desc?: string }[] = [
 export const ABOUT_ME_ITEMS = {
   experience: [
     {
-      position: "فوق تخصص خواب",
+      position: "فوق تخصص اختلالات خواب",
       hospital: "کلینیک خواب دکتر ایمانی",
-      years: "۲۰۱۷ - تا کنون",
+      years: "۱۳۹۵ - تا کنون",
     },
     {
-      position: "فوق تخصص خواب",
-      hospital: "ویزیت آنلاین",
-      years: "۲۰۲۲ - تا کنون",
+      position: "فوق تخصص خواب (ویزیت آنلاین)",
+      hospital: "پلتفرم‌های مشاوره آنلاین",
+      years: "۱۴۰۱ - تا کنون",
     },
     {
       position: "متخصص خواب",
-      hospital: "بیمارستان آجی بادم و 9 ایلول",
-      years: "۲۰۱۹ - ۲۰۲۲",
+      hospital: "بیمارستان‌های آجی بادم و ۹ ایلول، ترکیه",
+      years: "۱۳۹۸ - ۱۴۰۱",
     },
     {
       position: "متخصص کودکان",
-      hospital: "بیمارستان علوی",
-      years: "۲۰۱۳ - ۲۰۱۸",
-    },
-    {
-      position: "متخصص کودکان",
-      hospital: "بیمارستان علوی",
-      years: "۲۰۱۳ - ۲۰۱۸",
+      hospital: "بیمارستان علوی تبریز",
+      years: "۱۳۹۲ - ۱۳۹۷",
     },
   ],
   education: [
     {
       degree: "فلوشیپ اختلالات خواب",
-      institution: "دانشگاه آجی بادم ترکیه",
-      years: "۲۰۱۹ - ۲۰۲۰",
-      field: "داخلی",
-      description: "Specialized in interventional cardiology techniques",
-      details: "Specialized in interventional cardiology techniques",
+      institution: "دانشگاه آجی بادم، ترکیه",
+      years: "۱۳۹۸ - ۱۳۹۹",
+      description: "آموزش تخصصی در زمینه تشخیص و درمان اختلالات خواب",
+      details:
+        "مطالعه ساختار میکرو و ماکرو خواب، درمان آپنه خواب، ارزیابی پلی‌سومن‌گرافی و آزمون‌های MSLT/MWT",
     },
     {
       degree: "فلوشیپ پزشکی خواب",
       institution: "دانشگاه بابایی قزوین",
-      years: "۲۰۱۷ - ۲۰۱۸",
-      field: "داخلی",
-      description: "Specialized in interventional cardiology techniques",
-      details: "Specialized in interventional cardiology techniques",
+      years: "۱۳۹۶ - ۱۳۹۷",
+      description: "تخصص در زمینه درمان اختلالات خواب در کودکان و بزرگسالان",
+      details:
+        "یادگیری روش‌های نوین در تشخیص بی‌خوابی، نارکولپسی و اختلالات تنفسی خواب",
     },
     {
-      degree: "متخصص کودکان",
+      degree: "تخصص کودکان",
       institution: "دانشگاه علوم پزشکی تبریز",
-      years: "۲۰۱۱ - ۲۰۱۴",
-      field: "داخلی",
-      description: "Specialized in interventional cardiology techniques",
-      details: "Specialized in interventional cardiology techniques",
+      years: "۱۳۹۰ - ۱۳۹۳",
+      description: "تشخیص و درمان بیماری‌های شایع کودکان",
+      details: "تمرکز بر خواب کودکان، اختلالات رفتاری و مدیریت تغذیه در کودکان",
     },
     {
-      degree: "پزشک عمومی",
+      degree: "پزشکی عمومی",
       institution: "دانشگاه علوم پزشکی تبریز",
-      years: "۲۰۰۱ - ۲۰۰۸",
-      field: "داخلی",
-      description: "Specialized in interventional cardiology techniques",
-      details: "Specialized in interventional cardiology techniques",
+      years: "۱۳۸۰ - ۱۳۸۷",
+      description: "دوره پایه پزشکی عمومی",
+      details: "مهارت‌های پایه تشخیص و درمان و مراقبت‌های اولیه سلامت",
     },
   ],
   honors: [
     {
-      title: "یک درصد پژوهشگر و دانشمندان برتر",
-      year: "۲۰۲۴",
+      title: "قرار گرفتن در جمع یک درصد دانشمندان برتر جهان",
+      year: "۲۰۲۳ و ۲۰۲۴",
+      description:
+        "انتخاب توسط دانشگاه استنفورد به دلیل تأثیر علمی و پژوهشی برجسته",
     },
     {
-      title: "بانوی موفق و کارافرین ایران در سال",
+      title: "انتخاب به‌عنوان چهره سرشناس بانوان ایران و پزشک کارآفرین ملی",
       year: "۱۴۰۳",
+      description:
+        "چهارمین همایش ملی بانوان موفق ایران و تقدیر دانشگاه هالیک ترکیه",
     },
     {
-      title: "جزو پژوهشگران افتخاری",
-      year: "۲۲۲۲",
-      description: " دانشگاه استنفورد",
+      title: "نویسنده فصل «خواب و رشد عصبی»",
+      year: "۲۰۲۲",
+      description:
+        "کتاب Nature, Nurture and Neurodevelopment از انتشارات Springer",
     },
     {
-      title: "نویسنده فصل خواب کتاب",
-      year: "۲۲۲۲",
-      description: "انتشارات Springer",
+      title: "پژوهشگر افتخاری",
+      year: "۲۰۲۲",
+      description: "دانشگاه استنفورد",
     },
     {
-      title: "جوانترین سخنران و پزشک شاخص و نویسنده برترین مقاله",
+      title: "پزشک پیشرو و نویسنده مقاله برتر پژوهشی",
+      year: "۱۳۹۸",
+      description:
+        "برگزیده در چهلمین سالگرد دکتر محمد قریب به‌دلیل انتشار مقاله شاخص",
+    },
+    {
+      title: "جوان‌ترین سخنران و نویسنده برتر علمی",
       year: "۱۳۹۷",
-      description: "در بین متخصصین کودکان",
+      description:
+        "انتخاب‌شده در جمع متخصصان کودکان ایران به‌عنوان پژوهشگر ممتاز",
     },
     {
-      title: "پزشک پیشرو و نویسنده برترین مقاله پژوهشی",
+      title: "عضو کمیته علمی و سخنران رویدادهای بین‌المللی",
       year: "۱۳۹۷",
-      description: "چهلمین سالگرد دکتر محمد قریب",
+      description: "حضور در سمینارهای تخصصی استانبول، پکن و دهلی",
     },
     {
-      title: "عضو‌کمیته علمی سمینار و سخنرانی",
-      year: "۱۳۹۷",
-      description: "استانبول - پکن - دهلی",
-    },
-    {
-      title: "برگزارکننده و دبیر سمینار",
-      year: "۱۴۰۴",
-      description: "تازه های بیماریهای قلبی و اختلالات خواب",
+      title: "دبیر اجرایی و برگزارکننده کنگره‌های بزرگ اختلالات خواب",
+      year: "۱۴۰۲ تا ۱۴۰۴",
+      description: "سازماندهی کنگره‌های ملی و بین‌المللی در تبریز و تهران",
     },
   ],
 };
@@ -382,10 +394,6 @@ export const CONTACT_ITEMS: {
   icon?: React.ReactNode;
 }[] = [
   {
-    title: "در تماس باشید",
-    desc: "برای دریافت اطلاعات، رزرو نوبت یا ارتباط با کلینیک خواب، از طریق اطلاعات تماس زیر اقدام کنید.",
-  },
-  {
     title: "اینستاگرام",
     desc: "dr.imani.sleepclinic@",
     value: "https://www.instagram.com/dr.imani.sleepclinic",
@@ -398,11 +406,29 @@ export const CONTACT_ITEMS: {
     icon: <PhoneIcon height={30} width={30} />,
   },
   {
+    title: "واتساپ",
+    icon: <PhoneIcon width={20} height={20} />,
+    value: "https://wa.me/989302871635",
+    desc: "۰۹۳۰۲۷۱۶۳۵",
+  },
+  {
     title: "آدرس",
     desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
     icon: <MapPin height={30} width={30} />,
   },
 ];
+
+export const PERSIAN_WEEKDAYS = [
+  { id: 0, name: "شنبه", short: "ش" },
+  { id: 1, name: "یکشنبه", short: "ی" },
+  { id: 2, name: "دوشنبه", short: "د" },
+  { id: 3, name: "سه شنبه", short: "س" },
+  { id: 4, name: "چهارشنبه", short: "چ" },
+  { id: 5, name: "پنجشنبه", short: "پ" },
+  { id: 6, name: "جمعه", short: "ج" },
+];
+
+export const EVEN_DAYS = [0, 2, 4];
 
 export const REASONS_ITEMS = [
   {

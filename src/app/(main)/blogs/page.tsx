@@ -6,9 +6,49 @@ import SectionHeader from "@/components/shared/section-header";
 import NoContent from "@/components/shared/no-content";
 import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Blog } from "@/lib/types";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "مقالات تخصصی خواب",
+  description:
+    "آخرین مقالات علمی در زمینه اختلالات خواب، درمان بی‌خوابی و آپنه خواب توسط متخصصین کلینیک دکتر ایمانی تبریز",
+  keywords: [
+    "مقالات خواب",
+    "درمان بی خوابی",
+    "آپنه خواب",
+    "خروپف",
+    "بهداشت خواب",
+    "مطالب علمی خواب",
+    "نوشته‌های دکتر ایمانی",
+    "تحقیقات جدید خواب",
+    "مقاله پزشکی خواب",
+    "راهکارهای بهبود خواب",
+  ],
+  openGraph: {
+    title: "مقالات تخصصی خواب | کلینیک دکتر ایمانی تبریز",
+    description: "مجموعه مقالات معتبر در زمینه تشخیص و درمان اختلالات خواب",
+    url: "/blogs",
+    images: [
+      {
+        url: "/open-graph/home-fa.png",
+        width: 1200,
+        height: 630,
+        alt: "موقعیت و اطلاعات تماس کلینیک خواب دکتر ایمانی در خیابان آزادی تبریز",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "مقالات تخصصی خواب | کلینیک دکتر ایمانی",
+    description: "آخرین یافته‌های علمی در زمینه اختلالات خواب و درمان‌های جدید",
+  },
+  alternates: {
+    canonical: "/blogs",
+  },
+};
 
 interface BlogsPageProps {
-  searchParams?: { page?: string };
+  searchParams?: Promise<{ page?: string }>;
 }
 
 const BlogsPage = async ({ searchParams }: BlogsPageProps) => {

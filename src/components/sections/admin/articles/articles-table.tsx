@@ -11,34 +11,10 @@ import {
 import { Article } from "@/lib/types";
 import { formatDistanceToNow } from "date-fns";
 import { faIR } from "date-fns/locale";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { ModifyArticleModal } from "./modify-article-modal";
 import { SureDeleteModal } from "../sure-delete-modal";
 
 const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
-  const router = useRouter();
-
-  const handleUpdateArticle = async (articleId: string, formData: FormData) => {
-    try {
-      const response = await fetch(`/api/articles/${articleId}`, {
-        method: "PUT",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "خطا در بروزرسانی مقاله");
-      }
-
-      toast.success("مقاله با موفقیت بروزرسانی شد.");
-      router.refresh();
-    } catch (error) {
-      console.error("Error updating article:", error);
-      toast.error("خطا در بروزرسانی مقاله، دوباره تلاش کنید.");
-    }
-  };
-
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -71,12 +47,7 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
                     })}
                   </TableCell>
                   <TableCell className="space-x-2 text-right">
-                    <ModifyArticleModal
-                      article={article}
-                      onSave={(formData) =>
-                        handleUpdateArticle(article.id, formData)
-                      }
-                    />
+                    <ModifyArticleModal article={article} mode="edit" />
                     <SureDeleteModal
                       itemPath={article.id}
                       itemType="article"

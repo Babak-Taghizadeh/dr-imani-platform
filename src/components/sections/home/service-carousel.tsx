@@ -42,7 +42,7 @@ const ServiceCarousel = () => {
 
   return (
     <div
-      className="flex min-h-[450px] w-full flex-col items-center justify-center gap-10 overflow-hidden rounded-2xl sm:min-h-[500px] md:min-h-[550px] md:gap-0 lg:h-auto lg:w-1/2"
+      className="flex min-h-[450px] w-full flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl sm:min-h-[500px] md:min-h-[550px] md:gap-0 xl:h-auto xl:w-1/2"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

@@ -16,19 +16,16 @@ const heroImages = [
     src: Sleep1,
     alt: "تصویر خواب سالم",
     title: "کمک به بهبود کیفیت و سلامت خواب",
-    description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
   },
   {
     src: Sleep2,
     alt: "خوابیدن",
     title: "درمان اختلالات خواب",
-    description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
   },
   {
     src: Sleep3,
     alt: "تصویر خواب سالم",
     title: "کمک به بهبود کیفیت و سلامت خواب",
-    description: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
   },
 ];
 const HeroBackgroundCarousel = () => {
@@ -36,31 +33,35 @@ const HeroBackgroundCarousel = () => {
     <Carousel
       plugins={[
         Autoplay({
-          delay: 4000,
+          delay: 5000,
           stopOnInteraction: false,
         }),
       ]}
       className="h-full w-full"
+      aria-roledescription="carousel"
+      aria-label="اسلایدهای تصویری کلینیک خواب"
     >
-      <CarouselContent className="h-[300px] lg:h-[600px]">
+      <CarouselContent className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
         {heroImages.map((image, index) => (
-          <CarouselItem key={index}>
-            <div
-              dir="rtl"
-              className="relative h-full w-full"
-              aria-label={`اسلاید ${index + 1}: ${image.title}`}
-            >
+          <CarouselItem
+            key={index}
+            aria-roledescription="slide"
+            aria-label={`اسلاید ${index + 1} از ${heroImages.length}`}
+          >
+            <div dir="rtl" className="relative h-full w-full">
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
-                priority={index < 2}
-                loading={index < 2 ? "eager" : "lazy"}
+                loading={index ? "eager" : "lazy"}
                 sizes="100vw"
-                quality={90}
-                placeholder="blur"
+                quality={60}
+                placeholder={index === 0 ? undefined : "blur"}
                 className="object-cover brightness-[0.4]"
+                aria-hidden="false"
+                role="img"
               />
+              <span className="sr-only">{image.title}</span>
             </div>
           </CarouselItem>
         ))}

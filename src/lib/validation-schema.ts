@@ -1,82 +1,11 @@
 import * as z from "zod";
 
-// Common reusable schemas
-const fileSchema = z
-  .instanceof(File, { message: "فایل انتخاب شده معتبر نیست" })
-  .refine((file) => file.size > 0, "فایل نباید خالی باشد");
-
-const imageSchema = fileSchema
-  .refine(
-    (file) => file.size <= 5 * 1024 * 1024,
-    "حجم تصویر باید کمتر از ۵ مگابایت باشد",
-  )
-  .refine(
-    (file) => ["image/jpeg", "image/png", "image/webp"].includes(file.type),
-    "فقط فرمت‌های JPEG, PNG و WebP پشتیبانی می‌شوند",
-  );
-
-const documentSchema = fileSchema.refine(
-  (file) => [".pdf", ".docx"].some((ext) => file.name.endsWith(ext)),
-  "فقط فرمت‌های PDF و DOCX پشتیبانی می‌شوند",
-);
-
 export const loginSchema = z.object({
   username: z.string().min(1, "فیلد اجباری"),
   password: z.string().min(1, "فیلد اجباری"),
 });
 
-const blogBaseSchema = z.object({
-  title: z.string().min(3, "عنوان باید حداقل ۳ کاراکتر باشد").max(255),
-  content: z.string().min(10, "محتوا باید حداقل ۱۰ کاراکتر باشد"),
-  status: z.enum(["منتشر شده", "ذخیره شده"]),
-});
-
-export const BlogCreateSchema = blogBaseSchema.extend({
-  image: imageSchema.refine((file) => !!file, "تصویر کاور الزامی است"),
-});
-
-export const BlogUpdateSchema = blogBaseSchema.extend({
-  image: imageSchema.optional(),
-});
-
-export const createModifyBlogSchema = (isEditing: boolean) => {
-  const baseSchema = z.object({
-    title: z.string().min(1, "عنوان الزامی است"),
-    content: z.string().min(1, "محتوا الزامی است"),
-    status: z.enum(["منتشر شده", "ذخیره شده"]),
-  });
-
-  const imageSchema = z
-    .instanceof(File, {
-      message: "فایل انتخاب شده معتبر نیست",
-    })
-    .refine(
-      (file) => !file || file.size <= 5 * 1024 * 1024,
-      "حجم تصویر باید کمتر از ۵ مگابایت باشد",
-    )
-    .refine(
-      (file) =>
-        !file || ["image/jpeg", "image/png", "image/webp"].includes(file.type),
-      "فقط فرمت‌های JPEG, PNG و WebP پشتیبانی می‌شوند",
-    );
-
-  const schema = isEditing
-    ? baseSchema.extend({
-        image: imageSchema.optional(),
-      })
-    : baseSchema.extend({
-        image: imageSchema.refine((file) => !!file, {
-          message: "تصویر کاور الزامی است",
-        }),
-      });
-
-  return {
-    schema,
-    type: {} as z.infer<typeof schema>,
-  };
-};
-
-export const ArticleCreateSchema = z.object({
+export const articleFormSchema = z.object({
   title: z
     .string({ required_error: "عنوان مقاله الزامی است" })
     .min(3, "عنوان باید حداقل ۳ کاراکتر باشد")
@@ -84,22 +13,31 @@ export const ArticleCreateSchema = z.object({
   summary: z
     .string({ required_error: "خلاصه مقاله الزامی است" })
     .min(10, "خلاصه باید حداقل ۱۰ کاراکتر باشد"),
-  publishedAt: z
-    .string({ required_error: "تاریخ انتشار الزامی است" })
-    .datetime("تاریخ انتشار معتبر نیست"),
-  file: documentSchema,
+  fileUrl: z.string().optional(),
+  fileKey: z.string().optional(),
 });
 
-export const ArticleUpdateSchema = ArticleCreateSchema.extend({
-  id: z.number().int().positive(),
-  file: documentSchema.optional(),
+// NEW LOGIC
+export const blogFormSchema = z.object({
+  title: z
+    .string()
+    .min(1, "عنوان الزامی است")
+    .max(255, "عنوان نباید بیشتر از 255 کاراکتر باشد")
+    .trim(),
+  content: z
+    .string()
+    .min(1, "محتوا الزامی است")
+    .min(10, "محتوای بلاگ باید حداقل ۱۰ کاراکتر باشد")
+    .trim(),
+  excerpt: z.string().optional(),
+  slug: z.string().optional(),
+  imageUrl: z.string().optional(),
+  imageKey: z.string().optional(),
+  status: z.enum(["منتشر شده", "ذخیره شده"]),
 });
 
+export type BlogFormData = z.infer<typeof blogFormSchema>;
+// END OF NEW LOGIC
 export type LoginFormValues = z.infer<typeof loginSchema>;
-export type BlogFormValues = z.infer<typeof BlogCreateSchema>;
-export type BlogUpdateValues = z.infer<typeof BlogUpdateSchema>;
-export type ArticleFormValues = z.infer<typeof ArticleCreateSchema>;
-export type ArticleUpdateValues = z.infer<typeof ArticleUpdateSchema>;
-export type ModifyBlogFormValues = ReturnType<
-  typeof createModifyBlogSchema
->["type"];
+
+export type ArticleFormData = z.infer<typeof articleFormSchema>;

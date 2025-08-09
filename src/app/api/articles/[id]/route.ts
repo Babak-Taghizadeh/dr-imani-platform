@@ -1,26 +1,19 @@
 import { errorResponse, successResponse, validateId } from "@/lib/api-utils";
-import { ArticleUpdateSchema } from "@/lib/validation-schema";
+import { articleFormSchema } from "@/lib/validation-schema";
 import { deleteArticle, updateArticle } from "@/utils/articles-services";
 import { NextRequest } from "next/server";
 
 export const PUT = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const id = validateId(params.id);
-    const formData = await req.formData();
+    const id = (await params).id;
+    const idNumber = parseInt(id);
+    const body = await req.json();
+    const validatedData = articleFormSchema.parse(body);
 
-    const data = {
-      id,
-      title: formData.get("title"),
-      summary: formData.get("summary"),
-      publishedAt: formData.get("publishedAt"),
-      file: formData.has("file") ? formData.get("file") : undefined,
-    };
-
-    const validated = ArticleUpdateSchema.parse(data);
-    const article = await updateArticle(validated);
+    const article = await updateArticle(idNumber, validatedData);
     return successResponse(article);
   } catch (err) {
     return errorResponse(
@@ -34,11 +27,12 @@ export const PUT = async (
 
 export const DELETE = async (
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const id = validateId(params.id);
-    await deleteArticle(id);
+    const id = (await params).id;
+    const validId = validateId(id);
+    await deleteArticle(validId);
     return successResponse({ success: true });
   } catch (err) {
     return errorResponse(

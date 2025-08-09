@@ -5,80 +5,135 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  createModifyBlogSchema,
-  ModifyBlogFormValues,
-} from "@/lib/validation-schema";
+import { BlogFormData, blogFormSchema } from "@/lib/validation-schema";
 import { Blog } from "@/lib/types";
 import { useState, useEffect, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { BlogFormFields } from "./blog-form-fields";
-import ImageUploadField from "./image-upload-field";
 import { DialogModalWrapper } from "@/components/shared/modal-wrapper";
+import { useRouter } from "next/navigation";
+import ImageUploadField from "./image-upload-field";
+import { useFileUpload } from "@/hooks/use-file-upload";
 
 interface ModifyBlogModalProps {
-  onSave: (formData: FormData) => void;
+  mode: "create" | "edit";
   blog?: Blog;
 }
 
-export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
+export const ModifyBlogModal = ({ mode, blog }: ModifyBlogModalProps) => {
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  const isEditing = !!blog;
-  const { schema } = createModifyBlogSchema(isEditing);
-
-  const form = useForm<ModifyBlogFormValues>({
-    resolver: zodResolver(schema),
+  const form = useForm<BlogFormData>({
+    resolver: zodResolver(blogFormSchema),
     defaultValues: {
       title: blog?.title || "",
       content: blog?.content || "",
+      excerpt: blog?.excerpt || "",
+      slug: blog?.slug || "",
+      imageUrl: blog?.imageUrl || "",
+      imageKey: blog?.imageKey || "",
       status: blog?.status || "ذخیره شده",
     },
+    mode: "onChange",
   });
+
+  const { file, reset, setSelectedFile, uploadSelectedFile, isUploading } =
+    useFileUpload();
+
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      form.setError("imageUrl", {
+        message: "سایز تصویر باید کمتر از 5 مگابایت باشد",
+      });
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      form.setError("imageUrl", {
+        message: "لطفا یک تصویر معتبر انتخاب کنید",
+      });
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    setPreviewUrl(previewUrl);
+    setSelectedFile(file);
+  };
 
   useEffect(() => {
     return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      if (previewUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
+      }
     };
   }, [previewUrl]);
 
-  const handleImageChange = (file: File) => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setPreviewUrl(URL.createObjectURL(file));
-    form.setValue("image", file);
+  const handleRemoveImage = async () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+    }
+    form.setValue("imageUrl", "");
+    form.setValue("imageKey", "");
+    setSelectedFile(null);
   };
 
-  const removeImage = () => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setPreviewUrl(null);
-    form.setValue("image", undefined);
-  };
-
-  const onSubmit = async (values: ModifyBlogFormValues) => {
+  const onSubmit = async (data: BlogFormData) => {
     startTransition(async () => {
       try {
-        const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("content", values.content);
-        formData.append("status", values.status);
+        let uploadedUrl = data.imageUrl;
+        let uploadedKey = data.imageKey;
 
-        if (values.image instanceof File) {
-          formData.append("image", values.image);
+        if (file) {
+          const { url, key } = await uploadSelectedFile(blog?.imageUrl);
+          uploadedUrl = url!;
+          uploadedKey = key!;
         }
-        await onSave(formData);
 
-        form.reset();
-        setPreviewUrl(null);
-      } catch (error) {
-        toast.error("خطا در ذخیره بلاگ", {
-          description:
-            error instanceof Error ? error.message : "لطفاً دوباره تلاش کنید",
+        if (!uploadedUrl) {
+          toast.error("لطفا یک تصویر برای بلاگ انتخاب کنید");
+          return;
+        }
+
+        const payload = {
+          ...data,
+          imageUrl: uploadedUrl,
+          imageKey: uploadedKey,
+        };
+
+        const url =
+          mode === "create" ? "/api/blogs" : `/api/blogs/${blog?.slug}`;
+        const method = mode === "create" ? "POST" : "PUT";
+
+        const response = await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
-      } finally {
+
+        if (!response.ok) {
+          const error = await response.json();
+          toast.error(error.error || "خطا در ذخیره بلاگ");
+          return;
+        }
+
+        toast.success("بلاگ با موفقیت ذخیره شد.");
+        form.reset();
+        reset();
+        router.refresh();
         setOpen(false);
+      } catch (error) {
+        console.error(error);
+        toast.error("خطا در ذخیره بلاگ");
       }
     });
   };
@@ -87,21 +142,19 @@ export const ModifyBlogModal = ({ onSave, blog }: ModifyBlogModalProps) => {
     <DialogModalWrapper
       isModalOpen={open}
       setModalOpen={setOpen}
-      triggerLabel={blog ? "ویرایش" : "افزودن بلاگ"}
-      title={blog ? "ویرایش بلاگ" : "افزودن بلاگ"}
+      triggerLabel={mode === "edit" ? "ویرایش بلاگ" : "افزودن بلاگ"}
+      title={mode === "edit" ? "ویرایش بلاگ" : "افزودن بلاگ"}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <BlogFormFields control={form.control} />
-
           <ImageUploadField
-            control={form.control}
-            blogImg={blog?.imgPath.toString()}
+            blogImg={blog?.imageUrl}
+            onRemoveImage={handleRemoveImage}
+            isUploading={isUploading}
             previewUrl={previewUrl}
-            onImageChange={handleImageChange}
-            onRemoveImage={removeImage}
+            onImageChange={handleImageUpload}
           />
-
           <DialogFooter>
             <DialogClose asChild>
               <Button

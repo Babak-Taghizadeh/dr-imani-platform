@@ -35,14 +35,13 @@ const BlogCard = ({ blog, index }: BlogCardProps) => {
         <CardHeader className="relative">
           <div className="relative h-48 w-full overflow-hidden rounded-2xl lg:h-64">
             <Image
-              src={blog.imgPath}
-              alt={`تصویر کاور مقاله: ${blog.title}`}
+              src={`/api/upload/${blog.imageUrl}`}
+              alt={blog.title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              quality={85}
-              loading={index < 3 ? "eager" : "lazy"}
-              placeholder="blur"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              quality={70}
+              loading="lazy"
+              className="object-cover transition-all duration-500 group-hover:scale-105"
             />
           </div>
           <div className="bg-card/90 text-accent-foreground/80 absolute top-4 right-8 rounded-full px-3 py-1 text-xs backdrop-blur-sm">

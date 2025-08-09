@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { motion } from "motion/react";
@@ -8,7 +10,7 @@ const ExperienceList = () => {
   const experienceItems: ExperienceItem[] = ABOUT_ME_ITEMS.experience;
 
   return (
-    <div className="space-y-2">
+    <div className="flex h-full flex-col gap-12 py-4 lg:mt-6">
       {experienceItems.map((item, index) => (
         <motion.div
           key={index}
@@ -20,11 +22,6 @@ const ExperienceList = () => {
             type: "spring",
             stiffness: 100,
           }}
-          whileHover={{
-            scale: 1.01,
-            transition: { duration: 0.2 },
-          }}
-          className="group"
         >
           <div className="border-primary/30 hover:border-primary/50 relative border-l-2 pb-4 pl-6 transition-colors duration-200">
             <div className="bg-primary border-background absolute top-0 left-[-5px] h-3 w-3 rounded-full border-2 shadow-sm" />
@@ -35,7 +32,7 @@ const ExperienceList = () => {
                   <Briefcase className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-background group-hover:text-primary text-base font-semibold transition-colors duration-200">
+                  <h3 className="text-background text-base font-semibold transition-colors duration-200">
                     {item.position}
                   </h3>
                 </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import SectionHeader from "@/components/shared/section-header";
 import { REASONS_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
@@ -9,8 +8,9 @@ import { motion } from "motion/react";
 const WhyChooseUs = () => {
   return (
     <section className="space-y-10 p-8 text-center md:p-14">
-      <SectionHeader title="کلینیک تخصصی خواب با بالاترین استانداردها" />
-
+      <h5 className="from-foreground via-primary to-foreground bg-gradient-to-r bg-clip-text text-2xl font-bold tracking-tight text-transparent md:text-4xl">
+        کلینیک تخصصی خواب با بالاترین استانداردها
+      </h5>
       <div className="grid gap-8 text-right sm:grid-cols-2 lg:grid-cols-4">
         {REASONS_ITEMS.map(({ title, description }, i) => (
           <motion.div

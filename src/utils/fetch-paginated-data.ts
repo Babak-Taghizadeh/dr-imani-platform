@@ -1,6 +1,3 @@
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-
 type FetchPaginatedDataResult<T> = {
   [key: string]: T[];
 } & {
@@ -15,7 +12,12 @@ export const fetchPaginatedData = async <T>(
   options?: RequestInit,
 ): Promise<FetchPaginatedDataResult<T>> => {
   try {
-    const url = new URL(`${API_BASE_URL}/api/${endpoint}`);
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? `http://${process.env.HOSTNAME || "localhost"}:${process.env.PORT || 3000}`
+        : "http://localhost:3000";
+        
+    const url = new URL(`${baseUrl}/api/${endpoint}`);
     url.searchParams.append("page", page.toString());
     url.searchParams.append("limit", limit.toString());
 

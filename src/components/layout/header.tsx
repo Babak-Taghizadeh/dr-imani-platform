@@ -26,13 +26,15 @@ const Header = () => {
         />
       </Link>
       <DesktopHeader />
-      <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
+      <div className="flex flex-col items-center gap-2 md:flex-row md:gap-3">
         <Link
           href="https://wa.me/989302871635"
           className={cn(
             buttonVariants(),
             "group relative flex items-center gap-1.5 rounded-full bg-[#25D366] p-2 hover:bg-[#25D366]/90",
           )}
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <Image
             src={WhatsAppIcon}
@@ -50,6 +52,8 @@ const Header = () => {
         <Link
           href={"tel:041-3335-0357"}
           className={cn(buttonVariants(), "rounded-full md:w-36 md:px-4")}
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <PhoneCall width={20} height={20} />
           <span className="hidden font-bold md:inline-block">۰۴۱-۳۳۳۵۰۳۵۷</span>

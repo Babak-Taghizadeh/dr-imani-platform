@@ -8,8 +8,31 @@ const IRANSansXV = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Admin - Blogs",
-  description: "Portfolio",
+  title: {
+    default: "پنل مدیریت کلینیک خواب",
+    template: "%s | پنل مدیریت",
+  },
+  description: "سیستم مدیریت محتوای کلینیک تخصصی خواب دکتر ایمانی",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "none",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://drimanisleepclinic.com",
+  },
+  other: {
+    referrer: "no-referrer",
+    "cache-control": "no-store, max-age=0",
+  },
 };
 
 export default function AdminLayout({

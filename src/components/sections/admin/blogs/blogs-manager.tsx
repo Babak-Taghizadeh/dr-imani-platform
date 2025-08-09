@@ -3,7 +3,7 @@ import BlogTable from "./blogs-table";
 import TableSkeleton from "../table-skeleton";
 import PaginationControls from "@/components/shared/pagination-controls";
 import { Blog } from "@/lib/types";
-import AddBlog from "./add-blog";
+import { ModifyBlogModal } from "./modify-blog-modal";
 
 interface BlogsManagerProps {
   blogs: Blog[];
@@ -14,7 +14,7 @@ interface BlogsManagerProps {
 const BlogsManager = ({ blogs, page, totalPages }: BlogsManagerProps) => {
   return (
     <>
-      <AddBlog />
+      <ModifyBlogModal mode="create" />
       <Suspense fallback={<TableSkeleton />}>
         <BlogTable blogs={blogs} />
       </Suspense>

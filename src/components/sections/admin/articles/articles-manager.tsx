@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { Article } from "@/lib/types";
-import AddArticle from "./add-article";
 import ArticlesTable from "./articles-table";
 import PaginationControls from "@/components/shared/pagination-controls";
 import TableSkeleton from "../table-skeleton";
+import { ModifyArticleModal } from "./modify-article-modal";
 
 interface ArticlesManagerProps {
   articles: Article[];
@@ -18,7 +18,7 @@ const ArticlesManager = ({
 }: ArticlesManagerProps) => {
   return (
     <div className="space-y-6">
-      <AddArticle />
+      <ModifyArticleModal mode="create" />
       <Suspense fallback={<TableSkeleton />}>
         <ArticlesTable articles={articles} />
       </Suspense>

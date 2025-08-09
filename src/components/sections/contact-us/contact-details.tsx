@@ -7,19 +7,16 @@ import SectionHeader from "../../shared/section-header";
 
 const ContactDetails = () => {
   return (
-    <ul className="flex flex-col md:flex-1/2 md:gap-4">
-      {CONTACT_ITEMS.map((item, index) =>
-        index === 0 ? (
-          <li key={item.title}>
-            <SectionHeader
-              title={item.title}
-              description={item.desc}
-              theme="dark"
-            />
-          </li>
-        ) : (
+    <section className="my-auto">
+      <SectionHeader
+        title="در تماس باشید"
+        description="برای دریافت اطلاعات، رزرو نوبت یا ارتباط با کلینیک خواب، از طریق اطلاعات تماس زیر اقدام کنید."
+        theme="dark"
+      />
+      <ul className="flex flex-col md:flex-1/2 gap-2 lg:gap-6">
+        {CONTACT_ITEMS.map((item, index) => (
           <li
-            className="border-primary/60 flex items-center gap-5 border-b py-6 last:border-0"
+            className="border-primary/60 flex items-center gap-4 border-b py-5 last:border-0"
             key={item.title}
           >
             <motion.div
@@ -40,7 +37,8 @@ const ContactDetails = () => {
                 <Link
                   href={item.value}
                   target="_blank"
-                  className="text-background text-lg font-medium md:text-xl"
+                  rel="noopener noreferrer"
+                  className="text-background text-lg font-medium hover:underline md:text-xl"
                 >
                   {item.title}
                 </Link>
@@ -54,9 +52,9 @@ const ContactDetails = () => {
               </p>
             </motion.div>
           </li>
-        ),
-      )}
-    </ul>
+        ))}
+      </ul>
+    </section>
   );
 };
 

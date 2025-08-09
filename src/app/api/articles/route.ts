@@ -1,5 +1,5 @@
 import { errorResponse, successResponse } from "@/lib/api-utils";
-import { ArticleCreateSchema } from "@/lib/validation-schema";
+import { articleFormSchema } from "@/lib/validation-schema";
 import { createArticle, getArticles } from "@/utils/articles-services";
 import { NextRequest } from "next/server";
 
@@ -23,16 +23,10 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const formData = await req.formData();
-    const data = {
-      title: formData.get("title"),
-      summary: formData.get("summary"),
-      publishedAt: formData.get("publishedAt"),
-      file: formData.get("file"),
-    };
+    const body = await req.json();
+    const validatedData = articleFormSchema.parse(body);
 
-    const validated = ArticleCreateSchema.parse(data);
-    const article = await createArticle(validated);
+    const article = await createArticle(validatedData);
     return successResponse(article, 201);
   } catch (err) {
     return errorResponse(
