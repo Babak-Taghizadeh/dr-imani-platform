@@ -24,7 +24,7 @@ const ClinicSupervised = () => {
               alt="دکتر ویدا ایمانی - فوق تخصص اختلالات خواب"
               fill
               className="object-cover"
-              quality={60}
+              quality={50}
               priority
             />
           </motion.div>

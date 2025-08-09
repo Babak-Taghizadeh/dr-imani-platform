@@ -33,7 +33,7 @@ const HeroBackgroundCarousel = () => {
     <Carousel
       plugins={[
         Autoplay({
-          delay: 4000,
+          delay: 5000,
           stopOnInteraction: false,
         }),
       ]}
@@ -53,10 +53,10 @@ const HeroBackgroundCarousel = () => {
                 src={image.src}
                 alt={image.alt}
                 fill
-                priority
+                loading={index ? "eager" : "lazy"}
                 sizes="100vw"
-                quality={65}
-                placeholder="blur"
+                quality={60}
+                placeholder={index === 0 ? undefined : "blur"}
                 className="object-cover brightness-[0.4]"
                 aria-hidden="false"
                 role="img"
