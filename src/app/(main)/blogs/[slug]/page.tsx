@@ -120,9 +120,12 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
           src={`/api/upload/${blog.imageUrl}`}
           alt={`تصویر مقاله: ${blog.title}`}
           fill
-          priority
+          priority={true}
+          loading="eager"
+          quality={85}
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
+          placeholder="blur"
         />
       </figure>
       <div

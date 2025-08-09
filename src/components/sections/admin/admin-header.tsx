@@ -12,8 +12,15 @@ const AdminHeader = () => {
           مدیریت و ویرایش محتوای سایت کلینیک دکتر ایمانی
         </p>
       </div>
-      <div className="bg-primary/90 hover:bg-primary/90 flex items-center justify-center rounded-lg p-2 transition-colors">
-        <Image width={90} src={Logo} alt="logo" />
+      <div className="bg-primary hover:bg-primary/90 flex items-center justify-center rounded-2xl p-2 transition-colors">
+        <Image
+          src={Logo}
+          alt="Clinic Logo"
+          priority
+          quality={90}
+          className="h-auto w-full"
+          sizes="(max-width: 768px) 80px, 95px"
+        />
       </div>
     </div>
   );
