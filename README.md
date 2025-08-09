@@ -27,15 +27,4 @@ A modern full-stack platform for Dr. Imani’s sleep clinic, designed to improve
 
 ---
 
-## 🔧 Environment Variables
-
-Create a `.env.local` file with the following:
-
-```bash
-DATABASE_URL=your_postgres_connection_url
-NEXTAUTH_SECRET=your_nextauth_secret
-MAP_API_KEY=provided_by_neshan
-ADMIN_USERNAME=username
-ADMIN_PASSWORD=password
-
 Made with 🖤 by Babak Taghizadeh
