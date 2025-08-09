@@ -7,13 +7,13 @@ import SectionHeader from "../../shared/section-header";
 
 const ContactDetails = () => {
   return (
-    <section>
+    <section className="my-auto">
       <SectionHeader
         title="در تماس باشید"
         description="برای دریافت اطلاعات، رزرو نوبت یا ارتباط با کلینیک خواب، از طریق اطلاعات تماس زیر اقدام کنید."
         theme="dark"
       />
-      <ul className="flex flex-col md:flex-1/2">
+      <ul className="flex flex-col md:flex-1/2 gap-2 lg:gap-6">
         {CONTACT_ITEMS.map((item, index) => (
           <li
             className="border-primary/60 flex items-center gap-4 border-b py-5 last:border-0"

@@ -41,22 +41,10 @@ const EducationList = () => {
             </div>
 
             {item.description && (
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              <p className="text-muted-foreground mt-2 text-xs leading-relaxed md:text-sm">
                 {item.description}
               </p>
             )}
-
-            {/* {item.link && (
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary/90 hover:text-primary mt-2 inline-flex items-center text-sm font-medium transition-colors group-hover:underline"
-              >
-                View credentials
-                <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </a>
-            )} */}
           </div>
         </motion.div>
       ))}

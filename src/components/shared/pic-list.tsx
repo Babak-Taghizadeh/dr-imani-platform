@@ -27,12 +27,7 @@ const PicList = ({
       )}
     >
       {InfoElement}
-      <div
-        className={cn(
-          "flex items-center justify-center xl:w-[40%]",
-          "max-w-full",
-        )}
-      >
+      <div className="flex max-w-full items-center justify-center xl:w-[40%]">
         <Image
           src={pic}
           alt={alt}
