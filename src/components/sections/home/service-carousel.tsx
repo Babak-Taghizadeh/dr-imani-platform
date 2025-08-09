@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Direction } from "@/lib/types";
@@ -42,7 +42,7 @@ const ServiceCarousel = () => {
 
   return (
     <div
-      className="flex min-h-[450px] w-full flex-col items-center justify-center overflow-hidden rounded-2xl px-4 py-6 sm:min-h-[500px] sm:px-6 md:min-h-[550px] lg:h-auto lg:w-1/2 lg:justify-around"
+      className="flex min-h-[450px] w-full flex-col items-center justify-center gap-10 overflow-hidden rounded-2xl sm:min-h-[500px] md:min-h-[550px] md:gap-0 lg:h-auto lg:w-1/2"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

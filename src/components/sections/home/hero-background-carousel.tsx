@@ -36,7 +36,7 @@ const HeroBackgroundCarousel = () => {
     <Carousel
       plugins={[
         Autoplay({
-          delay: 2500,
+          delay: 4000,
           stopOnInteraction: false,
         }),
       ]}

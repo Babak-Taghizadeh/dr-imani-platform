@@ -10,7 +10,7 @@ import { PhoneCall } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="bg-foreground text-background relative flex h-28 w-full items-center justify-between border-b px-4 md:px-10">
+    <header className="bg-foreground text-background relative flex h-28 w-full items-center justify-between border-b px-4 md:px-8 lg:px-12 xl:px-28">
       <MobileHeader />
       <Link
         href="/"

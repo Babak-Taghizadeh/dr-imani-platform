@@ -32,8 +32,8 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         <NoContent />
       ) : (
         <Suspense fallback={<ArticlesLoader />}>
-          {articles?.map((article) => (
-            <ArticleCard article={article} key={article.id} />
+          {articles?.map((article, index) => (
+            <ArticleCard article={article} key={article.id} index={index} />
           ))}
         </Suspense>
       )}

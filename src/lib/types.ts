@@ -27,6 +27,8 @@ export interface EducationItem {
   years: string;
   description?: string;
   details?: string;
+  field?: string;
+  link?: string;
 }
 
 export interface ExperienceItem {

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import React, { memo } from "react";
+import React from "react";
 
 const SectionHeader = ({
   title,
@@ -23,7 +23,7 @@ const SectionHeader = ({
         transition={{ delay: 0.2, duration: 0.5 }}
         viewport={{ once: true }}
         className={cn(
-          "bg-gradient-to-r bg-clip-text pb-6 text-3xl font-bold tracking-tight text-transparent md:text-4xl",
+          "bg-gradient-to-r bg-clip-text pb-6 text-2xl font-bold tracking-tight text-transparent md:text-4xl",
           theme === "dark"
             ? "from-background via-primary to-background brightness-125"
             : "from-foreground via-primary to-foreground",
@@ -46,4 +46,4 @@ const SectionHeader = ({
   );
 };
 
-export default memo(SectionHeader);
+export default SectionHeader;

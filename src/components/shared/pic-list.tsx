@@ -26,15 +26,20 @@ const PicList = ({
           : "bg-background text-foreground",
       )}
     >
-      <div className="flex items-center justify-center lg:w-1/2">
+      <div
+        className={cn(
+          "flex items-center justify-center lg:w-1/2 xl:w-[40%]",
+          "max-w-full",
+        )}
+      >
         <Image
           src={pic}
           alt={alt}
           className={cn(
-            "h-auto w-auto rounded-lg object-contain",
+            "max-h-full w-auto rounded-lg object-contain",
             orientation === "portrait" ? "max-h-[650px]" : "max-h-[450px]",
           )}
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 768px) 80vw, 50vw"
           quality={85}
           placeholder="blur"
           loading="eager"

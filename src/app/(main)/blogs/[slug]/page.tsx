@@ -29,7 +29,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
   return (
     <article className="mx-auto max-w-4xl px-4 py-8 md:py-12">
       <header className="mb-8 space-y-4 text-right md:mb-8">
-        <h1 className="text-center text-3xl font-bold tracking-tight md:text-5xl">
+        <h1 className="text-center text-2xl font-bold tracking-tight md:text-4xl">
           {blog.title}
         </h1>
         <div className="text-muted-foreground flex items-center justify-end gap-2">

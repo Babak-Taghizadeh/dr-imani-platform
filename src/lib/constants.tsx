@@ -283,6 +283,7 @@ export const ABOUT_ME_ITEMS = {
       degree: "فلوشیپ اختلالات خواب",
       institution: "دانشگاه آجی بادم ترکیه",
       years: "۲۰۱۹ - ۲۰۲۰",
+      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -290,6 +291,7 @@ export const ABOUT_ME_ITEMS = {
       degree: "فلوشیپ پزشکی خواب",
       institution: "دانشگاه بابایی قزوین",
       years: "۲۰۱۷ - ۲۰۱۸",
+      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -297,6 +299,7 @@ export const ABOUT_ME_ITEMS = {
       degree: "متخصص کودکان",
       institution: "دانشگاه علوم پزشکی تبریز",
       years: "۲۰۱۱ - ۲۰۱۴",
+      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -304,6 +307,7 @@ export const ABOUT_ME_ITEMS = {
       degree: "پزشک عمومی",
       institution: "دانشگاه علوم پزشکی تبریز",
       years: "۲۰۰۱ - ۲۰۰۸",
+      field: "داخلی",
       description: "Specialized in interventional cardiology techniques",
       details: "Specialized in interventional cardiology techniques",
     },
@@ -397,5 +401,28 @@ export const CONTACT_ITEMS: {
     title: "آدرس",
     desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
     icon: <MapPin height={30} width={30} />,
+  },
+];
+
+export const REASONS_ITEMS = [
+  {
+    title: "تجربه و تخصص بالا",
+    description:
+      "بیش از ۱۰ سال سابقه درمان موفق اختلالات خواب با بهره‌گیری از پیشرفته‌ترین روش‌ها و دانش جهانی.",
+  },
+  {
+    title: "پزشک فوق تخصص خواب",
+    description:
+      "کلینیک تحت مدیریت دکتر ویدا ایمانی، فلوشیپ فوق تخصصی اختلالات خواب با تجربه درمان صدها بیمار.",
+  },
+  {
+    title: "ارزیابی جامع و دقیق",
+    description:
+      "تشخیص دقیق با بررسی کامل خواب، تنفس، امواج مغزی و عملکرد قلب برای انتخاب بهترین روش درمان.",
+  },
+  {
+    title: "محیطی آرام و مجهز",
+    description:
+      "فضایی طراحی شده برای آرامش بیماران با امکانات تخصصی و فناوری‌های نوین در کلینیک ما.",
   },
 ];

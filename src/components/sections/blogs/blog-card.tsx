@@ -12,8 +12,23 @@ import { Blog } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { motion } from "motion/react";
+import useMediaQuery from "@/hooks/use-media-query";
+import {
+  createStaggeredAnimation,
+  createViewportAnimation,
+} from "@/lib/animations";
 
-const BlogCard = ({ blog }: { blog: Blog }) => {
+interface BlogCardProps {
+  blog: Blog;
+  index: number;
+}
+
+const BlogCard = ({ blog, index }: BlogCardProps) => {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const desktopAnimation = createStaggeredAnimation({ index });
+  const mobileAnimation = createViewportAnimation();
   return (
     <motion.div {...(isDesktop ? desktopAnimation : mobileAnimation)}>
       <Card className="bg-card/80 hover:bg-card/90 border-border/50 group overflow-hidden transition-all hover:shadow-md">
@@ -36,14 +51,14 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
           </div>
         </CardHeader>
 
-      <CardContent>
-        <CardTitle className="text-primary/90 group-hover:text-primary mb-2 transition-colors lg:text-xl">
-          {blog.title}
-        </CardTitle>
-        <CardDescription className="line-clamp-3 leading-relaxed">
-          {blog.excerpt}
-        </CardDescription>
-      </CardContent>
+        <CardContent>
+          <CardTitle className="text-primary/90 group-hover:text-primary mb-2 transition-colors lg:text-xl">
+            {blog.title}
+          </CardTitle>
+          <CardDescription className="line-clamp-3 leading-relaxed">
+            {blog.excerpt}
+          </CardDescription>
+        </CardContent>
 
         <CardFooter className="justify-end">
           <Link

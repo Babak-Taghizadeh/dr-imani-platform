@@ -3,6 +3,8 @@
 
 body {
   font-feature-settings: "locl" !important;
+  scroll-behavior: smooth;
+  font-feature-settings: "ss01" on;
 }
 
 @theme inline {
@@ -58,7 +60,7 @@ body {
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.75 0 0);
   --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.35 0 0);
+  --accent-foreground: oklch(0.45 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
