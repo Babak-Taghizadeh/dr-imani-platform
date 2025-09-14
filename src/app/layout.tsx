@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./(main)/globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import TopLoader from "nextjs-toploader";
 
 const IRANSansXV = localFont({
   src: "../../public/fonts/IRANSansXV.woff2",
@@ -23,7 +25,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${IRANSansXV.className} antialiased`}>{children}</body>
+      <body className={`${IRANSansXV.className} antialiased`}>
+        <TopLoader
+          color="#6832a9"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #2563eb,0 0 5px #2563eb"
+        />
+        {children}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
+      </body>
     </html>
   );
 }
