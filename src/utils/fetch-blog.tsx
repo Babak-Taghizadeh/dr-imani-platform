@@ -32,6 +32,11 @@ const fetchBlog = async (slug: string): Promise<Blog> => {
     return data as Blog;
   } catch (error) {
     console.error("Fetch blog error:", error);
+
+    if (error instanceof TypeError && error.message.includes("fetch")) {
+      notFound();
+    }
+
     throw new Error(
       error instanceof Error ? error.message : "خطای ناشناخته در دریافت بلاگ",
     );
