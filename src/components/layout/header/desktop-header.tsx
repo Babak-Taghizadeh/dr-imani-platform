@@ -17,11 +17,12 @@ const DesktopHeader = () => {
   return (
     <NavigationMenu
       dir="rtl"
-      className="hidden md:flex xl:min-w-[400px] xl:justify-start xl:absolute xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:transform"
+      className="hidden md:flex xl:absolute xl:top-1/2 xl:left-1/2 xl:min-w-[400px] xl:-translate-x-1/2 xl:-translate-y-1/2 xl:transform xl:justify-start"
     >
       <NavigationMenuList className="flex gap-4">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.path;
+          const isSpecial = item.special;
           return (
             <NavigationMenuItem key={item.title}>
               <NavigationMenuLink asChild>
@@ -35,7 +36,20 @@ const DesktopHeader = () => {
                       "scale-110 text-purple-400 after:w-1/2 after:bg-purple-500",
                   )}
                 >
-                  {item.title}
+                  <span
+                    className={cn(
+                      isSpecial && !isActive && "animate-pulse font-black",
+                    )}
+                  >
+                    {item.title}
+                    {isSpecial && !isActive && (
+                      <div className="absolute -top-1 left-1/2 flex -translate-x-1/2 gap-0.5">
+                        <div className="h-1 w-0.5 bg-purple-500"></div>
+                        <div className="h-1 w-0.5 bg-purple-500"></div>
+                        <div className="h-1 w-0.5 bg-purple-500"></div>
+                      </div>
+                    )}
+                  </span>
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

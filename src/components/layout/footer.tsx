@@ -122,9 +122,9 @@ const Footer = () => {
         </div>
 
         <div className="border-primary/10 text-accent-foreground mt-12 border-t pt-8 text-center text-sm">
-          <p dir="ltr" className="text-accent-foreground text-sm">
-            © {new Date().getFullYear()} Dr. Imani. All rights reserved. |
-            Powered by{" "}
+          <p className="text-accent-foreground leading-6 text-sm">
+            ۲۰۲۵ © کلیه حقوق مادی و معنوی این وب‌سایت برای دکتر ویدا ایمانی
+            محفوظ است. | طراحی و توسعه توسط{" "}
             <Link
               href="https://babakcreates.com"
               className="text-[#2563eb] hover:underline"

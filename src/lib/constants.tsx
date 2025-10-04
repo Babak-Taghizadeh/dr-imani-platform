@@ -23,9 +23,8 @@ import {
   Trophy,
   Volume2,
 } from "lucide-react";
-import { TabConfig } from "./types";
 
-export const NAV_ITEMS: { title: string; path: string }[] = [
+export const NAV_ITEMS: { title: string; path: string; special?: boolean }[] = [
   {
     title: "خانه",
     path: "/",
@@ -46,12 +45,17 @@ export const NAV_ITEMS: { title: string; path: string }[] = [
     title: "مقالات",
     path: "/articles",
   },
+  {
+    title: "ارزیابی خواب",
+    path: "/quiz",
+    special: true,
+  },
 ];
 
 export const SUMMARY_INFO = [
   "تأسیس و مدیریت کلینیک تخصصی خواب از ۱۳۹۶",
-  "همکاری با مراکز معتبر بین‌المللی در ترکیه، نروژ و کانادا",
-  "تدریس در دانشگاه‌های آجی بادم ترکیه و بوعلی سینا قزوین",
+  "همکاری با مراکز معتبر بین‌المللی در ترکیه، سوئد و آمریکا",
+  "فعالیت در دانشگاه آجی بادم ترکیه",
   "طراحی پروتکل‌های درمانی مبتنی بر جدیدترین پژوهش‌های جهانی",
 ];
 
@@ -281,7 +285,7 @@ export const ABOUT_ME_ITEMS = {
     },
     {
       position: "متخصص کودکان",
-      hospital: "بیمارستان علوی تبریز",
+      hospital: "بیمارستان کودکان تبریز",
       years: "۱۳۹۲ - ۱۳۹۷",
     },
   ],
@@ -360,13 +364,13 @@ export const ABOUT_ME_ITEMS = {
     },
     {
       title: "دبیر اجرایی و برگزارکننده کنگره‌های بزرگ اختلالات خواب",
-      year: "۱۴۰۲ تا ۱۴۰۴",
+      year: "از سال ۱۳۹۷",
       description: "سازماندهی کنگره‌های ملی و بین‌المللی در تبریز و تهران",
     },
   ],
 };
 
-export const ABOUT_TABS: TabConfig[] = [
+export const ABOUT_TABS = [
   {
     value: "تحصیلات",
     label: "تحصیلات",

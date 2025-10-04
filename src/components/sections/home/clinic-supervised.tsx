@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 
 const ClinicSupervised = () => {
   return (
-    <section className="bg-foreground mt-1 px-6 py-12 sm:py-16 md:px-8 lg:px-16">
+    <section className="bg-foreground mt-0.5 px-6 py-12 sm:py-16 md:px-8 lg:px-16">
       <div className="mx-auto max-w-4xl">
         <div className="flex flex-col items-center gap-4 sm:gap-6">
           <motion.div

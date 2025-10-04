@@ -49,3 +49,46 @@ export interface TabConfig {
   icon: React.ReactNode;
   component: React.ReactNode;
 }
+
+// Quiz Types
+export interface QuizOption {
+  text: string;
+  score: number;
+}
+
+export interface QuizQuestion {
+  id: number;
+  question: string;
+  options: QuizOption[];
+}
+
+export interface QuizScoreInterpretation {
+  level: string;
+  color: string;
+  recommendation: string | string[];
+}
+
+export interface QuizConfig {
+  id: string;
+  title: string;
+  description: string;
+  hint?: string;
+  maxScore: number;
+  goodScoreThreshold: number;
+  moderateScoreThreshold: number;
+  lowScoreThreshold: number;
+  questions: QuizQuestion[];
+  scoreInterpretations: {
+    [key: string]: QuizScoreInterpretation;
+  };
+}
+
+export interface QuizRegistry {
+  [key: string]: QuizConfig;
+}
+
+export interface QuizResult {
+  score: number;
+  interpretation: QuizScoreInterpretation;
+  answers: { questionId: number; selectedOption: QuizOption }[];
+}
