@@ -37,7 +37,10 @@ const SectionHeader = ({
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-muted-foreground mx-auto max-w-2xl text-base tracking-tight md:text-xl"
+          className={cn(
+            "text-muted-foreground mx-auto max-w-2xl text-base leading-8 tracking-tight md:text-xl",
+            theme === "dark" ? "text-muted-foreground" : "text-foreground/75",
+          )}
         >
           {description}
         </motion.p>

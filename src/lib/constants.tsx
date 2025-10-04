@@ -23,9 +23,8 @@ import {
   Trophy,
   Volume2,
 } from "lucide-react";
-import { TabConfig } from "./types";
 
-export const NAV_ITEMS: { title: string; path: string }[] = [
+export const NAV_ITEMS: { title: string; path: string; special?: boolean }[] = [
   {
     title: "خانه",
     path: "/",
@@ -45,6 +44,11 @@ export const NAV_ITEMS: { title: string; path: string }[] = [
   {
     title: "مقالات",
     path: "/articles",
+  },
+  {
+    title: "ارزیابی خواب",
+    path: "/quiz",
+    special: true,
   },
 ];
 
@@ -366,7 +370,7 @@ export const ABOUT_ME_ITEMS = {
   ],
 };
 
-export const ABOUT_TABS: TabConfig[] = [
+export const ABOUT_TABS = [
   {
     value: "تحصیلات",
     label: "تحصیلات",

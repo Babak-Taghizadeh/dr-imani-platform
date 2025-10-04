@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Direction } from "@/lib/types";
 import { SERVICES_ITEMS } from "@/lib/constants";
 import getInitialAnimation from "@/utils/get-initial-animation";
 import getCardStyle from "@/utils/get-card-style";
@@ -13,7 +12,7 @@ import ServiceCard from "./service-card";
 
 const ServiceCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [direction, setDirection] = useState<Direction>("right");
+  const [direction, setDirection] = useState<"left" | "right">("right");
   const [isPaused, setIsPaused] = useState(false);
   const totalProjects = SERVICES_ITEMS.length;
 
