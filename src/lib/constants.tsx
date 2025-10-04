@@ -104,7 +104,7 @@ export const FOOTER_ITEMS: Record<
     {
       title: "واتساپ",
       icon: <PhoneIcon width={20} height={20} />,
-      value: "https://wa.me/989302871635",
+      value: "https://wa.me/989147360827",
     },
     {
       title: "۰۴۱-۳۳۳۵۰۳۵۷",

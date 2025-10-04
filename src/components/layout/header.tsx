@@ -28,7 +28,7 @@ const Header = () => {
       <DesktopHeader />
       <div className="flex flex-col items-center gap-2 md:gap-3 [@media(min-width:930px)]:flex-row">
         <Link
-          href="https://wa.me/989302871635"
+          href="https://wa.me/989147360827"
           className={cn(
             buttonVariants(),
             "group relative flex items-center gap-1.5 rounded-full bg-[#25D366] p-2 hover:bg-[#25D366]/90",
