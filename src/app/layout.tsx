@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   },
   description:
     "بهترین کلینیک خواب در تبریز | تشخیص و درمان اختلالات خواب با استانداردهای جهانی | تحت نظارت پزشک متخصص",
+  other: {
+    enamad: "34030070",
+  },
 };
 
 export default function RootLayout({
