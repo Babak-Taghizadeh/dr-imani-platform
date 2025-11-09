@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   other: {
     "contact:phone": "+984133350357",
     "contact:phone_local": "041-33350357",
-    "contact:whatsapp": "+989302871635",
+    "contact:whatsapp": "+989147360827",
   },
 };
 

@@ -17,6 +17,8 @@ export interface Article {
   publishedAt: string;
   fileUrl: string;
   fileKey: string;
+  scholarLink?: string;
+  inputType?: "file" | "link";
 }
 
 export type Direction = "left" | "right";

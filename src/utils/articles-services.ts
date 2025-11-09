@@ -25,6 +25,9 @@ export const getArticles = async (page = 1, limit = 6) => {
       title: articles.title,
       summary: articles.summary,
       fileUrl: articles.fileUrl,
+      fileKey: articles.fileKey,
+      scholarLink: articles.scholarLink,
+      inputType: articles.inputType,
       publishedAt: articles.publishedAt,
       total: sql<number>`count(*) OVER()`.as("total"),
     })

@@ -11,7 +11,7 @@ import {
 import { Button } from "../../ui/button";
 import { Article } from "@/lib/types";
 import Link from "next/link";
-import { Download } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 import useMediaQuery from "@/hooks/use-media-query";
 import {
   createStaggeredAnimation,
@@ -36,7 +36,7 @@ const ArticleCard = ({ article, index }: ArticleCardProps) => {
           <CardTitle className="text-primary/90 group-hover:text-primary transition-colors md:text-xl">
             {article.title}
           </CardTitle>
-          <CardDescription className="text-accent-foreground/80 mt-1 flex items-center justify-end gap-1 text-xs">
+          <CardDescription className="text-accent-foreground/80 flex items-center justify-end absolute left-6 -top-3 mt-2 gap-1 text-xs">
             <span className="bg-chart-1/50 h-2 w-2 animate-pulse rounded-full" />
             تاریخ انتشار:{" "}
             {new Date(article.publishedAt).toLocaleDateString("fa-IR")}
@@ -52,16 +52,33 @@ const ArticleCard = ({ article, index }: ArticleCardProps) => {
         </CardContent>
 
         <CardFooter className="justify-end">
-          <Link href={article.fileUrl} download>
-            <Button
-              size="sm"
-              variant="outline"
-              className="group-hover:border-primary/70"
+          {article.inputType === "file" && article.fileUrl ? (
+            <Link href={article.fileUrl} download>
+              <Button
+                size="sm"
+                variant="outline"
+                className="!border-primary"
+              >
+                <Download className="ml-2 h-4 w-4 opacity-80 group-hover:opacity-100" />
+                <span>دانلود مقاله</span>
+              </Button>
+            </Link>
+          ) : article.inputType === "link" && article.scholarLink ? (
+            <Link
+              href={article.scholarLink}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Download className="ml-2 h-4 w-4 opacity-80 group-hover:opacity-100" />
-              <span>دانلود مقاله</span>
-            </Button>
-          </Link>
+              <Button
+                size="sm"
+                variant="outline"
+                className="!border-primary"
+              >
+                <ExternalLink className="ml-2 h-4 w-4 opacity-80 group-hover:opacity-100" />
+                <span>مشاهده در گوگل اسکالر</span>
+              </Button>
+            </Link>
+          ) : null}
         </CardFooter>
       </Card>
     </motion.div>

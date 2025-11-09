@@ -104,7 +104,7 @@ export const FOOTER_ITEMS: Record<
     {
       title: "واتساپ",
       icon: <PhoneIcon width={20} height={20} />,
-      value: "https://wa.me/989302871635",
+      value: "https://wa.me/989147360827",
     },
     {
       title: "۰۴۱-۳۳۳۵۰۳۵۷",
@@ -112,7 +112,7 @@ export const FOOTER_ITEMS: Record<
       value: "tel:041-3335-0357",
     },
     {
-      title: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
+      title: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه ششم",
       icon: <SewingPinIcon width={20} height={20} />,
     },
   ],
@@ -417,7 +417,7 @@ export const CONTACT_ITEMS: {
   },
   {
     title: "آدرس",
-    desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه چهارم",
+    desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه ششم",
     icon: <MapPin height={30} width={30} />,
   },
 ];

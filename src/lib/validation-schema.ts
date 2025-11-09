@@ -5,17 +5,34 @@ export const loginSchema = z.object({
   password: z.string().min(1, "فیلد اجباری"),
 });
 
-export const articleFormSchema = z.object({
-  title: z
-    .string({ required_error: "عنوان مقاله الزامی است" })
-    .min(3, "عنوان باید حداقل ۳ کاراکتر باشد")
-    .max(255, "عنوان نباید بیش از ۲۵۵ کاراکتر باشد"),
-  summary: z
-    .string({ required_error: "خلاصه مقاله الزامی است" })
-    .min(10, "خلاصه باید حداقل ۱۰ کاراکتر باشد"),
-  fileUrl: z.string().optional(),
-  fileKey: z.string().optional(),
-});
+export const articleFormSchema = z
+  .object({
+    title: z
+      .string({ required_error: "عنوان مقاله الزامی است" })
+      .min(3, "عنوان باید حداقل ۳ کاراکتر باشد")
+      .max(255, "عنوان نباید بیش از ۲۵۵ کاراکتر باشد"),
+    summary: z
+      .string({ required_error: "خلاصه مقاله الزامی است" })
+      .min(10, "خلاصه باید حداقل ۱۰ کاراکتر باشد"),
+    fileUrl: z.string().optional(),
+    fileKey: z.string().optional(),
+    scholarLink: z.string().optional(),
+    inputType: z.enum(["file", "link"]),
+  })
+  .refine(
+    (data) => {
+      // Either fileUrl or scholarLink must be provided
+      if (data.inputType === "file") {
+        return data.fileUrl && data.fileUrl.length > 0;
+      } else {
+        return data.scholarLink && data.scholarLink.length > 0;
+      }
+    },
+    {
+      message: "لطفاً یک فایل آپلود کنید یا لینک گوگل اسکالر را وارد کنید",
+      path: ["fileUrl"],
+    },
+  );
 
 // NEW LOGIC
 export const blogFormSchema = z.object({

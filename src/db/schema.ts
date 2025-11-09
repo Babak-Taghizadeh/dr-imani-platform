@@ -19,4 +19,6 @@ export const articles = pgTable("articles", {
   publishedAt: timestamp("published_at").notNull(),
   fileUrl: varchar("file_url", { length: 500 }),
   fileKey: varchar("file_key", { length: 255 }),
+  scholarLink: varchar("scholar_link", { length: 1000 }),
+  inputType: varchar("input_type", { length: 10 }).default("file"),
 });
