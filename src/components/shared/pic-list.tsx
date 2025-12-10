@@ -32,7 +32,7 @@ const PicList = ({
           src={pic}
           alt={alt}
           className={cn(
-            "max-h-full w-auto rounded-lg object-contain",
+            "max-h-full w-auto rounded-lg object-contain brightness-90",
             orientation === "portrait" ? "max-h-[650px]" : "max-h-[450px]",
           )}
           sizes="(max-width: 768px) 80vw, 50vw"
