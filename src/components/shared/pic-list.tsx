@@ -22,7 +22,7 @@ const PicList = ({
       className={cn(
         "flex flex-col-reverse gap-8 px-4 py-8 md:justify-center md:gap-12 md:px-8 md:py-12 xl:min-h-[810px] xl:flex-row xl:justify-evenly xl:gap-0",
         theme === "dark"
-          ? "bg-foreground text-background"
+          ? "bg-foreground text-background 2xl:px-40"
           : "bg-background text-foreground",
       )}
     >
