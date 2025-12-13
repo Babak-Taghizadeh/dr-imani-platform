@@ -21,7 +21,7 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[25%]">عنوان</TableHead>
+              <TableHead className="max-w-[25%]">عنوان</TableHead>
               <TableHead className="w-[40%]">خلاصه</TableHead>
               <TableHead className="w-[20%]">تاریخ انتشار</TableHead>
               <TableHead className="w-[15%] text-right">عملیات</TableHead>
@@ -32,9 +32,12 @@ const ArticlesTable = ({ articles }: { articles?: Article[] }) => {
               articles.map((article) => (
                 <TableRow
                   key={article.id}
-                  className="group hover:bg-muted/50 transition-all"
+                  className="group transition-all hover:bg-blue-100"
                 >
-                  <TableCell className="font-semibold">
+                  <TableCell
+                    dir="ltr"
+                    className="max-w-0 truncate font-semibold"
+                  >
                     {article.title}
                   </TableCell>
                   <TableCell className="text-accent-foreground max-w-[400px] overflow-hidden text-ellipsis whitespace-nowrap">

@@ -31,9 +31,11 @@ const BlogTable = ({ blogs }: { blogs: Blog[] }) => {
               blogs.map((blog) => (
                 <TableRow
                   key={blog.id}
-                  className="group hover:bg-muted/50 transition-all"
+                  className="group transition-all hover:bg-blue-100"
                 >
-                  <TableCell className="font-semibold">{blog.title}</TableCell>
+                  <TableCell className="max-w-0 truncate font-semibold">
+                    {blog.title}
+                  </TableCell>
                   <TableCell>
                     <Badge
                       variant={

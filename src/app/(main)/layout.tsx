@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     "کلینیک خواب استان آذربایجان شرقی",
   ],
   authors: [{ name: "دکتر ایمانی", url: "https://drimanisleepclinic.com" }],
+  applicationName: "کلینیک خواب دکتر ایمانی",
   openGraph: {
     type: "website",
     locale: "fa_IR",
@@ -84,7 +85,46 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <MainLayout>{children}</MainLayout>;
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": ["MedicalClinic", "MedicalBusiness"],
+    "@id": "https://drimanisleepclinic.com",
+    name: "کلینیک خواب دکتر ایمانی",
+    alternateName: "کلینیک خواب دکتر ایمانی تبریز",
+    url: "https://drimanisleepclinic.com",
+    logo: "https://drimanisleepclinic.com/Logo.png",
+    image: "https://drimanisleepclinic.com/open-graph/home-fa.png",
+    description:
+      "تخصصی ترین مرکز درمان اختلالات خواب در شمالغرب کشور با کادری مجرب و تجهیزات پیشرفته",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "تبریز",
+      addressRegion: "آذربایجان شرقی",
+      addressCountry: "IR",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "38.096235",
+      longitude: "46.273418",
+    },
+    medicalSpecialty: "SleepMedicine",
+    sameAs: [
+      "https://www.instagram.com/dr.imani.sleepclinic",
+      "https://wa.me/989147360827",
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+      <MainLayout>{children}</MainLayout>
+    </>
+  );
 };
 
 export default RootLayout;

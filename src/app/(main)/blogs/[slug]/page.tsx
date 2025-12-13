@@ -134,11 +134,9 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
             alt={`تصویر بلاگ: ${blog.title}`}
             fill
             priority={true}
-            loading="eager"
-            quality={85}
+            quality={80}
             className="object-cover"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1200px"
-            placeholder="blur"
           />
         </figure>
         <div

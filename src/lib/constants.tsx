@@ -418,6 +418,7 @@ export const CONTACT_ITEMS: {
   {
     title: "آدرس",
     desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه ششم",
+    value: "https://neshan.org/maps/places/_bA9vXYCMD41#c38.059-46.318-21z-0p",
     icon: <MapPin height={30} width={30} />,
   },
 ];
