@@ -12,14 +12,14 @@ const AdminHeader = () => {
           مدیریت و ویرایش محتوای سایت کلینیک دکتر ایمانی
         </p>
       </div>
-      <div className="bg-primary hover:bg-primary/90 flex items-center justify-center rounded-2xl p-2 transition-colors">
+      <div className="bg-primary hover:bg-primary/90 flex w-20 items-center justify-center rounded-2xl p-2 transition-colors sm:w-24 md:w-[95px]">
         <Image
           src={Logo}
           alt="Clinic Logo"
           priority
           quality={90}
           className="h-auto w-full"
-          sizes="(max-width: 768px) 80px, 95px"
+          sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 95px"
         />
       </div>
     </div>
