@@ -160,8 +160,11 @@ export const ModifyArticleModal = ({
       setModalOpen={setOpen}
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid min-h-[500px] gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 sm:space-y-6"
+        >
+          <div className="grid min-h-[400px] gap-3 sm:min-h-[500px] sm:gap-4">
             <FormField
               control={form.control}
               name="title"
@@ -213,32 +216,36 @@ export const ModifyArticleModal = ({
                         }}
                         className="w-full"
                       >
-                        <TabsList className="bg-muted/20 flex justify-center gap-6 rounded-lg p-4 py-6 shadow-md">
+                        <TabsList className="bg-muted/20 flex w-full justify-center gap-2 rounded-lg p-2 shadow-md sm:gap-4 sm:p-3 md:gap-6 md:p-4 md:py-6">
                           <TabsTrigger
                             value="file"
-                            className="flex items-center gap-2 sm:p-4"
+                            className="flex items-center gap-1 text-xs sm:gap-2 sm:text-sm md:text-base"
                           >
-                            <FileIcon className="text-blue-600" />
-                            آپلود فایل
+                            <FileIcon className="h-4 w-4 shrink-0 text-blue-600 sm:h-5 sm:w-5" />
+                            <span className="whitespace-nowrap">
+                              آپلود فایل
+                            </span>
                           </TabsTrigger>
                           <TabsTrigger
                             value="link"
-                            className="flex items-center gap-2 sm:p-4"
+                            className="flex items-center gap-1 text-xs sm:gap-2 sm:text-sm md:text-base"
                           >
-                            <LinkIcon className="text-purple-600" />
-                            لینک گوگل اسکالر
+                            <LinkIcon className="h-4 w-4 shrink-0 text-purple-600 sm:h-5 sm:w-5" />
+                            <span className="whitespace-nowrap">
+                              لینک گوگل اسکالر
+                            </span>
                           </TabsTrigger>
                         </TabsList>
 
                         <TabsContent
                           value="file"
-                          className="mt-6 min-h-[270px] space-y-4"
+                          className="mt-4 min-h-[200px] space-y-3 sm:mt-6 sm:min-h-[270px] sm:space-y-4"
                         >
                           {(currentFile || article?.fileUrl) && (
-                            <div className="relative flex items-center justify-between rounded-lg border p-4">
-                              <div className="flex items-center gap-3">
-                                <FileIcon className="h-5 w-5 text-gray-500" />
-                                <span className="text-sm font-medium">
+                            <div className="relative flex items-center justify-between rounded-lg border p-2 sm:p-3 md:p-4">
+                              <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                                <FileIcon className="h-4 w-4 shrink-0 text-gray-500 sm:h-5 sm:w-5" />
+                                <span className="min-w-0 truncate text-xs font-medium sm:text-sm">
                                   {(currentFile || article?.fileUrl)
                                     ?.split("/")
                                     .pop()}
@@ -256,21 +263,25 @@ export const ModifyArticleModal = ({
                             </div>
                           )}
                           <Label>فایل مقاله</Label>
-                          <div className="rounded-lg border-2 border-dashed border-gray-300 p-6">
+                          <div className="rounded-lg border-2 border-dashed border-gray-300 p-3 sm:p-4 md:p-6">
                             <div className="text-center">
-                              <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                              <div className="mt-4">
+                              <Upload className="mx-auto h-8 w-8 text-gray-400 sm:h-10 sm:w-10 md:h-12 md:w-12" />
+                              <div className="mt-3 sm:mt-4">
                                 <Label
                                   htmlFor="pdf-upload"
-                                  className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                                  className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 sm:px-4 sm:py-2 sm:text-sm"
                                 >
                                   {isUploading ? (
                                     <>
-                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                      در حال آپلود ...
+                                      <Loader2 className="mr-1.5 h-3 w-3 animate-spin sm:mr-2 sm:h-4 sm:w-4" />
+                                      <span className="whitespace-nowrap">
+                                        در حال آپلود ...
+                                      </span>
                                     </>
                                   ) : (
-                                    "انتخاب فایل"
+                                    <span className="whitespace-nowrap">
+                                      انتخاب فایل
+                                    </span>
                                   )}
                                 </Label>
                                 <Input
@@ -279,10 +290,10 @@ export const ModifyArticleModal = ({
                                   accept=".pdf,.docx"
                                   onChange={handlePDFUpload}
                                   disabled={isUploading}
-                                  className="mt-4"
+                                  className="mt-3 sm:mt-4"
                                 />
                               </div>
-                              <p className="mt-2 text-xs text-gray-500">
+                              <p className="mt-2 text-[10px] text-gray-500 sm:text-xs">
                                 فرمت‌های مجاز: PDF, DOCX (حداکثر 10MB)
                               </p>
                             </div>
@@ -291,7 +302,7 @@ export const ModifyArticleModal = ({
 
                         <TabsContent
                           value="link"
-                          className="mt-6 min-h-[270px] space-y-4"
+                          className="mt-4 min-h-[200px] space-y-3 sm:mt-6 sm:min-h-[270px] sm:space-y-4"
                         >
                           <FormField
                             control={form.control}
@@ -311,12 +322,12 @@ export const ModifyArticleModal = ({
                               </FormItem>
                             )}
                           />
-                          <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
-                            <div className="flex items-start gap-3">
-                              <Link className="mt-0.5 h-5 w-5 text-blue-600" />
-                              <div className="text-sm text-blue-800">
+                          <div className="rounded-lg border border-blue-200 bg-blue-50 p-2 sm:p-3 md:p-4">
+                            <div className="flex items-start gap-2 sm:gap-3">
+                              <Link className="mt-0.5 h-4 w-4 shrink-0 text-blue-600 sm:h-5 sm:w-5" />
+                              <div className="min-w-0 text-xs text-blue-800 sm:text-sm">
                                 <p className="font-medium">راهنمای استفاده:</p>
-                                <p className="mt-1">
+                                <p className="mt-1 break-words">
                                   لینک مقاله را از گوگل اسکالر کپی کرده و در
                                   فیلد بالا وارد کنید.
                                 </p>

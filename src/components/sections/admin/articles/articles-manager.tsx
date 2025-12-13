@@ -17,7 +17,7 @@ const ArticlesManager = ({
   totalPages,
 }: ArticlesManagerProps) => {
   return (
-    <div className="space-y-6">
+    <>
       <ModifyArticleModal mode="create" />
       <Suspense fallback={<TableSkeleton />}>
         <ArticlesTable articles={articles} />
@@ -30,7 +30,7 @@ const ArticlesManager = ({
           queryKey="articlesPage"
         />
       )}
-    </div>
+    </>
   );
 };
 

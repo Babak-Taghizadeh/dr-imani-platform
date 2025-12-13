@@ -49,23 +49,32 @@ const AdminPage = async ({ searchParams }: AdminPageProps) => {
   ]);
 
   return (
-    <main className="bg-background text-foreground min-h-screen">
-      <div className="container mx-auto max-w-6xl space-y-10 px-6 py-12">
+    <main className="bg-background text-foreground min-h-screen overflow-x-hidden">
+      <div className="container mx-auto max-w-6xl space-y-10 px-3 py-8 sm:px-4 sm:py-10 md:px-6 md:py-12">
         <AdminHeader />
 
-        <Tabs defaultValue="blogs" className="space-y-8">
-          <TabsList className="bg-muted/20 flex justify-center gap-6 rounded-lg p-4 shadow-md">
-            <TabsTrigger value="blogs" className="flex items-center gap-2">
-              <PenSquare className="h-5 w-5 text-blue-600" />
-              مدیریت بلاگ‌ها
+        <Tabs defaultValue="blogs" className="space-y-6 sm:space-y-8">
+          <TabsList className="bg-muted/20 flex w-full justify-center gap-2 rounded-lg p-2 shadow-md sm:gap-4 sm:p-4 md:gap-6">
+            <TabsTrigger
+              value="blogs"
+              className="flex items-center gap-1 text-xs sm:gap-2 sm:text-sm md:text-base"
+            >
+              <PenSquare className="h-4 w-4 shrink-0 text-blue-600 sm:h-5 sm:w-5" />
+              <span className="whitespace-nowrap">مدیریت بلاگ‌ها</span>
             </TabsTrigger>
-            <TabsTrigger value="articles" className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-purple-600" />
-              مدیریت مقالات
+            <TabsTrigger
+              value="articles"
+              className="flex items-center gap-1 text-xs sm:gap-2 sm:text-sm md:text-base"
+            >
+              <FileText className="h-4 w-4 shrink-0 text-purple-600 sm:h-5 sm:w-5" />
+              <span className="whitespace-nowrap">مدیریت مقالات</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="blogs" className="space-y-6">
+          <TabsContent
+            value="blogs"
+            className="min-w-0 space-y-6 overflow-x-hidden"
+          >
             <BlogsManager
               blogs={blogs}
               page={blogsPage}
@@ -73,7 +82,10 @@ const AdminPage = async ({ searchParams }: AdminPageProps) => {
             />
           </TabsContent>
 
-          <TabsContent value="articles">
+          <TabsContent
+            value="articles"
+            className="min-w-0 space-y-6 overflow-x-hidden"
+          >
             <ArticlesManager
               articles={articles}
               totalPages={totalArticles}
