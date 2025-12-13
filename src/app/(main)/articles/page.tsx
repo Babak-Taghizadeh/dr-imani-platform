@@ -83,7 +83,7 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         totalPages={totalPages}
         className="col-span-full"
         theme="dark"
-        queryKey="articlesPage"
+        queryKey="page"
       />
     </main>
   );
