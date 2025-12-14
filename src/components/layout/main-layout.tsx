@@ -1,5 +1,7 @@
 import Footer from "./footer";
 import Header from "./header";
+import { Providers } from "../providers";
+import { Toaster } from "@/components/ui/sonner";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -7,11 +9,14 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="min-h-dvh flex flex-col">
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
+    <Providers>
+      <div className="flex min-h-dvh flex-col">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+      <Toaster expand={true} position="top-center" richColors />
+    </Providers>
   );
 };
 
