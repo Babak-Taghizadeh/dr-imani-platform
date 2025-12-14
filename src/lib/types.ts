@@ -94,3 +94,66 @@ export interface QuizResult {
   interpretation: QuizScoreInterpretation;
   answers: { questionId: number; selectedOption: QuizOption }[];
 }
+
+// Appointment Types
+export type AppointmentType = "ONLINE_PHONE" | "IN_CLINIC";
+export type AgeRange = "UNDER_15" | "OVER_15";
+export type AppointmentStatus = "PENDING" | "CONFIRMED";
+
+export interface Appointment {
+  id: string;
+  userId: string;
+  appointmentType: AppointmentType;
+  ageRange: AgeRange;
+  price: number;
+  date: string; // YYYY-MM-DD format
+  time: string; // HH:mm format
+  durationMinutes: number;
+  status: AppointmentStatus;
+  paymentReference: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AppointmentWithUser extends Appointment {
+  userName?: string | null;
+  userPhone?: string | null;
+}
+
+export interface AppointmentsResponse {
+  appointments: Appointment[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export interface AppointmentResponse {
+  appointment: Appointment | AppointmentWithUser;
+}
+
+export interface AdminAppointmentsResponse {
+  appointments: AppointmentWithUser[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+// User Types
+export interface User {
+  id: string;
+  name: string;
+  idNumber: string;
+  phoneNumber: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserResponse {
+  user: User;
+}

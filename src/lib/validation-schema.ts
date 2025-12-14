@@ -58,3 +58,35 @@ export type BlogFormData = z.infer<typeof blogFormSchema>;
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export type ArticleFormData = z.infer<typeof articleFormSchema>;
+
+// Booking schemas
+export const signupSchema = z.object({
+  name: z.string().min(1, "نام الزامی است"),
+  idNumber: z.string().min(1, "شماره شناسنامه الزامی است"),
+  phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست"),
+  password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
+});
+
+export const userLoginSchema = z.object({
+  phoneNumber: z.string().min(1, "شماره تلفن الزامی است"),
+  password: z.string().min(1, "رمز عبور الزامی است"),
+});
+
+export const updateProfileSchema = z.object({
+  name: z.string().min(1, "نام الزامی است").optional(),
+  idNumber: z.string().min(1, "شماره شناسنامه الزامی است").optional(),
+  phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست").optional(),
+  password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد").optional(),
+});
+
+export const bookingSchema = z.object({
+  appointmentType: z.enum(["ONLINE_PHONE", "IN_CLINIC"]),
+  ageRange: z.enum(["UNDER_15", "OVER_15"]),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "فرمت تاریخ نامعتبر است"),
+  time: z.string().regex(/^\d{2}:\d{2}$/, "فرمت زمان نامعتبر است"),
+});
+
+export type SignupFormData = z.infer<typeof signupSchema>;
+export type UserLoginFormData = z.infer<typeof userLoginSchema>;
+export type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;
+export type BookingFormData = z.infer<typeof bookingSchema>;
