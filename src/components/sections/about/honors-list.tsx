@@ -1,15 +1,13 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { AwardIcon } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const HonorsList = () => {
   return (
     <div className="grid h-full gap-4 py-4 sm:grid-cols-2 sm:gap-6">
       {ABOUT_ME_ITEMS.honors.map((item, index) => (
-        <motion.div
+        <AnimatedSection
           key={index}
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -34,7 +32,7 @@ const HonorsList = () => {
               </p>
             )}
           </div>
-        </motion.div>
+        </AnimatedSection>
       ))}
     </div>
   );

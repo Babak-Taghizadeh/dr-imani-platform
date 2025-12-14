@@ -1,4 +1,3 @@
-"use client";
 import { ArrowLeft } from "lucide-react";
 import Avatar from "../../../../public/images/dr-imani-1.jpg";
 import Image from "next/image";
@@ -6,14 +5,14 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { SUMMARY_INFO } from "@/lib/constants";
-import { motion } from "motion/react";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const ClinicSupervised = () => {
   return (
     <section className="bg-foreground mt-0.5 px-6 py-12 sm:py-16 md:px-8 lg:px-16">
       <div className="mx-auto max-w-4xl">
         <div className="flex flex-col items-center gap-4 sm:gap-6">
-          <motion.div
+          <AnimatedSection
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
@@ -27,7 +26,7 @@ const ClinicSupervised = () => {
               quality={50}
               priority
             />
-          </motion.div>
+          </AnimatedSection>
 
           <h2 className="text-background text-center text-lg font-bold sm:text-xl md:text-2xl">
             مدیریت کلینیک زیرنظر پژوهشگر برتر جهانی اختلالات خواب

@@ -1,15 +1,13 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { CalendarDays, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EVEN_DAYS, PERSIAN_WEEKDAYS } from "@/lib/constants";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const WorkingDays = () => {
   return (
-    <motion.div
+    <AnimatedSection
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -28,11 +26,9 @@ const WorkingDays = () => {
 
             <div className="mt-5 grid grid-cols-4 gap-1 sm:grid-cols-7 sm:gap-2 lg:grid-cols-4 xl:grid-cols-7">
               {PERSIAN_WEEKDAYS.map((day) => (
-                <motion.div
+                <div
                   key={day.id}
-                  whileHover={{ scale: EVEN_DAYS.includes(day.id) ? 1.05 : 1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`flex flex-col items-center justify-center rounded-lg p-1 text-xs sm:p-2 sm:text-sm ${
+                  className={`flex flex-col items-center justify-center rounded-lg p-1 text-xs transition-transform hover:scale-105 active:scale-95 sm:p-2 sm:text-sm ${
                     EVEN_DAYS.includes(day.id)
                       ? "bg-primary text-white"
                       : "bg-background/10 text-background/50"
@@ -42,7 +38,7 @@ const WorkingDays = () => {
                   <span className="text-[0.65rem] leading-tight sm:mt-1 sm:text-sm sm:font-medium">
                     {day.name.split("‌").join("")}{" "}
                   </span>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -67,7 +63,7 @@ const WorkingDays = () => {
           <ArrowLeft className="mr-1 h-3 w-3 transition-transform group-hover:-translate-x-1 sm:h-4 sm:w-4" />
         </Link>
       </div>
-    </motion.div>
+    </AnimatedSection>
   );
 };
 

@@ -1,10 +1,8 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
-import { motion } from "motion/react";
 import { Briefcase, Calendar, Building2 } from "lucide-react";
 import { ExperienceItem } from "@/lib/types";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const ExperienceList = () => {
   const experienceItems: ExperienceItem[] = ABOUT_ME_ITEMS.experience;
@@ -12,7 +10,7 @@ const ExperienceList = () => {
   return (
     <div className="flex h-full flex-col gap-12 py-4 lg:mt-6">
       {experienceItems.map((item, index) => (
-        <motion.div
+        <AnimatedSection
           key={index}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -54,7 +52,7 @@ const ExperienceList = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </AnimatedSection>
       ))}
     </div>
   );

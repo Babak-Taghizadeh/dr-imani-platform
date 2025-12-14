@@ -1,9 +1,7 @@
-"use client";
-
 import { REASONS_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { CheckCircle } from "lucide-react";
-import { motion } from "motion/react";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const WhyChooseUs = () => {
   return (
@@ -13,7 +11,7 @@ const WhyChooseUs = () => {
       </h5>
       <div className="grid gap-8 text-right sm:grid-cols-2 lg:grid-cols-4">
         {REASONS_ITEMS.map(({ title, description }, i) => (
-          <motion.div
+          <AnimatedSection
             key={i}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -35,7 +33,7 @@ const WhyChooseUs = () => {
             <p className="text-accent-foreground text-sm leading-relaxed">
               {description}
             </p>
-          </motion.div>
+          </AnimatedSection>
         ))}
       </div>
     </section>

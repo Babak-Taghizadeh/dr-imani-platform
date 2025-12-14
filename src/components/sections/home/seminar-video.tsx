@@ -1,7 +1,5 @@
-"use client";
-
-import { motion } from "motion/react";
 import SectionHeader from "@/components/shared/section-header";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 // Video configuration - Update this with the actual seminar video file path
 const SEMINAR_VIDEO_CONFIG = {
@@ -23,7 +21,7 @@ const SeminarVideo = () => {
         description={SEMINAR_VIDEO_CONFIG.description}
       />
       <div className="flex max-w-full items-center justify-center xl:w-[65%]">
-        <motion.div
+        <AnimatedSection
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -49,7 +47,7 @@ const SeminarVideo = () => {
 
           <div className="bg-primary/20 absolute -top-3 -right-3 h-8 w-8 rounded-full"></div>
           <div className="bg-primary/30 absolute -bottom-3 -left-3 h-8 w-8 rounded-full"></div>
-        </motion.div>
+        </AnimatedSection>
       </div>
     </section>
   );

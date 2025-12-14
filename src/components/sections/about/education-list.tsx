@@ -1,9 +1,7 @@
-"use client";
-
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
-import { motion } from "motion/react";
 import { GraduationCap, Building2, Calendar } from "lucide-react";
 import { EducationItem } from "@/lib/types";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const EducationList = () => {
   const educationItems: EducationItem[] = ABOUT_ME_ITEMS.education;
@@ -11,7 +9,7 @@ const EducationList = () => {
   return (
     <div className="flex h-full flex-col gap-16 py-4 lg:mt-6">
       {educationItems.map((item, index) => (
-        <motion.div
+        <AnimatedSection
           key={index}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,7 +44,7 @@ const EducationList = () => {
               </p>
             )}
           </div>
-        </motion.div>
+        </AnimatedSection>
       ))}
     </div>
   );

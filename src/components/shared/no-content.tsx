@@ -1,11 +1,9 @@
-"use client";
-
 import { BookOpen } from "lucide-react";
-import { motion } from "motion/react";
+import { AnimatedSection } from "./animated-section";
 
 const NoContent = () => {
   return (
-    <motion.div
+    <AnimatedSection
       className="col-span-full mx-auto flex w-fit flex-col items-center justify-center rounded-2xl border p-10"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -18,25 +16,27 @@ const NoContent = () => {
         </div>
       </div>
 
-      <motion.h3
-        className="text-muted-foreground text-center text-xl font-medium"
+      <AnimatedSection
         initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, duration: 0.3 }}
       >
-        هیچ محتوایی برای نمایش وجود ندارد.
-      </motion.h3>
+        <h3 className="text-muted-foreground text-center text-xl font-medium">
+          هیچ محتوایی برای نمایش وجود ندارد.
+        </h3>
+      </AnimatedSection>
 
-      <motion.p
-        className="text-muted-foreground/80 mt-3 max-w-md text-center text-sm leading-6"
+      <AnimatedSection
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
       >
-        در حال آماده‌سازی مطالب جدید و ارزشمند هستیم. به زودی محتوای تخصصی در
-        این بخش منتشر خواهد شد.
-      </motion.p>
-    </motion.div>
+        <p className="text-muted-foreground/80 mt-3 max-w-md text-center text-sm leading-6">
+          در حال آماده‌سازی مطالب جدید و ارزشمند هستیم. به زودی محتوای تخصصی در
+          این بخش منتشر خواهد شد.
+        </p>
+      </AnimatedSection>
+    </AnimatedSection>
   );
 };
 

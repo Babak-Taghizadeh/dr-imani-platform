@@ -1,9 +1,7 @@
-"use client";
-
 import { CONTACT_ITEMS } from "@/lib/constants";
-import { motion } from "motion/react";
 import Link from "next/link";
 import SectionHeader from "../../shared/section-header";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const ContactDetails = () => {
   return (
@@ -19,13 +17,10 @@ const ContactDetails = () => {
             className="border-primary/60 flex items-center gap-4 border-b py-5 last:border-0"
             key={item.title}
           >
-            <motion.div
-              className="text-background/80"
-              whileHover={{ scale: 1.1, color: "var(--primary)" }}
-            >
+            <AnimatedSection className="text-background/80 hover:text-primary transition-transform hover:scale-110">
               {item.icon}
-            </motion.div>
-            <motion.div
+            </AnimatedSection>
+            <AnimatedSection
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
@@ -50,7 +45,7 @@ const ContactDetails = () => {
               <p className="text-secondary/70 mt-1 text-sm md:text-lg!">
                 {item.desc}
               </p>
-            </motion.div>
+            </AnimatedSection>
           </li>
         ))}
       </ul>
