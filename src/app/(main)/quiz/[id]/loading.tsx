@@ -1,11 +1,9 @@
-"use client";
-
-import { motion } from "motion/react";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const QuizLoading = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      <motion.div
+      <AnimatedSection
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -22,7 +20,7 @@ const QuizLoading = () => {
           در حال بارگذاری پرسشنامه
         </h3>
         <p className="text-gray-600">لطفاً صبر کنید...</p>
-      </motion.div>
+      </AnimatedSection>
     </div>
   );
 };

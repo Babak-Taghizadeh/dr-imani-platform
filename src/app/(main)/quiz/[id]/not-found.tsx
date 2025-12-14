@@ -1,14 +1,12 @@
-"use client";
-
-import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Home, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { AnimatedSection } from "@/components/shared/animated-section";
 
 const QuizNotFound = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      <motion.div
+      <AnimatedSection
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -44,7 +42,7 @@ const QuizNotFound = () => {
             </Button>
           </Link>
         </div>
-      </motion.div>
+      </AnimatedSection>
     </div>
   );
 };
