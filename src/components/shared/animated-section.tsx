@@ -1,16 +1,16 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, Transition } from "motion/react";
 import { ReactNode } from "react";
 
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
-  initial?: { opacity?: number; y?: number; scale?: number };
-  animate?: { opacity?: number; y?: number; scale?: number };
-  whileInView?: { opacity?: number; y?: number; scale?: number };
+  initial?: { opacity?: number; y?: number; x?: number; scale?: number };
+  animate?: { opacity?: number; y?: number; x?: number; scale?: number };
+  whileInView?: { opacity?: number; y?: number; x?: number; scale?: number };
   viewport?: { once?: boolean; margin?: string };
-  transition?: { delay?: number; duration?: number };
+  transition?: Transition;
 }
 
 export function AnimatedSection({
@@ -20,7 +20,7 @@ export function AnimatedSection({
   animate,
   whileInView,
   viewport = { once: true },
-  transition = { duration: 0.5 },
+  transition,
 }: AnimatedSectionProps) {
   return (
     <motion.div
@@ -29,7 +29,7 @@ export function AnimatedSection({
       animate={animate}
       whileInView={whileInView}
       viewport={viewport}
-      transition={transition}
+      transition={transition ?? { duration: 0.5 }}
     >
       {children}
     </motion.div>
