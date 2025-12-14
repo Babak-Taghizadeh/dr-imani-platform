@@ -56,7 +56,7 @@ const HeroBackgroundCarousel = () => {
                 priority={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}
                 sizes="100vw"
-                quality={60}
+                quality={40}
                 className="object-cover brightness-[0.4]"
                 aria-hidden="false"
                 role="img"
