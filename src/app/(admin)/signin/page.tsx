@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import LoginForm from "@/components/sections/admin/login-form";
 import { Metadata } from "next";
+import AdminLoginForm from "@/components/sections/admin/admin-login-form";
 
 export const metadata: Metadata = {
   title: "ورود ادمین",
@@ -30,7 +30,7 @@ const SignInPage = () => {
         <CardHeader>
           <CardTitle className="text-center">ورود ادمین</CardTitle>
         </CardHeader>
-        <LoginForm />
+        <AdminLoginForm />
       </Card>
     </main>
   );
