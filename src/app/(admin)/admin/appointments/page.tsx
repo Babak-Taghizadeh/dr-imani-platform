@@ -33,7 +33,8 @@ import TableSkeleton from "@/components/sections/admin/table-skeleton";
 import { AppointmentsTableEmpty } from "@/components/sections/admin/appointments-table-empty";
 import { AdminPagination } from "@/components/sections/admin/admin-pagination";
 import type { AdminAppointmentsResponse } from "@/lib/types";
-import { formatDatePersian, toPersianNumber } from "@/lib/persian-number-utils";
+import { toPersianNumber } from "@/lib/persian-number-utils";
+import { toShamsi } from "@/lib/shamsi-utils";
 
 const statusLabels: Record<
   string,
@@ -227,21 +228,23 @@ export default function AdminAppointmentsPage() {
                   {appointments.map((appointment) => (
                     <TableRow key={appointment.id}>
                       <TableCell>{appointment.userName || "-"}</TableCell>
-                      <TableCell>{appointment.userPhone || "-"}</TableCell>
+                      <TableCell>
+                        {appointment.userPhone
+                          ? toPersianNumber(appointment.userPhone)
+                          : "-"}
+                      </TableCell>
                       <TableCell>
                         {appointment.appointmentType === "ONLINE_PHONE"
                           ? "تماس تلفنی"
                           : "حضوری"}
                       </TableCell>
-                      <TableCell>
-                        {formatDatePersian(
-                          new Date(appointment.date),
-                          "yyyy/MM/dd",
-                        )}
-                      </TableCell>
+                      <TableCell>{toShamsi(appointment.date)}</TableCell>
                       <TableCell>{toPersianNumber(appointment.time)}</TableCell>
                       <TableCell>
-                        {appointment.price.toLocaleString("fa-IR")} تومان
+                        {toPersianNumber(
+                          appointment.price.toLocaleString("en-US"),
+                        )}{" "}
+                        تومان
                       </TableCell>
                       <TableCell>
                         <Badge

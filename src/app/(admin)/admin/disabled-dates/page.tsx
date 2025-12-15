@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -24,9 +23,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toShamsi } from "@/lib/shamsi-utils";
+
+interface DisabledDateRange {
+  id: string;
+  startDate: string;
+  endDate: string;
+  reason?: string | null;
+}
 
 export default function DisabledDatesPage() {
-  const [disabledDates, setDisabledDates] = useState([]);
+  const [disabledDates, setDisabledDates] = useState<DisabledDateRange[]>([]);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -175,12 +182,8 @@ export default function DisabledDatesPage() {
                 <TableBody>
                   {disabledDates.map((range) => (
                     <TableRow key={range.id}>
-                      <TableCell>
-                        {format(new Date(range.startDate), "yyyy/MM/dd")}
-                      </TableCell>
-                      <TableCell>
-                        {format(new Date(range.endDate), "yyyy/MM/dd")}
-                      </TableCell>
+                      <TableCell>{toShamsi(range.startDate)}</TableCell>
+                      <TableCell>{toShamsi(range.endDate)}</TableCell>
                       <TableCell>{range.reason || "-"}</TableCell>
                     </TableRow>
                   ))}
