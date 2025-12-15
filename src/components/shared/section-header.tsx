@@ -22,7 +22,7 @@ const SectionHeader = ({
       >
         <h3
           className={cn(
-            "bg-gradient-to-r bg-clip-text pb-6 text-2xl font-bold tracking-tight text-transparent md:text-4xl",
+            "bg-gradient-to-r bg-clip-text pb-4 text-3xl font-bold tracking-tight text-transparent md:pb-6 md:text-4xl",
             theme === "dark"
               ? "from-background via-primary to-background brightness-125"
               : "from-foreground via-primary to-foreground",
@@ -40,7 +40,7 @@ const SectionHeader = ({
         >
           <p
             className={cn(
-              "text-muted-foreground mx-auto max-w-2xl text-base leading-8 tracking-tight md:text-xl",
+              "text-muted-foreground mx-auto max-w-2xl text-sm leading-6 tracking-tight md:text-xl",
               theme === "dark" ? "text-muted-foreground" : "text-foreground/75",
             )}
           >
