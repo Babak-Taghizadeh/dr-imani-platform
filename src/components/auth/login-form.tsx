@@ -115,6 +115,14 @@ export function LoginForm() {
                   </FormItem>
                 )}
               />
+              <div className="text-right">
+                <Link
+                  href="/forgot-password"
+                  className="text-primary hover:underline text-sm"
+                >
+                  رمز عبور را فراموش کرده‌اید؟
+                </Link>
+              </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
               <Button
