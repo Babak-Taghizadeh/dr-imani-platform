@@ -62,7 +62,7 @@ export type ArticleFormData = z.infer<typeof articleFormSchema>;
 // Booking schemas
 export const signupSchema = z.object({
   name: z.string().min(1, "نام الزامی است"),
-  idNumber: z.string().min(1, "شماره شناسنامه الزامی است"),
+  idNumber: z.string().min(1, "کد ملی الزامی است"),
   phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست"),
   password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
 });
@@ -74,7 +74,7 @@ export const userLoginSchema = z.object({
 
 export const updateProfileSchema = z.object({
   name: z.string().min(1, "نام الزامی است").optional(),
-  idNumber: z.string().min(1, "شماره شناسنامه الزامی است").optional(),
+  idNumber: z.string().min(1, "کد ملی الزامی است").optional(),
   phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست").optional(),
   password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد").optional(),
 });
@@ -86,7 +86,25 @@ export const bookingSchema = z.object({
   time: z.string().regex(/^\d{2}:\d{2}$/, "فرمت زمان نامعتبر است"),
 });
 
+export const forgotPasswordSchema = z.object({
+  idNumber: z.string().min(1, "کد ملی الزامی است"),
+  phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست"),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
+    confirmPassword: z.string().min(6, "تأیید رمز عبور الزامی است"),
+    token: z.string().min(1, "توکن معتبر نیست"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "رمز عبور و تأیید رمز عبور باید یکسان باشند",
+    path: ["confirmPassword"],
+  });
+
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type UserLoginFormData = z.infer<typeof userLoginSchema>;
 export type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;
 export type BookingFormData = z.infer<typeof bookingSchema>;
+export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
