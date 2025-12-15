@@ -31,6 +31,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex justify-center"
           >
             <p
               className="text-center text-sm leading-relaxed text-white/90 drop-shadow-md sm:text-base md:text-lg lg:max-w-[80%]"
