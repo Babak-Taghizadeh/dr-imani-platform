@@ -122,6 +122,26 @@ export const disableDatesSchema = z
     },
   );
 
+export const appointmentsFilterSchema = z.object({
+  fromDate: z
+    .union([
+      z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "فرمت تاریخ نامعتبر است"),
+      z.literal(""),
+    ])
+    .optional(),
+  toDate: z
+    .union([
+      z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "فرمت تاریخ نامعتبر است"),
+      z.literal(""),
+    ])
+    .optional(),
+  status: z.union([z.enum(["PENDING", "CONFIRMED"]), z.literal("")]).optional(),
+  appointmentType: z
+    .union([z.enum(["ONLINE_PHONE", "IN_CLINIC"]), z.literal("")])
+    .optional(),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+});
+
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type UserLoginFormData = z.infer<typeof userLoginSchema>;
 export type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;
@@ -129,3 +149,6 @@ export type BookingFormData = z.infer<typeof bookingSchema>;
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 export type DisableDatesFormData = z.infer<typeof disableDatesSchema>;
+export type AppointmentsFilterFormData = z.infer<
+  typeof appointmentsFilterSchema
+>;
