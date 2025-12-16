@@ -102,9 +102,30 @@ export const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
+export const disableDatesSchema = z
+  .object({
+    startDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "فرمت تاریخ نامعتبر است"),
+    endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "فرمت تاریخ نامعتبر است"),
+    reason: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      const start = new Date(data.startDate);
+      const end = new Date(data.endDate);
+      return start <= end;
+    },
+    {
+      message: "تاریخ شروع باید قبل از تاریخ پایان باشد",
+      path: ["endDate"],
+    },
+  );
+
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type UserLoginFormData = z.infer<typeof userLoginSchema>;
 export type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;
 export type BookingFormData = z.infer<typeof bookingSchema>;
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
+export type DisableDatesFormData = z.infer<typeof disableDatesSchema>;
