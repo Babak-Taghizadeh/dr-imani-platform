@@ -16,6 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toShamsi } from "@/lib/shamsi-utils";
+import { ModifyDisabledDateModal } from "./modify-disabled-date-modal";
+import { SureDeleteDisabledDateModal } from "./sure-delete-disabled-date-modal";
 
 interface DisabledDateRange {
   id: string;
@@ -49,6 +51,7 @@ export function DisabledDatesList({
                 <TableHead>از تاریخ</TableHead>
                 <TableHead>تا تاریخ</TableHead>
                 <TableHead>دلیل</TableHead>
+                <TableHead className="text-right">عملیات</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -57,6 +60,10 @@ export function DisabledDatesList({
                   <TableCell>{toShamsi(range.startDate)}</TableCell>
                   <TableCell>{toShamsi(range.endDate)}</TableCell>
                   <TableCell>{range.reason || "-"}</TableCell>
+                  <TableCell className="space-x-2 text-right">
+                    <ModifyDisabledDateModal disabledDate={range} />
+                    <SureDeleteDisabledDateModal disabledDateId={range.id} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
