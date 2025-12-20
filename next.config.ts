@@ -49,7 +49,7 @@ const nextConfig = {
         hostname: "trustseal.enamad.ir",
       },
     ],
-    qualities: [40, 50, 75, 90],
+    qualities: [40, 50, 70, 75, 80, 90],
   },
   async headers() {
     return [
