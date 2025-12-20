@@ -23,7 +23,7 @@ const BlogsManager = ({ blogs, page, totalPages }: BlogsManagerProps) => {
           currentPage={page}
           totalPages={totalPages}
           theme="light"
-          queryKey="blogsPage"
+          queryKey="page"
         />
       )}
     </>
