@@ -46,7 +46,7 @@ export default function AdminNavigation() {
             key={tab.href}
             href={tab.href}
             className={cn(
-              "inline-flex h-[calc(100%-1px)] shrink-0 items-center justify-center gap-1 rounded-md border border-transparent px-2.5 py-1.5 text-[11px] font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 sm:flex-1 sm:gap-1.5 sm:px-3 sm:py-2 sm:text-xs md:p-3 md:text-sm lg:text-base",
+              "inline-flex h-[calc(100%-1px)] shrink-0 items-center justify-center gap-1 rounded-md border border-transparent px-2.5 py-1.5 text-[11px] font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 sm:gap-1.5 sm:px-3 sm:py-2 sm:text-xs md:p-3 md:text-sm lg:text-base [@media(min-width:500px)]:flex [@media(min-width:500px)]:flex-1",
               "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
               isActive
                 ? "bg-background text-foreground dark:bg-input/80 dark:border-input dark:text-foreground shadow-sm"
