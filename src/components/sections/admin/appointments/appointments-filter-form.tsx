@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { JalaliDateInput } from "@/components/ui/jalali-date-input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { z } from "zod";
 import {
   appointmentsFilterSchema,
   AppointmentsFilterFormData,
@@ -29,11 +30,13 @@ interface AppointmentsFilterFormProps {
   onReset: () => void;
 }
 
+type AppointmentsFilterFormInput = z.input<typeof appointmentsFilterSchema>;
+
 export function AppointmentsFilterForm({
   onFilterChange,
   onReset,
 }: AppointmentsFilterFormProps) {
-  const form = useForm<AppointmentsFilterFormData>({
+  const form = useForm<AppointmentsFilterFormInput>({
     resolver: zodResolver(appointmentsFilterSchema),
     defaultValues: {
       fromDate: "",
@@ -52,7 +55,12 @@ export function AppointmentsFilterForm({
     const currentValues = JSON.stringify(watchedValues);
     if (currentValues !== previousValuesRef.current) {
       previousValuesRef.current = currentValues;
-      onFilterChange(watchedValues);
+      // Convert input type to output type (ensure sortOrder has default)
+      const outputValues: AppointmentsFilterFormData = {
+        ...watchedValues,
+        sortOrder: watchedValues.sortOrder ?? "desc",
+      };
+      onFilterChange(outputValues);
     }
   }, [watchedValues, onFilterChange]);
 
@@ -77,7 +85,11 @@ export function AppointmentsFilterForm({
             <FormItem>
               <FormLabel>از تاریخ</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <JalaliDateInput
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  placeholder="از تاریخ"
+                />
               </FormControl>
             </FormItem>
           )}
@@ -89,7 +101,11 @@ export function AppointmentsFilterForm({
             <FormItem>
               <FormLabel>تا تاریخ</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <JalaliDateInput
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  placeholder="تا تاریخ"
+                />
               </FormControl>
             </FormItem>
           )}

@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { JalaliDateInput } from "@/components/ui/jalali-date-input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import {
@@ -131,7 +131,11 @@ export function DisableDatesForm({
             <FormItem>
               <FormLabel>تاریخ شروع</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <JalaliDateInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="تاریخ شروع را انتخاب کنید"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,7 +148,11 @@ export function DisableDatesForm({
             <FormItem>
               <FormLabel>تاریخ پایان</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <JalaliDateInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="تاریخ پایان را انتخاب کنید"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -157,10 +165,7 @@ export function DisableDatesForm({
             <FormItem>
               <FormLabel>دلیل (اختیاری)</FormLabel>
               <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="دلیل غیرفعال کردن این بازه"
-                />
+                <Textarea {...field} placeholder="دلیل غیرفعال کردن این بازه" />
               </FormControl>
               <FormMessage />
             </FormItem>
