@@ -122,7 +122,7 @@ const Footer = () => {
         </div>
 
         <div className="border-primary/10 text-accent-foreground mt-12 border-t pt-8 text-center text-sm">
-          <p className="text-accent-foreground leading-6 text-sm">
+          <p className="text-accent-foreground text-sm leading-6">
             ۲۰۲۵ © کلیه حقوق مادی و معنوی این وب‌سایت برای دکتر ویدا ایمانی
             محفوظ است. | طراحی و توسعه توسط{" "}
             <Link
@@ -134,6 +134,25 @@ const Footer = () => {
               Babak Taghizadeh
             </Link>
           </p>
+          <div className="mt-6 flex justify-center">
+            <Link
+              href="https://trustseal.enamad.ir/?id=667640&Code=P83wVmEyUmo2xYei039WuSModMLnf9px"
+              target="_blank"
+              rel="noopener noreferrer"
+              referrerPolicy="origin"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://trustseal.enamad.ir/logo.aspx?id=667640&Code=P83wVmEyUmo2xYei039WuSModMLnf9px"
+                alt=""
+                referrerPolicy="origin"
+                {...({
+                  code: "P83wVmEyUmo2xYei039WuSModMLnf9px",
+                } as React.HTMLAttributes<HTMLImageElement>)}
+                className="h-16 w-auto"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
