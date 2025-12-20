@@ -36,7 +36,7 @@ export default function AdminNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-muted/20 flex w-full justify-center gap-2 rounded-lg p-2 shadow-md sm:gap-4 sm:p-4 md:gap-6">
+    <nav className="bg-muted/20 flex w-full justify-start gap-1.5 overflow-x-auto rounded-lg px-1 py-2 shadow-md [-ms-overflow-style:none] [scrollbar-width:none] sm:justify-center sm:gap-4 sm:p-4 md:gap-6 [&::-webkit-scrollbar]:hidden">
       {tabs.map((tab) => {
         const isActive = pathname === tab.href;
         const Icon = tab.icon;
@@ -46,7 +46,7 @@ export default function AdminNavigation() {
             key={tab.href}
             href={tab.href}
             className={cn(
-              "inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent p-3 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 md:text-base",
+              "inline-flex h-[calc(100%-1px)] shrink-0 items-center justify-center gap-1 rounded-md border border-transparent px-2.5 py-1.5 text-[11px] font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 sm:flex-1 sm:gap-1.5 sm:px-3 sm:py-2 sm:text-xs md:p-3 md:text-sm lg:text-base",
               "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring",
               isActive
                 ? "bg-background text-foreground dark:bg-input/80 dark:border-input dark:text-foreground shadow-sm"
@@ -56,7 +56,7 @@ export default function AdminNavigation() {
           >
             <Icon
               className={cn(
-                "h-4 w-4 shrink-0 sm:h-5 sm:w-5",
+                "h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 md:h-5 md:w-5",
                 isActive ? tab.iconColor : "text-muted-foreground",
               )}
             />
