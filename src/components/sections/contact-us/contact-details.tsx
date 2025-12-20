@@ -17,7 +17,11 @@ const ContactDetails = () => {
             className="border-primary/60 flex items-center gap-4 border-b py-5 last:border-0"
             key={item.title}
           >
-            <AnimatedSection className="text-background/80 hover:text-primary transition-transform hover:scale-110">
+            <AnimatedSection
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: index * 0.15, duration: 0.5 }}
+            >
               {item.icon}
             </AnimatedSection>
             <AnimatedSection

@@ -407,11 +407,11 @@ export const CONTACT_ITEMS: {
     title: "شماره تماس",
     desc: "۰۴۱-۳۳۳۵۰۳۵۷",
     value: "tel:041-3335-0357",
-    icon: <PhoneIcon height={30} width={30} />,
+    icon: <Link2Icon width={30} height={30} />,
   },
   {
     title: "واتساپ",
-    icon: <PhoneIcon width={20} height={20} />,
+    icon: <PhoneIcon height={30} width={30} />,
     value: "https://wa.me/989302871635",
     desc: "۰۹۳۰۲۷۱۶۳۵",
   },
