@@ -98,3 +98,33 @@ button {
 .prose h2 {
   @apply mb-2 text-xl font-bold;
 }
+
+/* Ensure jalali datepicker calendar appears above modals */
+/* Target various possible datepicker container selectors */
+[data-jdp-container],
+.jdp-container,
+.jdp-wrapper,
+div[data-jdp-container],
+.jdp,
+[id*="jdp"],
+[class*="jdp"],
+[class*="datepicker"],
+[class*="calendar"] {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure all datepicker child elements are clickable */
+[data-jdp-container] *,
+.jdp-container *,
+.jdp-wrapper *,
+[class*="jdp"] *,
+[class*="datepicker"] * {
+  pointer-events: auto !important;
+}
+
+/* Target any absolutely positioned div that might be the datepicker */
+body > div[style*="position: absolute"],
+body > div[style*="position: fixed"] {
+  z-index: 9999 !important;
+}

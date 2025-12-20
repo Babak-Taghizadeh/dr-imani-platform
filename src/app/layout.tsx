@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./(main)/globals.css";
+import "@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import TopLoader from "nextjs-toploader";
 
