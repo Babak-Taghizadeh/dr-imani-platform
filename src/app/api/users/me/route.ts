@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs";
 
 const updateProfileSchema = z.object({
   name: z.string().min(1, "نام الزامی است").optional(),
-  idNumber: z.string().min(1, "شماره شناسنامه الزامی است").optional(),
+  idNumber: z.string().min(1, "کد ملی الزامی است").optional(),
   phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست").optional(),
   password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد").optional(),
 });
@@ -88,7 +88,7 @@ export async function PUT(request: NextRequest) {
 
       if (existingIdNumber.length > 0 && existingIdNumber[0].id !== userId) {
         return NextResponse.json(
-          { error: "شماره شناسنامه قبلاً استفاده شده است" },
+          { error: "کد ملی قبلاً استفاده شده است" },
           { status: 409 },
         );
       }

@@ -59,7 +59,7 @@ export function ForgotPasswordForm() {
   return (
     <AuthLayout
       title="بازیابی رمز عبور"
-      description="شماره شناسنامه و شماره تلفن خود را وارد کنید. پس از تأیید، می‌توانید رمز عبور جدید خود را تنظیم کنید."
+      description="کد ملی و شماره تلفن خود را وارد کنید. پس از تأیید، می‌توانید رمز عبور جدید خود را تنظیم کنید."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -70,11 +70,11 @@ export function ForgotPasswordForm() {
               <FormControl>
                 <AuthInput
                   {...field}
-                  label="شماره شناسنامه"
+                  label="کد ملی"
                   type="text"
                   autocomplete="off"
                   error={form.formState.errors.idNumber?.message}
-                  placeholder="شماره شناسنامه"
+                  placeholder="کد ملی"
                 />
               </FormControl>
             )}

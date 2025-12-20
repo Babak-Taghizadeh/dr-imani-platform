@@ -6,7 +6,7 @@ import { z } from "zod";
 import crypto from "crypto";
 
 const forgotPasswordSchema = z.object({
-  idNumber: z.string().min(1, "شماره شناسنامه الزامی است"),
+  idNumber: z.string().min(1, "کد ملی الزامی است"),
   phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست"),
 });
 
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     if (user.length === 0) {
       // Don't reveal which field is wrong for security
       return NextResponse.json(
-        { error: "شماره شناسنامه یا شماره تلفن معتبر نیست" },
+        { error: "کد ملی یا شماره تلفن معتبر نیست" },
         { status: 404 },
       );
     }

@@ -31,9 +31,8 @@ export function SignupForm() {
 
   // Autofocus first field
   useEffect(() => {
-    const firstInput = document.querySelector<HTMLInputElement>(
-      'input[name="name"]'
-    );
+    const firstInput =
+      document.querySelector<HTMLInputElement>('input[name="name"]');
     firstInput?.focus();
   }, []);
 
@@ -103,11 +102,11 @@ export function SignupForm() {
               <FormControl>
                 <AuthInput
                   {...field}
-                  label="شماره شناسنامه"
+                  label="کد ملی"
                   type="text"
                   autocomplete="off"
                   error={form.formState.errors.idNumber?.message}
-                  placeholder="شماره شناسنامه"
+                  placeholder="کد ملی"
                 />
               </FormControl>
             )}
@@ -154,11 +153,11 @@ export function SignupForm() {
             ثبت‌نام
           </AuthSubmitButton>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-center text-sm">
             قبلاً ثبت‌نام کرده‌اید؟{" "}
             <Link
               href="/login"
-              className="font-medium text-foreground hover:underline"
+              className="text-foreground font-medium hover:underline"
             >
               ورود
             </Link>

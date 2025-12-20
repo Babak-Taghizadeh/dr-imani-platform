@@ -104,7 +104,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
                 name="idNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>شماره شناسنامه</FormLabel>
+                    <FormLabel>کد ملی</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

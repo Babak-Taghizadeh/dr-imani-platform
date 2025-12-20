@@ -7,7 +7,7 @@ import { z } from "zod";
 
 const signupSchema = z.object({
   name: z.string().min(1, "نام الزامی است"),
-  idNumber: z.string().min(1, "شماره شناسنامه الزامی است"),
+  idNumber: z.string().min(1, "کد ملی الزامی است"),
   phoneNumber: z.string().min(10, "شماره تلفن معتبر نیست"),
   password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
 });
@@ -21,9 +21,7 @@ export async function POST(request: NextRequest) {
     const existingUser = await db
       .select()
       .from(users)
-      .where(
-        eq(users.phoneNumber, validatedData.phoneNumber),
-      )
+      .where(eq(users.phoneNumber, validatedData.phoneNumber))
       .limit(1);
 
     if (existingUser.length > 0) {
@@ -41,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     if (existingIdNumber.length > 0) {
       return NextResponse.json(
-        { error: "کاربری با این شماره شناسنامه قبلاً ثبت‌نام کرده است" },
+        { error: "کاربری با این کد ملی قبلاً ثبت‌نام کرده است" },
         { status: 409 },
       );
     }
@@ -87,4 +85,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
