@@ -71,7 +71,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
 
       toast.success("پروفایل با موفقیت به‌روزرسانی شد");
       router.refresh(); // Refresh to get updated data
-    } catch (error) {
+    } catch {
       toast.error("خطایی در به‌روزرسانی پروفایل رخ داد");
     }
   };

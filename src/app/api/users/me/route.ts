@@ -14,7 +14,7 @@ const updateProfileSchema = z.object({
   password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد").optional(),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
 

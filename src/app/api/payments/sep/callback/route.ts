@@ -6,6 +6,14 @@ import { verifySEPTransaction } from "@/lib/sep-client";
 
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID || "";
 
+interface PaymentErrorData {
+  state?: string;
+  status?: string;
+  amount?: string;
+  terminalId?: string;
+  verifyError?: string;
+}
+
 // SEP callback can be POST or GET (based on GetMethod parameter)
 export async function POST(request: NextRequest) {
   return handleCallback(request);
@@ -66,10 +74,10 @@ async function handleCallback(request: NextRequest) {
     if (state !== "OK" || status !== "2") {
       // Payment failed or canceled
       await handleFailedPayment(resNum, refNum, {
-        state,
-        status,
-        amount,
-        terminalId,
+        state: state ?? undefined,
+        status: status ?? undefined,
+        amount: amount ?? undefined,
+        terminalId: terminalId ?? undefined,
       });
 
       return NextResponse.redirect(
@@ -88,10 +96,10 @@ async function handleCallback(request: NextRequest) {
 
     if (!verifyResponse.Success || verifyResponse.ResultCode !== 0) {
       await handleFailedPayment(resNum, refNum, {
-        state,
-        status,
-        amount,
-        terminalId,
+        state: state ?? undefined,
+        status: status ?? undefined,
+        amount: amount ?? undefined,
+        terminalId: terminalId ?? undefined,
         verifyError: verifyResponse.ResultDescription,
       });
 
@@ -139,10 +147,10 @@ async function handleCallback(request: NextRequest) {
     const verifiedAmount = verifyResponse.TransactionDetail?.OrginalAmount || 0;
     if (verifiedAmount !== appointment.price) {
       await handleFailedPayment(resNum, refNum, {
-        state,
-        status,
-        amount,
-        terminalId,
+        state: state ?? undefined,
+        status: status ?? undefined,
+        amount: amount ?? undefined,
+        terminalId: terminalId ?? undefined,
         verifyError: `مبلغ پرداختی (${verifiedAmount}) با مبلغ نوبت (${appointment.price}) مطابقت ندارد`,
       });
 
@@ -200,7 +208,7 @@ async function handleCallback(request: NextRequest) {
 async function handleFailedPayment(
   resNum: string,
   refNum: string,
-  errorData: any,
+  errorData: PaymentErrorData,
 ) {
   try {
     const appointmentData = await db
