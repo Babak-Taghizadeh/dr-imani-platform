@@ -103,7 +103,7 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
           </h1>
           <div
             aria-label="اطلاعات بلاگ"
-            className="text-muted-foreground flex items-center justify-end gap-2"
+            className="text-accent-foreground flex items-center justify-end gap-2"
           >
             <CalendarIcon className="h-4 w-4" />
             <time

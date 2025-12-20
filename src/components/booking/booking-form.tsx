@@ -383,7 +383,7 @@ export function BookingForm() {
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold">زمان را انتخاب کنید</h3>
                   {form.watch("date") && (
-                    <p className="text-muted-foreground mt-1 text-sm">
+                    <p className="text-accent-foreground mt-1 text-sm">
                       تاریخ انتخاب شده: {toShamsi(form.watch("date"))}
                     </p>
                   )}

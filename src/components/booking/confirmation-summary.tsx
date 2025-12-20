@@ -67,7 +67,7 @@ export function ConfirmationSummary({ form }: ConfirmationSummaryProps) {
                 <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
                   <Icon className="text-primary h-5 w-5" />
                 </div>
-                <span className="text-muted-foreground font-medium">
+                <span className="text-accent-foreground font-medium">
                   {item.label}:
                 </span>
               </div>

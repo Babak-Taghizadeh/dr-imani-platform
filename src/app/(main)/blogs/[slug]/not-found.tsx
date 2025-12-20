@@ -13,7 +13,7 @@ const NotFound = () => {
         <h1 className="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
           صفحه مورد نظر یافت نشد
         </h1>
-        <p className="text-muted-foreground mt-6 text-base leading-7">
+        <p className="text-accent-foreground mt-6 text-base leading-7">
           متأسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد یا به آدرس دیگری
           منتقل شده است.
         </p>

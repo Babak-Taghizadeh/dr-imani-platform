@@ -1,6 +1,4 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   calculatePrice,
@@ -50,7 +48,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
       </div>
       {value && (
         <div className="bg-muted rounded-lg p-4 text-center">
-          <p className="text-muted-foreground text-sm">مبلغ قابل پرداخت:</p>
+          <p className="text-accent-foreground text-sm">مبلغ قابل پرداخت:</p>
           <p className="text-primary mt-1 text-2xl font-bold">
             {calculatePrice(value).toLocaleString("fa-IR")} تومان
           </p>

@@ -23,31 +23,31 @@ export function AppointmentCard({ appointment }: AppointmentCardProps) {
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div className="flex items-center gap-2">
                 {appointment.appointmentType === "ONLINE_PHONE" ? (
-                  <Phone className="text-muted-foreground h-4 w-4" />
+                  <Phone className="text-accent-foreground h-4 w-4" />
                 ) : (
-                  <Building2 className="text-muted-foreground h-4 w-4" />
+                  <Building2 className="text-accent-foreground h-4 w-4" />
                 )}
-                <span className="text-muted-foreground text-sm">
+                <span className="text-accent-foreground text-sm">
                   {appointment.appointmentType === "ONLINE_PHONE"
                     ? "تماس تلفنی"
                     : "حضوری"}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="text-muted-foreground h-4 w-4" />
+                <Calendar className="text-accent-foreground h-4 w-4" />
                 <span className="text-sm sm:text-base">
                   {formatDatePersian(new Date(appointment.date), "yyyy/MM/dd")}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="text-muted-foreground h-4 w-4" />
+                <Clock className="text-accent-foreground h-4 w-4" />
                 <span className="text-sm sm:text-base">
                   {toPersianNumber(appointment.time)}
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground text-sm">مبلغ:</span>
+              <span className="text-accent-foreground text-sm">مبلغ:</span>
               <span className="text-sm font-semibold sm:text-base">
                 {appointment.price.toLocaleString("fa-IR")} تومان
               </span>

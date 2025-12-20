@@ -27,7 +27,7 @@ export default function Error({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-muted-foreground">
+          <p className="text-accent-foreground">
             متأسفانه خطایی در بارگذاری لیست نوبت‌ها رخ داد. لطفاً دوباره تلاش
             کنید.
           </p>

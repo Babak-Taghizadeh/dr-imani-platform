@@ -234,12 +234,12 @@ export function DatePicker({
         })}
       </div>
       {disabledDates.length > 0 && (
-        <Alert className="mt-auto border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950">
-          <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-          <AlertTitle className="text-blue-900 dark:text-blue-100">
+        <Alert className="mt-auto mb-1 bg-blue-950">
+          <Info className="h-4 w-4" color="white" />
+          <AlertTitle className="text-blue-50">
             اطلاعیه تعطیلی کلینیک
           </AlertTitle>
-          <AlertDescription className="mt-2 space-y-2 text-blue-800 dark:text-blue-200">
+          <AlertDescription className="mt-2 space-y-2 text-blue-100">
             <p className="text-sm">
               کلینیک در بازه‌های زمانی زیر تعطیل می‌باشد:
             </p>
@@ -251,7 +251,7 @@ export function DatePicker({
                     {toShamsi(new Date(range.endDate))}
                   </span>
                   {range.reason && (
-                    <span className="mr-2 text-blue-200">({range.reason})</span>
+                    <span className="mr-2 text-blue-100">({range.reason})</span>
                   )}
                 </li>
               ))}
