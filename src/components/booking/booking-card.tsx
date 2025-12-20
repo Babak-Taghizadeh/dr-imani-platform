@@ -1,6 +1,10 @@
-"use client";
-
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 interface BookingCardProps {
@@ -12,11 +16,11 @@ export function BookingCard({ children, className }: BookingCardProps) {
   return (
     <Card
       className={cn(
-        "shadow-xl border-2 transition-shadow duration-300 hover:shadow-2xl",
-        className
+        "border-2 shadow-xl transition-shadow duration-300 hover:shadow-2xl",
+        className,
       )}
     >
-      <CardHeader className="border-b bg-gradient-to-r from-primary/5 to-primary/10">
+      <CardHeader className="from-primary/5 to-primary/10 border-b bg-gradient-to-r">
         <CardTitle className="text-2xl font-bold">رزرو نوبت</CardTitle>
         <CardDescription className="text-base">
           مراحل رزرو نوبت را تکمیل کنید
@@ -26,4 +30,3 @@ export function BookingCard({ children, className }: BookingCardProps) {
     </Card>
   );
 }
-
