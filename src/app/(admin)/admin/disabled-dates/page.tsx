@@ -3,7 +3,6 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/db/db";
 import { disabledDates } from "@/db/schema";
 import { redirect } from "next/navigation";
-import AdminHeader from "@/components/sections/admin/admin-header";
 import { DisableDatesForm } from "@/components/sections/admin/disable-dates-form";
 import { DisabledDatesList } from "@/components/sections/admin/disabled-dates-list";
 import { Metadata } from "next";
@@ -68,8 +67,7 @@ export default async function DisabledDatesPage() {
   const disabledDatesList = await getDisabledDates();
 
   return (
-    <div className="container mx-auto py-8">
-      <AdminHeader />
+    <div className="min-w-0 space-y-6 overflow-x-hidden">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <DisableDatesForm />
         <DisabledDatesList initialDisabledDates={disabledDatesList} />
