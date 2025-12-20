@@ -40,7 +40,7 @@ const SectionHeader = ({
         >
           <p
             className={cn(
-              "text-muted-foreground mx-auto max-w-2xl text-sm leading-6 tracking-tight md:text-xl",
+              "text-muted-foreground mx-auto max-w-2xl text-sm leading-7 tracking-tight md:text-xl",
               theme === "dark" ? "text-muted-foreground" : "text-foreground/75",
             )}
           >
