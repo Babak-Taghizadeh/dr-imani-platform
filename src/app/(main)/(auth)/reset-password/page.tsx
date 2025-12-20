@@ -1,13 +1,7 @@
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
-import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { AuthLayout } from "@/components/auth/auth-layout";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface ResetPasswordPageProps {
   searchParams?: Promise<{ token?: string }>;
@@ -21,21 +15,14 @@ export default async function ResetPasswordPage({
 
   if (!token) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>خطا</CardTitle>
-            <CardDescription>
-              توکن معتبر نیست. لطفاً دوباره تلاش کنید.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/forgot-password">
-              <Button className="w-full">بازیابی رمز عبور</Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
+      <AuthLayout
+        title="خطا"
+        description="توکن معتبر نیست. لطفاً دوباره تلاش کنید."
+      >
+        <Button asChild className="h-11 w-full font-medium">
+          <Link href="/forgot-password">بازیابی رمز عبور</Link>
+        </Button>
+      </AuthLayout>
     );
   }
 
