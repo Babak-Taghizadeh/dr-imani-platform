@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/db/db";
@@ -5,8 +6,16 @@ import { disabledDates } from "@/db/schema";
 import { redirect } from "next/navigation";
 import { DisableDatesForm } from "@/components/sections/admin/disable-dates-form";
 import { DisabledDatesList } from "@/components/sections/admin/disabled-dates-list";
+import { DisabledDatesTableSkeleton } from "@/components/sections/admin/disabled-dates-table-skeleton";
 import { Metadata } from "next";
 import { format } from "date-fns";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "مدیریت تاریخ‌های غیرفعال",
@@ -63,14 +72,31 @@ async function getDisabledDates(): Promise<DisabledDateRange[]> {
   }));
 }
 
-export default async function DisabledDatesPage() {
+async function DisabledDatesListWrapper() {
   const disabledDatesList = await getDisabledDates();
+  return <DisabledDatesList initialDisabledDates={disabledDatesList} />;
+}
 
+export default async function DisabledDatesPage() {
   return (
     <div className="min-w-0 space-y-6 overflow-x-hidden">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <DisableDatesForm />
-        <DisabledDatesList initialDisabledDates={disabledDatesList} />
+        <Suspense
+          fallback={
+            <Card>
+              <CardHeader>
+                <CardTitle>تاریخ‌های غیرفعال شده</CardTitle>
+                <CardDescription>لیست بازه‌های تاریخی غیرفعال</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DisabledDatesTableSkeleton />
+              </CardContent>
+            </Card>
+          }
+        >
+          <DisabledDatesListWrapper />
+        </Suspense>
       </div>
     </div>
   );
