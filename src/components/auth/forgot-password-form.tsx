@@ -2,24 +2,10 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Form, FormControl, FormField } from "@/components/ui/form";
+import { AuthInput } from "@/components/auth/auth-input";
+import { AuthSubmitButton } from "@/components/auth/auth-submit-button";
+import { AuthLayout } from "@/components/auth/auth-layout";
 import {
   forgotPasswordSchema,
   ForgotPasswordFormData,
@@ -27,6 +13,7 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export function ForgotPasswordForm() {
   const router = useRouter();
@@ -38,6 +25,14 @@ export function ForgotPasswordForm() {
       phoneNumber: "",
     },
   });
+
+  // Autofocus first field
+  useEffect(() => {
+    const firstInput = document.querySelector<HTMLInputElement>(
+      'input[name="idNumber"]',
+    );
+    firstInput?.focus();
+  }, []);
 
   const onSubmit = async (values: ForgotPasswordFormData) => {
     try {
@@ -62,62 +57,60 @@ export function ForgotPasswordForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>بازیابی رمز عبور</CardTitle>
-          <CardDescription>
-            شماره شناسنامه و شماره تلفن خود را وارد کنید
-          </CardDescription>
-        </CardHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CardContent className="space-y-4">
-              <FormField
-                control={form.control}
-                name="idNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>شماره شناسنامه</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="شماره شناسنامه" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>شماره تلفن</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="09123456789" type="tel" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4">
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={form.formState.isSubmitting}
-              >
-                ادامه
-              </Button>
-              <Link
-                href="/login"
-                className="text-primary text-center text-sm hover:underline"
-              >
-                بازگشت به صفحه ورود
-              </Link>
-            </CardFooter>
-          </form>
-        </Form>
-      </Card>
-    </div>
+    <AuthLayout
+      title="بازیابی رمز عبور"
+      description="شماره شناسنامه و شماره تلفن خود را وارد کنید. پس از تأیید، می‌توانید رمز عبور جدید خود را تنظیم کنید."
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="idNumber"
+            render={({ field }) => (
+              <FormControl>
+                <AuthInput
+                  {...field}
+                  label="شماره شناسنامه"
+                  type="text"
+                  autocomplete="off"
+                  error={form.formState.errors.idNumber?.message}
+                  placeholder="شماره شناسنامه"
+                />
+              </FormControl>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormControl>
+                <AuthInput
+                  {...field}
+                  label="شماره تلفن"
+                  type="tel"
+                  autocomplete="tel"
+                  error={form.formState.errors.phoneNumber?.message}
+                  placeholder="09123456789"
+                />
+              </FormControl>
+            )}
+          />
+
+          <AuthSubmitButton isLoading={form.formState.isSubmitting}>
+            درخواست بازیابی
+          </AuthSubmitButton>
+
+          <div className="text-center">
+            <Link
+              href="/login"
+              className="text-accent-foreground hover:text-foreground text-sm underline transition-colors"
+            >
+              بازگشت به صفحه ورود
+            </Link>
+          </div>
+        </form>
+      </Form>
+    </AuthLayout>
   );
 }

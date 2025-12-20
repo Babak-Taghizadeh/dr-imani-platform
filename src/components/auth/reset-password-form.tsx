@@ -2,24 +2,11 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Form, FormControl, FormField } from "@/components/ui/form";
+import { AuthInput } from "@/components/auth/auth-input";
+import { AuthSubmitButton } from "@/components/auth/auth-submit-button";
+import { AuthLayout } from "@/components/auth/auth-layout";
+import { PasswordRequirements } from "@/components/auth/password-requirements";
 import {
   resetPasswordSchema,
   ResetPasswordFormData,
@@ -27,16 +14,13 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { useEffect } from "react";
 
 interface ResetPasswordFormProps {
   token: string;
 }
 
 export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
 
   const form = useForm<ResetPasswordFormData>({
@@ -47,6 +31,16 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       token,
     },
   });
+
+  const password = form.watch("password");
+
+  // Autofocus first field
+  useEffect(() => {
+    const firstInput = document.querySelector<HTMLInputElement>(
+      'input[name="password"]',
+    );
+    firstInput?.focus();
+  }, []);
 
   const onSubmit = async (values: ResetPasswordFormData) => {
     try {
@@ -75,97 +69,65 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>تنظیم رمز عبور جدید</CardTitle>
-          <CardDescription>رمز عبور جدید خود را وارد کنید</CardDescription>
-        </CardHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CardContent className="space-y-4">
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="relative">
-                    <FormLabel>رمز عبور جدید</FormLabel>
-                    <FormControl>
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                    <div className="absolute top-1/2 left-0 -translate-y-1/5">
-                      <button
-                        type="button"
-                        className="rounded-md p-2"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                      >
-                        {showPassword ? (
-                          <Eye size={20} />
-                        ) : (
-                          <EyeOff size={20} />
-                        )}
-                      </button>
-                    </div>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem className="relative">
-                    <FormLabel>تأیید رمز عبور</FormLabel>
-                    <FormControl>
-                      <Input
-                        type={showConfirmPassword ? "text" : "password"}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                    <div className="absolute top-1/2 left-0 -translate-y-1/5">
-                      <button
-                        type="button"
-                        className="rounded-md p-2"
-                        onClick={() => setShowConfirmPassword((prev) => !prev)}
-                      >
-                        {showConfirmPassword ? (
-                          <Eye size={20} />
-                        ) : (
-                          <EyeOff size={20} />
-                        )}
-                      </button>
-                    </div>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="token"
-                render={() => <></>}
-              />
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4">
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={form.formState.isSubmitting}
-              >
-                تغییر رمز عبور
-              </Button>
-              <Link
-                href="/login"
-                className="text-primary text-center text-sm hover:underline"
-              >
-                بازگشت به صفحه ورود
-              </Link>
-            </CardFooter>
-          </form>
-        </Form>
-      </Card>
-    </div>
+    <AuthLayout
+      title="تنظیم رمز عبور جدید"
+      description="رمز عبور جدید خود را وارد کنید"
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormControl>
+                <div className="space-y-2">
+                  <AuthInput
+                    {...field}
+                    label="رمز عبور جدید"
+                    type="password"
+                    autocomplete="new-password"
+                    showPasswordToggle
+                    error={form.formState.errors.password?.message}
+                  />
+                  <PasswordRequirements password={password} />
+                </div>
+              </FormControl>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormControl>
+                <AuthInput
+                  {...field}
+                  label="تأیید رمز عبور"
+                  type="password"
+                  autocomplete="new-password"
+                  showPasswordToggle
+                  error={form.formState.errors.confirmPassword?.message}
+                />
+              </FormControl>
+            )}
+          />
+
+          <FormField control={form.control} name="token" render={() => <></>} />
+
+          <AuthSubmitButton isLoading={form.formState.isSubmitting}>
+            تنظیم رمز عبور جدید
+          </AuthSubmitButton>
+
+          <div className="text-center">
+            <Link
+              href="/login"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              بازگشت به صفحه ورود
+            </Link>
+          </div>
+        </form>
+      </Form>
+    </AuthLayout>
   );
 }

@@ -3,34 +3,18 @@
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Form, FormControl, FormField } from "@/components/ui/form";
+import { AuthInput } from "@/components/auth/auth-input";
+import { AuthSubmitButton } from "@/components/auth/auth-submit-button";
+import { AuthLayout } from "@/components/auth/auth-layout";
+import { PasswordRequirements } from "@/components/auth/password-requirements";
 import { signupSchema, SignupFormData } from "@/lib/validation-schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { useEffect } from "react";
 
 export function SignupForm() {
-  const [showPassword, setShowPassword] = useState(false);
-
   const router = useRouter();
 
   const form = useForm<SignupFormData>({
@@ -42,6 +26,16 @@ export function SignupForm() {
       password: "",
     },
   });
+
+  const password = form.watch("password");
+
+  // Autofocus first field
+  useEffect(() => {
+    const firstInput = document.querySelector<HTMLInputElement>(
+      'input[name="name"]'
+    );
+    firstInput?.focus();
+  }, []);
 
   const onSubmit = async (values: SignupFormData) => {
     try {
@@ -79,102 +73,98 @@ export function SignupForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>ثبت‌نام</CardTitle>
-          <CardDescription>برای رزرو نوبت، ابتدا ثبت‌نام کنید</CardDescription>
-        </CardHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CardContent className="space-y-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>نام و نام خانوادگی</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="نام خود را وارد کنید" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="idNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>شماره شناسنامه</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="شماره شناسنامه" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>شماره تلفن</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="09123456789" type="tel" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="relative">
-                    <FormLabel>رمز عبور</FormLabel>
-                    <FormControl>
-                      <Input
-                        type={showPassword ? "text" : "password"}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                    <div className="absolute top-1/2 left-0 -translate-y-1/6">
-                      <button
-                        type="button"
-                        className="rounded-md p-2"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                      >
-                        {showPassword ? (
-                          <Eye size={20} />
-                        ) : (
-                          <EyeOff size={20} />
-                        )}
-                      </button>
-                    </div>
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4">
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={form.formState.isSubmitting}
-              >
-                ثبت‌نام
-              </Button>
-              <p className="text-muted-foreground text-center text-sm">
-                قبلاً ثبت‌نام کرده‌اید؟{" "}
-                <Link href="/login" className="text-primary hover:underline">
-                  ورود
-                </Link>
-              </p>
-            </CardFooter>
-          </form>
-        </Form>
-      </Card>
-    </div>
+    <AuthLayout
+      title="ثبت‌نام"
+      description="برای رزرو نوبت، ابتدا ثبت‌نام کنید"
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormControl>
+                <AuthInput
+                  {...field}
+                  label="نام و نام خانوادگی"
+                  type="text"
+                  autocomplete="name"
+                  error={form.formState.errors.name?.message}
+                  placeholder="نام خود را وارد کنید"
+                />
+              </FormControl>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="idNumber"
+            render={({ field }) => (
+              <FormControl>
+                <AuthInput
+                  {...field}
+                  label="شماره شناسنامه"
+                  type="text"
+                  autocomplete="off"
+                  error={form.formState.errors.idNumber?.message}
+                  placeholder="شماره شناسنامه"
+                />
+              </FormControl>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormControl>
+                <AuthInput
+                  {...field}
+                  label="شماره تلفن"
+                  type="tel"
+                  autocomplete="tel"
+                  error={form.formState.errors.phoneNumber?.message}
+                  placeholder="09123456789"
+                />
+              </FormControl>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormControl>
+                <div className="space-y-2">
+                  <AuthInput
+                    {...field}
+                    label="رمز عبور"
+                    type="password"
+                    autocomplete="new-password"
+                    showPasswordToggle
+                    error={form.formState.errors.password?.message}
+                  />
+                  <PasswordRequirements password={password} />
+                </div>
+              </FormControl>
+            )}
+          />
+
+          <AuthSubmitButton isLoading={form.formState.isSubmitting}>
+            ثبت‌نام
+          </AuthSubmitButton>
+
+          <p className="text-center text-sm text-muted-foreground">
+            قبلاً ثبت‌نام کرده‌اید؟{" "}
+            <Link
+              href="/login"
+              className="font-medium text-foreground hover:underline"
+            >
+              ورود
+            </Link>
+          </p>
+        </form>
+      </Form>
+    </AuthLayout>
   );
 }
