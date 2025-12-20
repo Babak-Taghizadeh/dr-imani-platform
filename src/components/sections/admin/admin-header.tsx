@@ -8,7 +8,7 @@ const AdminHeader = () => {
         <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
           داشبورد مدیریت
         </h1>
-        <p className="text-muted-foreground text-sm md:text-lg">
+        <p className="text-accent-foreground text-sm md:text-lg">
           مدیریت و ویرایش محتوای سایت کلینیک دکتر ایمانی
         </p>
       </div>
