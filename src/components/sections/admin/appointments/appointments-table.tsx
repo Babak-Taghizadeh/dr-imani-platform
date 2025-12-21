@@ -44,34 +44,54 @@ export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {appointments.map((appointment) => (
-          <TableRow key={appointment.id}>
-            <TableCell>{appointment.userName || "-"}</TableCell>
-            <TableCell>
-              {appointment.userPhone
-                ? toPersianNumber(appointment.userPhone)
-                : "-"}
+        {appointments.length > 0 ? (
+          appointments.map((appointment) => (
+            <TableRow key={appointment.id}>
+              <TableCell>{appointment.userName || "-"}</TableCell>
+              <TableCell>
+                {appointment.userPhone
+                  ? toPersianNumber(appointment.userPhone)
+                  : "-"}
+              </TableCell>
+              <TableCell>
+                {appointment.appointmentType === "ONLINE_PHONE"
+                  ? "تماس تلفنی"
+                  : "حضوری"}
+              </TableCell>
+              <TableCell>{toShamsi(appointment.date)}</TableCell>
+              <TableCell>{toPersianNumber(appointment.time)}</TableCell>
+              <TableCell>
+                {toPersianNumber(appointment.price.toLocaleString("en-US"))}{" "}
+                تومان
+              </TableCell>
+              <TableCell>
+                <Badge
+                  variant={
+                    statusLabels[appointment.status]?.variant || "outline"
+                  }
+                >
+                  {statusLabels[appointment.status]?.label ||
+                    appointment.status}
+                </Badge>
+              </TableCell>
+              <TableCell>-</TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell
+              colSpan={8}
+              className="text-accent-foreground h-24 text-center"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <p className="text-base">نوبتی یافت نشد.</p>
+                <p className="text-sm">
+                  با فیلترهای فعلی هیچ نوبتی وجود ندارد.
+                </p>
+              </div>
             </TableCell>
-            <TableCell>
-              {appointment.appointmentType === "ONLINE_PHONE"
-                ? "تماس تلفنی"
-                : "حضوری"}
-            </TableCell>
-            <TableCell>{toShamsi(appointment.date)}</TableCell>
-            <TableCell>{toPersianNumber(appointment.time)}</TableCell>
-            <TableCell>
-              {toPersianNumber(appointment.price.toLocaleString("en-US"))} تومان
-            </TableCell>
-            <TableCell>
-              <Badge
-                variant={statusLabels[appointment.status]?.variant || "outline"}
-              >
-                {statusLabels[appointment.status]?.label || appointment.status}
-              </Badge>
-            </TableCell>
-            <TableCell>-</TableCell>
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );
