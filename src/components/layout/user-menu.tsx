@@ -58,7 +58,11 @@ export function UserMenu() {
     <div className="hidden [@media(min-width:930px)]:block">
       <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="gap-2" aria-label="منوی کاربر">
+          <Button
+            variant="outline"
+            className="hover:!text-foreground gap-2"
+            aria-label="منوی کاربر"
+          >
             <UserCircle className="h-4 w-4" />
             <span className="hidden max-w-[120px] truncate sm:inline">
               {userName}
@@ -68,7 +72,7 @@ export function UserMenu() {
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col gap-2">
-              <p className="text-muted-foreground text-xs leading-none">
+              <p className="text-accent-foreground text-xs leading-none">
                 حساب کاربری
               </p>
               <p className="text-sm leading-none font-medium">{userName}</p>
