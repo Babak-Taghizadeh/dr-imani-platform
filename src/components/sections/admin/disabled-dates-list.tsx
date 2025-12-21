@@ -40,22 +40,18 @@ export function DisabledDatesList({
         <CardDescription>لیست بازه‌های تاریخی غیرفعال</CardDescription>
       </CardHeader>
       <CardContent>
-        {initialDisabledDates.length === 0 ? (
-          <p className="text-muted-foreground py-8 text-center">
-            هیچ تاریخ غیرفعالی وجود ندارد
-          </p>
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>از تاریخ</TableHead>
-                <TableHead>تا تاریخ</TableHead>
-                <TableHead>دلیل</TableHead>
-                <TableHead className="text-right">عملیات</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {initialDisabledDates.map((range) => (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>از تاریخ</TableHead>
+              <TableHead>تا تاریخ</TableHead>
+              <TableHead>دلیل</TableHead>
+              <TableHead className="text-right">عملیات</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {initialDisabledDates.length > 0 ? (
+              initialDisabledDates.map((range) => (
                 <TableRow key={range.id}>
                   <TableCell>{toShamsi(range.startDate)}</TableCell>
                   <TableCell>{toShamsi(range.endDate)}</TableCell>
@@ -65,10 +61,24 @@ export function DisabledDatesList({
                     <SureDeleteDisabledDateModal disabledDateId={range.id} />
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={4}
+                  className="text-accent-foreground h-24 text-center"
+                >
+                  <div className="flex flex-col items-center gap-1">
+                    <p className="text-base">تاریخ غیرفعالی یافت نشد.</p>
+                    <p className="text-sm">
+                      هنوز هیچ بازه تاریخی غیرفعال نشده است.
+                    </p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );
