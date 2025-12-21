@@ -14,8 +14,6 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
-
 interface ResetPasswordFormProps {
   token: string;
 }
@@ -33,14 +31,6 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   });
 
   const password = form.watch("password");
-
-  // Autofocus first field
-  useEffect(() => {
-    const firstInput = document.querySelector<HTMLInputElement>(
-      'input[name="password"]',
-    );
-    firstInput?.focus();
-  }, []);
 
   const onSubmit = async (values: ResetPasswordFormData) => {
     try {

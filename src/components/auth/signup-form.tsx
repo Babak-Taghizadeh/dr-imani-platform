@@ -12,7 +12,6 @@ import { signupSchema, SignupFormData } from "@/lib/validation-schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export function SignupForm() {
   const router = useRouter();
@@ -28,13 +27,6 @@ export function SignupForm() {
   });
 
   const password = form.watch("password");
-
-  // Autofocus first field
-  useEffect(() => {
-    const firstInput =
-      document.querySelector<HTMLInputElement>('input[name="name"]');
-    firstInput?.focus();
-  }, []);
 
   const onSubmit = async (values: SignupFormData) => {
     try {

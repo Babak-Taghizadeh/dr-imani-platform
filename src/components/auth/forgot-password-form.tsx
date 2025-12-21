@@ -13,7 +13,6 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export function ForgotPasswordForm() {
   const router = useRouter();
@@ -25,14 +24,6 @@ export function ForgotPasswordForm() {
       phoneNumber: "",
     },
   });
-
-  // Autofocus first field
-  useEffect(() => {
-    const firstInput = document.querySelector<HTMLInputElement>(
-      'input[name="idNumber"]',
-    );
-    firstInput?.focus();
-  }, []);
 
   const onSubmit = async (values: ForgotPasswordFormData) => {
     try {
