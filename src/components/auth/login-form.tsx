@@ -11,7 +11,6 @@ import { userLoginSchema, UserLoginFormData } from "@/lib/validation-schema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -23,14 +22,6 @@ export function LoginForm() {
       password: "",
     },
   });
-
-  // Autofocus first field
-  useEffect(() => {
-    const firstInput = document.querySelector<HTMLInputElement>(
-      'input[name="phoneNumber"]'
-    );
-    firstInput?.focus();
-  }, []);
 
   const onSubmit = async (values: UserLoginFormData) => {
     const res = await signIn("user", {
@@ -46,7 +37,7 @@ export function LoginForm() {
       });
     } else if (res?.ok) {
       toast.success("خوش آمدید");
-      router.push("/profile");
+      router.replace("/profile");
     } else {
       toast.error("خطایی در ورود رخ داد");
     }
@@ -96,7 +87,7 @@ export function LoginForm() {
           <div className="text-left">
             <Link
               href="/forgot-password"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-accent-foreground hover:text-foreground text-sm transition-colors hover:underline"
             >
               رمز عبور را فراموش کرده‌اید؟
             </Link>
@@ -106,11 +97,11 @@ export function LoginForm() {
             ورود
           </AuthSubmitButton>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-center text-sm">
             حساب کاربری ندارید؟{" "}
             <Link
               href="/signup"
-              className="font-medium text-foreground hover:underline"
+              className="text-foreground font-medium hover:underline"
             >
               ثبت‌نام
             </Link>
