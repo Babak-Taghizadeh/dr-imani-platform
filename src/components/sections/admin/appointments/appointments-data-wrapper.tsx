@@ -6,6 +6,8 @@ import { AppointmentsTable } from "./appointments-table";
 import { AppointmentsTableEmpty } from "@/components/sections/admin/appointments-table-empty";
 import { AppointmentsTableSkeleton } from "./appointments-table-skeleton";
 import { AdminPagination } from "@/components/sections/admin/admin-pagination";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 import type {
   AdminAppointmentsResponse,
   AppointmentWithUser,
@@ -47,7 +49,7 @@ export function AppointmentsDataWrapper({
   }, [filters, page]);
 
   // Use SWR for data fetching
-  const { data, error, isLoading } = useSWR<AdminAppointmentsResponse>(
+  const { data, error, isLoading, mutate } = useSWR<AdminAppointmentsResponse>(
     apiUrl,
     fetcher,
     {
@@ -67,7 +69,23 @@ export function AppointmentsDataWrapper({
   if (error) {
     return (
       <div className="flex items-center justify-center p-8">
-        <p className="text-destructive">خطا در بارگذاری داده‌ها</p>
+        <div className="text-center">
+          <p className="text-destructive text-lg font-semibold">
+            خطا در بارگذاری داده‌ها
+          </p>
+          <p className="text-muted-foreground mt-2 text-sm">
+            {error instanceof Error ? error.message : "خطای ناشناخته"}
+          </p>
+          <Button
+            onClick={() => mutate()}
+            variant="outline"
+            className="mt-4"
+            size="sm"
+          >
+            <RefreshCw className="ml-2 h-4 w-4" />
+            تلاش مجدد
+          </Button>
+        </div>
       </div>
     );
   }
