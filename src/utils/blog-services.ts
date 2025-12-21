@@ -33,6 +33,7 @@ export const getBlogs = async (page = 1, limit = 6) => {
       slug: blogs.slug,
       status: blogs.status,
       imageUrl: blogs.imageUrl,
+      imageKey: blogs.imageKey,
       content: blogs.content,
       excerpt: blogs.excerpt,
       createdAt: blogs.createdAt,
@@ -46,6 +47,39 @@ export const getBlogs = async (page = 1, limit = 6) => {
   return {
     blogs: result,
     totalPages: Math.ceil((result[0]?.total ?? 0) / limit),
+  };
+};
+
+export const getPaginatedBlogs = async (
+  page: number,
+  limit = 10,
+): Promise<{ blogs: Array<{
+  id: number;
+  title: string;
+  slug: string;
+  status: "ذخیره شده" | "منتشر شده";
+  imageUrl: string;
+  imageKey: string;
+  content: string;
+  createdAt: string;
+  excerpt?: string;
+}>; totalPages: number }> => {
+  const result = await getBlogs(page, limit);
+  return {
+    blogs: result.blogs.map((blog) => ({
+      id: blog.id,
+      title: blog.title,
+      slug: blog.slug,
+      status: blog.status as "ذخیره شده" | "منتشر شده",
+      imageUrl: blog.imageUrl || "",
+      imageKey: blog.imageKey || "",
+      content: blog.content,
+      createdAt: blog.createdAt instanceof Date 
+        ? blog.createdAt.toISOString() 
+        : blog.createdAt,
+      excerpt: blog.excerpt || undefined,
+    })),
+    totalPages: result.totalPages,
   };
 };
 

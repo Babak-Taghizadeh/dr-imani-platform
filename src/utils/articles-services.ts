@@ -42,6 +42,41 @@ export const getArticles = async (page = 1, limit = 6) => {
   };
 };
 
+export const getPaginatedArticles = async (
+  page: number,
+  limit = 10,
+): Promise<{
+  articles: Array<{
+    id: number;
+    title: string;
+    summary: string;
+    publishedAt: string;
+    fileUrl: string;
+    fileKey: string;
+    scholarLink?: string;
+    inputType?: "file" | "link";
+  }>;
+  totalPages: number;
+}> => {
+  const result = await getArticles(page, limit);
+  return {
+    articles: result.articles.map((article) => ({
+      id: article.id,
+      title: article.title,
+      summary: article.summary,
+      publishedAt:
+        article.publishedAt instanceof Date
+          ? article.publishedAt.toISOString()
+          : article.publishedAt,
+      fileUrl: article.fileUrl || "",
+      fileKey: article.fileKey || "",
+      scholarLink: article.scholarLink || undefined,
+      inputType: (article.inputType as "file" | "link" | null) || undefined,
+    })),
+    totalPages: result.totalPages,
+  };
+};
+
 export const updateArticle = async (id: number, data: ArticleFormData) => {
   const current = await db.select().from(articles).where(eq(articles.id, id));
 
