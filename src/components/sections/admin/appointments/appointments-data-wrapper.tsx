@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import useSWR from "swr";
 import { AppointmentsTable } from "./appointments-table";
 import { AppointmentsTableEmpty } from "@/components/sections/admin/appointments-table-empty";
-import TableSkeleton from "@/components/sections/admin/table-skeleton";
+import { AppointmentsTableSkeleton } from "./appointments-table-skeleton";
 import { AdminPagination } from "@/components/sections/admin/admin-pagination";
 import type {
   AdminAppointmentsResponse,
@@ -61,7 +61,7 @@ export function AppointmentsDataWrapper({
   const totalPages = data?.pagination?.totalPages || 1;
 
   if (isLoading) {
-    return <TableSkeleton />;
+    return <AppointmentsTableSkeleton />;
   }
 
   if (error) {
