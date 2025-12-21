@@ -68,7 +68,7 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
               onClick={() => setShowPassword((prev) => !prev)}
               className={cn(
                 "absolute top-1/2 left-3 -translate-y-1/2",
-                "text-muted-foreground rounded-md p-1.5 transition-colors",
+                "text-accent-foreground rounded-md p-1.5 transition-colors",
                 "hover:text-foreground focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
                 "disabled:pointer-events-none disabled:opacity-50",
               )}
@@ -78,9 +78,9 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
               tabIndex={-1}
             >
               {showPassword ? (
-                <EyeOff className="h-4 w-4" />
+                <EyeOff className="h-5 w-5" />
               ) : (
-                <Eye className="h-4 w-4" />
+                <Eye className="h-5 w-5" />
               )}
             </button>
           )}
