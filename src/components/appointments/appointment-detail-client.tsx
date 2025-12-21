@@ -4,10 +4,11 @@ import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, Calendar, Phone, Building2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import type { Appointment, AppointmentWithUser } from "@/lib/types";
-import { formatDatePersian, toPersianNumber } from "@/lib/persian-number-utils";
+import { toPersianNumber } from "@/lib/persian-number-utils";
+import { toShamsi } from "@/lib/shamsi-utils";
 import { statusLabels } from "@/lib/appointment-constants";
 
 interface AppointmentDetailClientProps {
@@ -47,13 +48,8 @@ export function AppointmentDetailClient({
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center gap-2">
-              {appointment.appointmentType === "ONLINE_PHONE" ? (
-                <Phone className="text-muted-foreground h-4 w-4" />
-              ) : (
-                <Building2 className="text-muted-foreground h-4 w-4" />
-              )}
               <div>
-                <p className="text-muted-foreground text-sm">نوع نوبت</p>
+                <p className="text-accent-foreground text-sm">نوع نوبت</p>
                 <p className="font-medium">
                   {appointment.appointmentType === "ONLINE_PHONE"
                     ? "تماس تلفنی"
@@ -62,25 +58,21 @@ export function AppointmentDetailClient({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="text-muted-foreground h-4 w-4" />
               <div>
-                <p className="text-muted-foreground text-sm">تاریخ</p>
-                <p className="font-medium">
-                  {formatDatePersian(new Date(appointment.date), "yyyy/MM/dd")}
-                </p>
+                <p className="text-accent-foreground text-sm">تاریخ</p>
+                <p className="font-medium">{toShamsi(appointment.date)}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="text-muted-foreground h-4 w-4" />
               <div>
-                <p className="text-muted-foreground text-sm">زمان</p>
+                <p className="text-accent-foreground text-sm">زمان</p>
                 <p className="font-medium">
                   {toPersianNumber(appointment.time)}
                 </p>
               </div>
             </div>
             <div>
-              <p className="text-muted-foreground text-sm">گروه سنی</p>
+              <p className="text-accent-foreground text-sm">گروه سنی</p>
               <p className="font-medium">
                 {appointment.ageRange === "UNDER_15"
                   ? `زیر ${toPersianNumber(15)} سال`
@@ -91,7 +83,7 @@ export function AppointmentDetailClient({
 
           <div className="border-t pt-4">
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground text-sm">مبلغ:</span>
+              <span className="text-accent-foreground text-sm">مبلغ:</span>
               <span className="text-primary text-2xl font-bold">
                 {appointment.price.toLocaleString("fa-IR")} تومان
               </span>
@@ -100,7 +92,7 @@ export function AppointmentDetailClient({
 
           {appointment.paymentReference && (
             <div className="border-t pt-4">
-              <p className="text-muted-foreground text-sm">
+              <p className="text-accent-foreground text-sm">
                 شماره پیگیری پرداخت:
               </p>
               <p className="font-mono text-sm">
