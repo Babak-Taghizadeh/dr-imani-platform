@@ -26,16 +26,17 @@ export const metadata: Metadata = {
 };
 
 interface BlogsPageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
-  };
+  }>;
 }
 
 export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   // Authentication check at page level - redirects execute before any rendering
   await requireAdmin();
 
-  const page = Math.max(1, parseInt(searchParams?.page || "1", 10) || 1);
+  const params = await searchParams;
+  const page = Math.max(1, parseInt(params?.page || "1", 10) || 1);
 
   const { blogs, totalPages } = await getPaginatedBlogs(page);
 
