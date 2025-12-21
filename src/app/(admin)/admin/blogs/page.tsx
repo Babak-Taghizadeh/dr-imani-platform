@@ -1,7 +1,9 @@
 import BlogsManager from "@/components/sections/admin/blogs/blogs-manager";
-import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
-import { Blog } from "@/lib/types";
+import { getPaginatedBlogs } from "@/utils/blog-services";
 import { Metadata } from "next";
+import { requireAdmin } from "@/lib/auth-guards";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "مدیریت بلاگ‌ها",
@@ -20,44 +22,26 @@ export const metadata: Metadata = {
   },
   other: {
     referrer: "no-referrer",
-    "cache-control": "no-store, max-age=0",
   },
 };
 
 interface BlogsPageProps {
-  searchParams?: Promise<{
+  searchParams?: {
     page?: string;
-  }>;
+  };
 }
 
 export default async function BlogsPage({ searchParams }: BlogsPageProps) {
-  const params = await searchParams;
-  const page = parseInt(params?.page || "1", 10);
+  // Authentication check at page level - redirects execute before any rendering
+  await requireAdmin();
 
-  try {
-    const { blogs, totalPages } = await fetchPaginatedData<Blog>(
-      "blogs",
-      "blogs",
-      page,
-    );
+  const page = Math.max(1, parseInt(searchParams?.page || "1", 10) || 1);
 
-    return (
-      <div className="min-w-0 space-y-6 overflow-x-hidden">
-        <BlogsManager blogs={blogs} page={page} totalPages={totalPages} />
-      </div>
-    );
-  } catch (error) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-center">
-          <p className="text-destructive text-lg font-semibold">
-            خطا در بارگذاری داده‌ها
-          </p>
-          <p className="text-muted-foreground mt-2 text-sm">
-            {error instanceof Error ? error.message : "خطای ناشناخته"}
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const { blogs, totalPages } = await getPaginatedBlogs(page);
+
+  return (
+    <div className="min-w-0 space-y-6 overflow-x-hidden">
+      <BlogsManager blogs={blogs} page={page} totalPages={totalPages} />
+    </div>
+  );
 }

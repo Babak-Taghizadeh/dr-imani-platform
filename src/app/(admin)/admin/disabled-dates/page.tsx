@@ -1,9 +1,6 @@
 import { Suspense } from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { db } from "@/db/db";
 import { disabledDates } from "@/db/schema";
-import { redirect } from "next/navigation";
 import { DisableDatesForm } from "@/components/sections/admin/disable-dates-form";
 import { DisabledDatesList } from "@/components/sections/admin/disabled-dates-list";
 import { DisabledDatesTableSkeleton } from "@/components/sections/admin/disabled-dates-table-skeleton";
@@ -16,6 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { requireAdmin } from "@/lib/auth-guards";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "مدیریت تاریخ‌های غیرفعال",
@@ -34,7 +34,6 @@ export const metadata: Metadata = {
   },
   other: {
     referrer: "no-referrer",
-    "cache-control": "no-store, max-age=0",
   },
 };
 
@@ -45,13 +44,11 @@ interface DisabledDateRange {
   reason?: string | null;
 }
 
+/**
+ * Pure data-fetching function for disabled dates.
+ * No authentication checks - auth is handled at page level.
+ */
 async function getDisabledDates(): Promise<DisabledDateRange[]> {
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user || session.user.role !== "admin") {
-    redirect("/signin");
-  }
-
   const disabledRanges = await db
     .select()
     .from(disabledDates)
@@ -73,47 +70,15 @@ async function getDisabledDates(): Promise<DisabledDateRange[]> {
 }
 
 async function DisabledDatesListWrapper() {
-  try {
-    const disabledDatesList = await getDisabledDates();
-    return <DisabledDatesList initialDisabledDates={disabledDatesList} />;
-  } catch (error) {
-    // Re-throw redirect errors - Next.js redirect() throws a special error
-    // that must not be caught, otherwise the redirect won't execute
-    if (
-      error &&
-      typeof error === "object" &&
-      "digest" in error &&
-      typeof error.digest === "string" &&
-      error.digest.startsWith("NEXT_REDIRECT")
-    ) {
-      throw error;
-    }
-
-    // Handle other errors (database errors, etc.)
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>تاریخ‌های غیرفعال شده</CardTitle>
-          <CardDescription>لیست بازه‌های تاریخی غیرفعال</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-center p-8">
-            <div className="text-center">
-              <p className="text-destructive text-lg font-semibold">
-                خطا در بارگذاری داده‌ها
-              </p>
-              <p className="text-muted-foreground mt-2 text-sm">
-                {error instanceof Error ? error.message : "خطای ناشناخته"}
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
+  const disabledDatesList = await getDisabledDates();
+  return <DisabledDatesList initialDisabledDates={disabledDatesList} />;
 }
 
 export default async function DisabledDatesPage() {
+  // Authentication check at page level - redirects execute before Suspense
+  // This ensures redirect errors cannot be caught by error boundaries
+  await requireAdmin();
+
   return (
     <div className="min-w-0 space-y-6 overflow-x-hidden">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
