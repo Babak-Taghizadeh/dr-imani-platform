@@ -1,8 +1,6 @@
-import { Suspense } from "react";
 import { Article } from "@/lib/types";
 import ArticlesTable from "./articles-table";
 import PaginationControls from "@/components/shared/pagination-controls";
-import TableSkeleton from "../table-skeleton";
 import { ModifyArticleModal } from "./modify-article-modal";
 
 interface ArticlesManagerProps {
@@ -19,9 +17,7 @@ const ArticlesManager = ({
   return (
     <>
       <ModifyArticleModal mode="create" />
-      <Suspense fallback={<TableSkeleton />}>
-        <ArticlesTable articles={articles} />
-      </Suspense>
+      <ArticlesTable articles={articles} />
       {totalPages > 1 && (
         <PaginationControls
           currentPage={page}
