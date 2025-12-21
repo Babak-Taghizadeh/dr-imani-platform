@@ -26,7 +26,6 @@ import {
 } from "@/lib/validation-schema";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useEffect } from "react";
 import type { User } from "@/lib/types";
 
 interface ProfileFormProps {
@@ -45,15 +44,6 @@ export function ProfileForm({ user }: ProfileFormProps) {
     },
   });
 
-  // Reset form when user data changes
-  useEffect(() => {
-    form.reset({
-      name: user.name,
-      idNumber: user.idNumber,
-      phoneNumber: user.phoneNumber,
-    });
-  }, [user, form]);
-
   const onSubmit = async (values: UpdateProfileFormData) => {
     try {
       const res = await fetch("/api/users/me", {
@@ -70,7 +60,17 @@ export function ProfileForm({ user }: ProfileFormProps) {
       }
 
       toast.success("پروفایل با موفقیت به‌روزرسانی شد");
-      router.refresh(); // Refresh to get updated data
+
+      // Reset form with updated data from server response
+      if (data.user) {
+        form.reset({
+          name: data.user.name,
+          idNumber: data.user.idNumber,
+          phoneNumber: data.user.phoneNumber,
+        });
+      }
+
+      router.refresh();
     } catch {
       toast.error("خطایی در به‌روزرسانی پروفایل رخ داد");
     }
