@@ -38,7 +38,7 @@ export function AuthLayout({
 
         <Shield className="text-primary/10 absolute right-8 bottom-8 h-11 w-11 md:h-14 md:w-14" />
 
-        <User className="text-primary/10 absolute top-12 left-1/2 h-9 w-9 -translate-x-1/2 md:h-12 md:w-12" />
+        <User className="text-primary/10 absolute top-6 left-1/2 h-9 w-9 -translate-x-1/2 md:h-12 md:w-12" />
       </div>
 
       <div
