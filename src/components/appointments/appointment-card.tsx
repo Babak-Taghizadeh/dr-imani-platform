@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Phone, Building2 } from "lucide-react";
 import Link from "next/link";
-import { formatDatePersian, toPersianNumber } from "@/lib/persian-number-utils";
+import { toPersianNumber } from "@/lib/persian-number-utils";
+import { toShamsi } from "@/lib/shamsi-utils";
 import { statusLabels } from "@/lib/appointment-constants";
 import type { Appointment } from "@/lib/types";
 
@@ -35,13 +36,13 @@ export function AppointmentCard({ appointment }: AppointmentCardProps) {
           <div className="flex-1 space-y-4">
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div className="flex items-center gap-2">
-                <Calendar className="text-accent-foreground h-4 w-4" />
+                <Calendar className="text-accent-foreground h-5 w-5" />
                 <span className="text-sm sm:text-base">
-                  {formatDatePersian(new Date(appointment.date), "yyyy/MM/dd")}
+                  {toShamsi(appointment.date)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="text-accent-foreground h-4 w-4" />
+                <Clock className="text-accent-foreground h-5 w-5" />
                 <span className="text-sm sm:text-base">
                   {toPersianNumber(appointment.time)}
                 </span>
@@ -60,7 +61,12 @@ export function AppointmentCard({ appointment }: AppointmentCardProps) {
             >
               {statusLabels[appointment.status]?.label || appointment.status}
             </Badge>
-            <Button variant="outline" size="sm" asChild>
+            <Button
+              variant="outline"
+              className="hover:!text-foreground !bg-blue-50 hover:!bg-blue-100"
+              size="sm"
+              asChild
+            >
               <Link href={`/appointments/${appointment.id}`}>
                 مشاهده جزئیات
               </Link>
