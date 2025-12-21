@@ -36,7 +36,7 @@ export default function AdminNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-muted/20 flex w-full justify-start gap-1.5 overflow-x-auto rounded-lg px-1 py-2 shadow-md [-ms-overflow-style:none] [scrollbar-width:none] sm:justify-center sm:gap-4 sm:p-4 md:gap-6 [&::-webkit-scrollbar]:hidden">
+    <nav className="bg-muted/20 relative z-10 flex w-full justify-start gap-1.5 overflow-x-auto rounded-lg px-1 py-2 shadow-md [-ms-overflow-style:none] [scrollbar-width:none] sm:justify-center sm:gap-4 sm:p-4 md:gap-6 [&::-webkit-scrollbar]:hidden">
       {tabs.map((tab) => {
         const isActive = pathname === tab.href;
         const Icon = tab.icon;
