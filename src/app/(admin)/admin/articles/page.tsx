@@ -36,19 +36,34 @@ export default async function ArticlesPage({
   const params = await searchParams;
   const page = parseInt(params?.page || "1", 10);
 
-  const { articles, totalPages } = await fetchPaginatedData<Article>(
-    "articles",
-    "articles",
-    page,
-  );
+  try {
+    const { articles, totalPages } = await fetchPaginatedData<Article>(
+      "articles",
+      "articles",
+      page,
+    );
 
-  return (
-    <div className="min-w-0 space-y-6 overflow-x-hidden">
-      <ArticlesManager
-        articles={articles}
-        page={page}
-        totalPages={totalPages}
-      />
-    </div>
-  );
+    return (
+      <div className="min-w-0 space-y-6 overflow-x-hidden">
+        <ArticlesManager
+          articles={articles}
+          page={page}
+          totalPages={totalPages}
+        />
+      </div>
+    );
+  } catch (error) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-destructive text-lg font-semibold">
+            خطا در بارگذاری داده‌ها
+          </p>
+          <p className="text-muted-foreground mt-2 text-sm">
+            {error instanceof Error ? error.message : "خطای ناشناخته"}
+          </p>
+        </div>
+      </div>
+    );
+  }
 }

@@ -73,8 +73,44 @@ async function getDisabledDates(): Promise<DisabledDateRange[]> {
 }
 
 async function DisabledDatesListWrapper() {
-  const disabledDatesList = await getDisabledDates();
-  return <DisabledDatesList initialDisabledDates={disabledDatesList} />;
+  try {
+    const disabledDatesList = await getDisabledDates();
+    return <DisabledDatesList initialDisabledDates={disabledDatesList} />;
+  } catch (error) {
+    // Re-throw redirect errors - Next.js redirect() throws a special error
+    // that must not be caught, otherwise the redirect won't execute
+    if (
+      error &&
+      typeof error === "object" &&
+      "digest" in error &&
+      typeof error.digest === "string" &&
+      error.digest.startsWith("NEXT_REDIRECT")
+    ) {
+      throw error;
+    }
+
+    // Handle other errors (database errors, etc.)
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>تاریخ‌های غیرفعال شده</CardTitle>
+          <CardDescription>لیست بازه‌های تاریخی غیرفعال</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-center p-8">
+            <div className="text-center">
+              <p className="text-destructive text-lg font-semibold">
+                خطا در بارگذاری داده‌ها
+              </p>
+              <p className="text-muted-foreground mt-2 text-sm">
+                {error instanceof Error ? error.message : "خطای ناشناخته"}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 }
 
 export default async function DisabledDatesPage() {
