@@ -77,10 +77,10 @@ export function ConfirmationSummary({ form }: ConfirmationSummaryProps) {
         })}
 
         <div className="bg-primary/5 border-primary/20 mt-6 flex items-center justify-between rounded-lg border-2 p-4">
-          <span className="text-base font-bold md:text-lg">
+          <span className="text-sm font-bold md:text-base">
             مبلغ قابل پرداخت:
           </span>
-          <span className="text-primary text-lg font-bold md:text-2xl">
+          <span className="text-primary text-base font-bold md:text-xl">
             {price.toLocaleString("fa-IR")} تومان
           </span>
         </div>

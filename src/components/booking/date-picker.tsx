@@ -205,8 +205,9 @@ export function DatePicker({
                 className={cn(
                   "text-[10px] sm:text-xs",
                   isDisabled
-                    ? "text-muted-foreground/50"
-                    : "text-muted-foreground",
+                    ? "text-accent-foreground/50"
+                    : "text-accent-foreground",
+                  isSelected && "text-primary-foreground",
                 )}
               >
                 {dateInfo.dayName}
@@ -214,7 +215,7 @@ export function DatePicker({
               <span
                 className={cn(
                   "text-base font-semibold sm:text-lg",
-                  isDisabled && "text-muted-foreground/50",
+                  isDisabled && "text-accent-foreground/50",
                 )}
               >
                 {toPersianNumber(dateInfo.shamsiDay)}
@@ -223,8 +224,9 @@ export function DatePicker({
                 className={cn(
                   "text-[10px] sm:text-xs",
                   isDisabled
-                    ? "text-muted-foreground/50"
-                    : "text-muted-foreground",
+                    ? "text-accent-foreground/50"
+                    : "text-accent-foreground",
+                  isSelected && "text-primary-foreground",
                 )}
               >
                 {dateInfo.monthName}

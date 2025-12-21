@@ -15,32 +15,32 @@ interface AgeRangeSelectorProps {
 
 export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+    <div className="space-y-10">
+      <div className="flex flex-col gap-4 md:flex-row">
         <Card
           className={cn(
-            "hover:border-primary cursor-pointer transition-all",
+            "hover:border-primary flex-1 cursor-pointer transition-all",
             value === "UNDER_15" && "border-primary bg-primary/5",
           )}
           onClick={() => onChange("UNDER_15")}
         >
-          <div className="p-6 text-center">
+          <div className="text-center md:p-6">
             <h3 className="font-semibold">زیر {toPersianNumber(15)} سال</h3>
-            <p className="text-primary mt-2 text-2xl font-bold">
+            <p className="text-primary mt-2 text-lg font-bold md:text-2xl">
               {PRICE_UNDER_15.toLocaleString("fa-IR")} تومان
             </p>
           </div>
         </Card>
         <Card
           className={cn(
-            "hover:border-primary cursor-pointer transition-all",
+            "hover:border-primary flex-1 cursor-pointer transition-all",
             value === "OVER_15" && "border-primary bg-primary/5",
           )}
           onClick={() => onChange("OVER_15")}
         >
-          <div className="p-6 text-center">
+          <div className="text-center md:p-6">
             <h3 className="font-semibold">بالای {toPersianNumber(15)} سال</h3>
-            <p className="text-primary mt-2 text-2xl font-bold">
+            <p className="text-primary mt-2 text-lg font-bold md:text-2xl">
               {PRICE_OVER_15.toLocaleString("fa-IR")} تومان
             </p>
           </div>
@@ -49,7 +49,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
       {value && (
         <div className="bg-muted rounded-lg p-4 text-center">
           <p className="text-accent-foreground text-sm">مبلغ قابل پرداخت:</p>
-          <p className="text-primary mt-1 text-2xl font-bold">
+          <p className="text-primary mt-1 text-xl font-bold md:text-2xl">
             {calculatePrice(value).toLocaleString("fa-IR")} تومان
           </p>
         </div>

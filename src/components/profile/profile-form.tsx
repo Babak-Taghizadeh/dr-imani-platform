@@ -77,7 +77,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
   };
 
   return (
-    <div className="container mx-auto max-w-2xl py-8">
+    <div className="container mx-auto max-w-2xl px-4 py-8">
       <Card>
         <CardHeader>
           <CardTitle>پروفایل کاربری</CardTitle>
@@ -142,15 +142,15 @@ export function ProfileForm({ user }: ProfileFormProps) {
                   </FormItem>
                 )}
               />
-              <div className="flex gap-2">
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  ذخیره تغییرات
-                </Button>
+              <div className="flex flex-wrap justify-center gap-2">
                 <Button variant="outline" asChild>
                   <Link href="/profile/appointments">مشاهده نوبت‌ها</Link>
                 </Button>
                 <Button variant="outline" asChild>
                   <Link href="/booking">رزرو نوبت جدید</Link>
+                </Button>
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  ذخیره تغییرات
                 </Button>
               </div>
             </form>

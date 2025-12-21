@@ -35,7 +35,7 @@ export function AppointmentCard({ appointment }: AppointmentCardProps) {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex-1 space-y-4">
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <div className="flex items-center gap-2">
+              <div className="relative z-10 flex items-center gap-2">
                 <Calendar className="text-accent-foreground h-5 w-5" />
                 <span className="text-sm sm:text-base">
                   {toShamsi(appointment.date)}

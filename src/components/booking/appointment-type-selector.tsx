@@ -13,15 +13,15 @@ export function AppointmentTypeSelector({
   onChange,
 }: AppointmentTypeSelectorProps) {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="flex flex-col gap-4 md:flex-row">
       <Card
         className={cn(
-          "hover:border-primary cursor-pointer transition-all",
+          "hover:border-primary flex-1 cursor-pointer transition-all",
           value === "ONLINE_PHONE" && "border-primary bg-primary/5",
         )}
         onClick={() => onChange("ONLINE_PHONE")}
       >
-        <div className="p-6 text-center">
+        <div className="text-center md:p-6">
           <Phone className="mx-auto mb-2 h-8 w-8" />
           <h3 className="font-semibold">تماس تلفنی</h3>
           <p className="text-accent-foreground mt-1 text-sm">
@@ -31,12 +31,12 @@ export function AppointmentTypeSelector({
       </Card>
       <Card
         className={cn(
-          "hover:border-primary cursor-pointer transition-all",
+          "hover:border-primary flex-1 cursor-pointer transition-all",
           value === "IN_CLINIC" && "border-primary bg-primary/5",
         )}
         onClick={() => onChange("IN_CLINIC")}
       >
-        <div className="p-6 text-center">
+        <div className="text-center md:p-6">
           <Building2 className="mx-auto mb-2 h-8 w-8" />
           <h3 className="font-semibold">حضوری</h3>
           <p className="text-accent-foreground mt-1 text-sm">مراجعه به مطب</p>

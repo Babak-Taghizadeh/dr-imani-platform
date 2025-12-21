@@ -22,7 +22,7 @@ export function AppointmentDetailClient({
   const paymentSuccess = searchParams.get("payment") === "success";
 
   return (
-    <div className="container mx-auto max-w-2xl py-8">
+    <div className="container mx-auto max-w-2xl px-4 py-8">
       {paymentSuccess && (
         <Card className="mb-6 border-green-500 bg-green-50 dark:bg-green-950">
           <CardContent className="pt-6">
@@ -91,7 +91,7 @@ export function AppointmentDetailClient({
           </div>
 
           {appointment.paymentReference && (
-            <div className="border-t pt-4">
+            <div className="space-y-1 border-t pt-4">
               <p className="text-accent-foreground text-sm">
                 شماره پیگیری پرداخت:
               </p>
