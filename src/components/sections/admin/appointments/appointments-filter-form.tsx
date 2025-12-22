@@ -182,6 +182,7 @@ export function AppointmentsFilterForm({
             </FormItem>
           )}
         />
+        {/* TODO: UI conflict */}
         <div className="flex items-end">
           <Button variant="outline" onClick={handleReset} type="button">
             پاک کردن فیلترها

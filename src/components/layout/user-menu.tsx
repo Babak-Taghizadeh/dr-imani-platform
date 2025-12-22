@@ -35,7 +35,7 @@ export function UserMenu() {
       <Button
         asChild
         variant="outline"
-        className="hidden gap-2 [@media(min-width:930px)]:flex"
+        className="hover:!text-foreground hidden gap-2 [@media(min-width:930px)]:flex"
       >
         <Link href="/login">
           <User className="h-4 w-4" />

@@ -95,6 +95,12 @@ export const authOptions = {
     signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  url:
+    process.env.NEXTAUTH_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.NODE_ENV === "production"
+      ? undefined
+      : "http://localhost:3000"),
 };
 
 export default NextAuth(authOptions);
