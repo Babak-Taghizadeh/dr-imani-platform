@@ -40,7 +40,6 @@ export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
           <TableHead>زمان</TableHead>
           <TableHead>مبلغ</TableHead>
           <TableHead>وضعیت</TableHead>
-          <TableHead>عملیات</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -74,7 +73,6 @@ export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
                     appointment.status}
                 </Badge>
               </TableCell>
-              <TableCell>-</TableCell>
             </TableRow>
           ))
         ) : (
