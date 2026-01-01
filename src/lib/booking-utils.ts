@@ -38,9 +38,9 @@ export function generateTimeSlots(
     endHour = 13;
     endMinute = 45;
   } else if (appointmentType === "IN_CLINIC") {
-    // In-clinic: 14:00 to 18:00 (last slot at 17:45)
+    // In-clinic: 14:00 to 16:00 (last slot at 15:45)
     startHour = 14;
-    endHour = 17;
+    endHour = 15;
     endMinute = 45;
   } else {
     // Fallback to environment variables or defaults (for backward compatibility)
@@ -105,9 +105,9 @@ export function isValidTimeForAppointmentType(
     const endMinutes = 13 * 60 + 45; // 825
     return timeInMinutes >= startMinutes && timeInMinutes <= endMinutes;
   } else if (appointmentType === "IN_CLINIC") {
-    // In-clinic: 14:00 (840 minutes) to 17:45 (1065 minutes)
+    // In-clinic: 14:00 (840 minutes) to 15:50 (950 minutes)
     const startMinutes = 14 * 60; // 840
-    const endMinutes = 17 * 60 + 45; // 1065
+    const endMinutes = 15 * 60 + 45; // 945
     return timeInMinutes >= startMinutes && timeInMinutes <= endMinutes;
   }
 
