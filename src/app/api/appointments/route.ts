@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       .select()
       .from(appointments)
       .where(eq(appointments.userId, userId))
-      .orderBy(desc(appointments.createdAt))
+      .orderBy(desc(appointments.date), desc(appointments.time))
       .limit(limit)
       .offset(offset);
 
