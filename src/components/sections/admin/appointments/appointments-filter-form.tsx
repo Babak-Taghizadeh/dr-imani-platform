@@ -24,6 +24,7 @@ import {
   appointmentsFilterSchema,
   AppointmentsFilterFormData,
 } from "@/lib/validation-schema";
+import { RefreshCcw } from "lucide-react";
 
 interface AppointmentsFilterFormProps {
   onFilterChange: (filters: AppointmentsFilterFormData) => void;
@@ -77,13 +78,13 @@ export function AppointmentsFilterForm({
 
   return (
     <Form {...form}>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         <FormField
           control={form.control}
           name="fromDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>از تاریخ</FormLabel>
+              <FormLabel>از تاریخ:</FormLabel>
               <FormControl>
                 <JalaliDateInput
                   value={field.value || ""}
@@ -99,7 +100,7 @@ export function AppointmentsFilterForm({
           name="toDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>تا تاریخ</FormLabel>
+              <FormLabel>تا تاریخ:</FormLabel>
               <FormControl>
                 <JalaliDateInput
                   value={field.value || ""}
@@ -115,7 +116,7 @@ export function AppointmentsFilterForm({
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>وضعیت</FormLabel>
+              <FormLabel>وضعیت:</FormLabel>
               <Select
                 value={field.value || undefined}
                 onValueChange={(value) => {
@@ -141,7 +142,7 @@ export function AppointmentsFilterForm({
           name="appointmentType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>نوع نوبت</FormLabel>
+              <FormLabel>نوع نوبت:</FormLabel>
               <Select
                 value={field.value || undefined}
                 onValueChange={(value) => {
@@ -167,7 +168,7 @@ export function AppointmentsFilterForm({
           name="sortOrder"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>مرتب‌سازی</FormLabel>
+              <FormLabel>مرتب‌سازی:</FormLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger>
@@ -183,9 +184,14 @@ export function AppointmentsFilterForm({
           )}
         />
         {/* TODO: UI conflict */}
-        <div className="flex items-end">
-          <Button variant="outline" onClick={handleReset} type="button">
-            پاک کردن فیلترها
+        <div className="flex items-end lg:justify-center">
+          <Button
+            variant="outline"
+            onClick={handleReset}
+            disabled={!form.formState.isDirty}
+            type="button"
+          >
+            <RefreshCcw />
           </Button>
         </div>
       </div>
