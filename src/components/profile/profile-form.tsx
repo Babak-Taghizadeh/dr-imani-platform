@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AuthInput } from "@/components/auth/auth-input";
 import {
   updateProfileSchema,
   UpdateProfileFormData,
@@ -36,6 +37,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
       name: user.name,
       idNumber: user.idNumber,
       phoneNumber: user.phoneNumber,
+      password: "",
     },
   });
 
@@ -62,6 +64,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
           name: data.user.name,
           idNumber: data.user.idNumber,
           phoneNumber: data.user.phoneNumber,
+          password: "",
         });
       }
 
@@ -124,17 +127,17 @@ export function ProfileForm({ user }: ProfileFormProps) {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>رمز عبور جدید (اختیاری)</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="password"
-                        placeholder="در صورت تغییر رمز عبور وارد کنید"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  <FormControl>
+                    <AuthInput
+                      {...field}
+                      label="تغییر رمز عبور"
+                      type="password"
+                      autocomplete="new-password"
+                      showPasswordToggle
+                      error={form.formState.errors.password?.message}
+                      placeholder="رمز عبور جدید"
+                    />
+                  </FormControl>
                 )}
               />
               <div className="flex flex-wrap justify-center gap-2">
