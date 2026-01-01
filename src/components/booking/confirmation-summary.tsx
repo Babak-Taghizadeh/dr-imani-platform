@@ -1,9 +1,10 @@
 "use client";
 
-import { Calendar, Users, Clock, CheckCircle2 } from "lucide-react";
+import { Calendar, Users, Clock, CheckCircle2, Info } from "lucide-react";
 import { toShamsi } from "@/lib/shamsi-utils";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { calculatePrice } from "@/lib/price-calculator";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { UseFormReturn } from "react-hook-form";
 import type { BookingFormData } from "@/lib/validation-schema";
 
@@ -54,6 +55,15 @@ export function ConfirmationSummary({ form }: ConfirmationSummaryProps) {
         <CheckCircle2 className="text-primary h-5 w-5" />
         <h3 className="text-lg font-semibold">تأیید اطلاعات</h3>
       </div>
+      {appointmentType === "ONLINE_PHONE" && (
+        <Alert className="border-none bg-blue-950">
+          <AlertDescription className="flex gap-2 text-blue-100 sm:items-center sm:text-base">
+            <Info className="shrink-0" size={18} color="white" />
+            تماس از طرف مطب برقرار خواهد شد. لطفاً در زمان انتخاب شده آماده
+            دریافت تماس باشید.
+          </AlertDescription>
+        </Alert>
+      )}
 
       <div className="bg-muted/50 space-y-4 rounded-lg border p-6">
         {summaryItems.map((item, index) => {
