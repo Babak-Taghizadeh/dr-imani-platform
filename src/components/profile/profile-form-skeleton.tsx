@@ -1,20 +1,15 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import SectionHeader from "../shared/section-header";
 
 export function ProfileFormSkeleton() {
   return (
-    <div className="container mx-auto max-w-2xl py-8">
+    <div className="container mx-auto max-w-2xl space-y-4 px-4 py-8">
+      <SectionHeader
+        title="پروفایل کاربری"
+        description="اطلاعات شخصی خود را مدیریت کنید"
+      />
       <Card>
-        <CardHeader>
-          <CardTitle>پروفایل کاربری</CardTitle>
-          <CardDescription>اطلاعات شخصی خود را مدیریت کنید</CardDescription>
-        </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">

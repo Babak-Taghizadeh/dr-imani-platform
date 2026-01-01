@@ -3,13 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -27,6 +21,7 @@ import {
 import { toast } from "sonner";
 import Link from "next/link";
 import type { User } from "@/lib/types";
+import SectionHeader from "../shared/section-header";
 
 interface ProfileFormProps {
   user: User;
@@ -77,12 +72,12 @@ export function ProfileForm({ user }: ProfileFormProps) {
   };
 
   return (
-    <div className="container mx-auto max-w-2xl px-4 py-8">
+    <div className="container mx-auto max-w-2xl space-y-4 px-4 py-8">
+      <SectionHeader
+        title="پروفایل کاربری"
+        description="اطلاعات شخصی خود را مدیریت کنید"
+      />
       <Card>
-        <CardHeader>
-          <CardTitle>پروفایل کاربری</CardTitle>
-          <CardDescription>اطلاعات شخصی خود را مدیریت کنید</CardDescription>
-        </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
