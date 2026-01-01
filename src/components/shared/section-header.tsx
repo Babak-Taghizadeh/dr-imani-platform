@@ -22,7 +22,7 @@ const SectionHeader = ({
       >
         <h3
           className={cn(
-            "bg-gradient-to-r bg-clip-text pb-4 text-3xl font-bold tracking-tight text-transparent md:pb-6 md:text-4xl",
+            "bg-gradient-to-r bg-clip-text p-3 text-3xl font-bold tracking-tight text-transparent md:text-4xl",
             theme === "dark"
               ? "from-background via-primary to-background brightness-125"
               : "from-foreground via-primary to-foreground",
