@@ -1,10 +1,4 @@
-import {
-  Calendar,
-  Users,
-  CalendarDays,
-  Clock,
-  CheckCircle,
-} from "lucide-react";
+import { Users, Clock, CheckCircle, Tag, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -18,9 +12,9 @@ const steps: Array<{
   label: string;
   icon: React.ComponentType<{ className?: string }>;
 }> = [
-  { number: 1, label: "نوع نوبت", icon: Calendar },
+  { number: 1, label: "نوع نوبت", icon: Tag },
   { number: 2, label: "گروه سنی", icon: Users },
-  { number: 3, label: "تاریخ", icon: CalendarDays },
+  { number: 3, label: "تاریخ", icon: Calendar },
   { number: 4, label: "زمان", icon: Clock },
   { number: 5, label: "تأیید", icon: CheckCircle },
 ];
@@ -47,7 +41,7 @@ export function StepProgressIndicator({
                 <div className="flex flex-col items-center">
                   <div
                     className={cn(
-                      "flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300",
+                      "relative z-0 flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300",
                       isActive
                         ? "border-primary bg-primary text-primary-foreground shadow-primary/50 shadow-lg"
                         : isCompleted
@@ -103,7 +97,7 @@ export function StepProgressIndicator({
                 <div className="flex flex-col items-center">
                   <div
                     className={cn(
-                      "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300",
+                      "relative z-0 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300",
                       isActive
                         ? "border-primary bg-primary text-primary-foreground shadow-primary/50 shadow-lg"
                         : isCompleted

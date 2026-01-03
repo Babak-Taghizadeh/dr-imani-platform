@@ -20,7 +20,7 @@ import { StepNavigation } from "@/components/booking/step-navigation";
 import { ConfirmationSummary } from "@/components/booking/confirmation-summary";
 import { bookingSchema, BookingFormData } from "@/lib/validation-schema";
 import { toast } from "sonner";
-import { Calendar, Users, CalendarDays, Clock } from "lucide-react";
+import { Users, CalendarDays, Clock, Tag } from "lucide-react";
 import { toShamsi } from "@/lib/shamsi-utils";
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -257,8 +257,8 @@ export function BookingForm() {
               className="min-h-[480px] space-y-6"
             >
               <div className="flex items-center gap-3">
-                <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Calendar className="text-primary h-6 w-6" />
+                <div className="bg-primary/10 relative z-0 flex h-12 w-12 items-center justify-center rounded-full">
+                  <Tag className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold">
                   نوع نوبت را انتخاب کنید
@@ -331,7 +331,7 @@ export function BookingForm() {
               className="flex min-h-[480px] flex-col space-y-6"
             >
               <div className="flex items-center gap-3">
-                <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
+                <div className="bg-primary/10 relative z-0 flex h-12 w-12 items-center justify-center rounded-full">
                   <CalendarDays className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold">تاریخ را انتخاب کنید</h3>

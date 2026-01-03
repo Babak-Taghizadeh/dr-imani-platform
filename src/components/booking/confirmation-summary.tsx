@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Users, Clock, CheckCircle2, Info } from "lucide-react";
+import { Calendar, Users, Clock, CheckCircle2, Info, Tag } from "lucide-react";
 import { toShamsi } from "@/lib/shamsi-utils";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { calculatePrice } from "@/lib/price-calculator";
@@ -28,7 +28,7 @@ export function ConfirmationSummary({ form }: ConfirmationSummaryProps) {
 
   const summaryItems = [
     {
-      icon: Calendar,
+      icon: Tag,
       label: "نوع نوبت",
       value: appointmentTypeLabel,
     },
@@ -65,7 +65,7 @@ export function ConfirmationSummary({ form }: ConfirmationSummaryProps) {
         </Alert>
       )}
 
-      <div className="bg-muted/50 space-y-4 rounded-lg border p-6">
+      <div className="bg-muted/50 relative z-0 space-y-4 rounded-lg border p-6">
         {summaryItems.map((item, index) => {
           const Icon = item.icon;
           return (
