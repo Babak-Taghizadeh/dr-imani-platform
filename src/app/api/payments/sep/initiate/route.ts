@@ -75,10 +75,12 @@ export async function POST(request: NextRequest) {
       TerminalId: SEP_TERMINAL_ID,
       Amount: appointment.price,
       ResNum: appointment.id,
+      // TODO: CONSIDER ADDING UNIQUE IDS ON EVERY REDIRECT DUE TO SEP REQUIREMENTS
       RedirectUrl: SEP_CALLBACK_URL,
     });
 
     if (tokenResponse.status !== 1 || !tokenResponse.token) {
+      // TODO: CONSIDER ONLY LOGGING THE ERROR WHEN RESPONSE CODE IS -1 
       return NextResponse.json(
         {
           error: "خطا در ارتباط با درگاه پرداخت",
@@ -93,6 +95,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       paymentUrl,
+      // TODO: TOKEN IS NOT REQUIRED ON FRONT SIDE
       token: tokenResponse.token,
     });
   } catch (error) {

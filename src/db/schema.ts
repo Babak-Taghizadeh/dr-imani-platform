@@ -79,6 +79,7 @@ export const appointments = pgTable(
     time: time("time").notNull(),
     durationMinutes: integer("duration_minutes").notNull().default(15),
     status: appointmentStatusEnum("status").notNull().default("PENDING"),
+    // TODO: REPLACE WITH PAYMENT ID
     paymentReference: varchar("payment_reference", { length: 255 }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
