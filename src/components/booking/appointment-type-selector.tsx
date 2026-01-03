@@ -79,10 +79,8 @@ export function AppointmentTypeSelector({
               رزرو نوبت برای بیماران خارجی
             </DialogTitle>
             <DialogDescription className="text-accent-foreground pt-2 text-center">
-              <p>
-                برای رزرو نوبت آنلاین خارج از کشور، لطفاً از طریق واتساپ با ما
-                در ارتباط باشید.
-              </p>
+              برای رزرو نوبت آنلاین خارج از کشور، لطفاً از طریق واتساپ با ما در
+              ارتباط باشید.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex-col gap-2 sm:flex-row">
