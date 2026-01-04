@@ -41,6 +41,9 @@ const securityHeaders = [
 
 const nextConfig = {
   output: "standalone",
+  experimental: {
+    instrumentationHook: true,
+  },
   images: {
     remotePatterns: [
       {
