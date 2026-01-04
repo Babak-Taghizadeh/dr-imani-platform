@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireAdmin, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { appointments, users } from "@/db/schema";
 import { eq, and, gte, lte, desc, asc, sql } from "drizzle-orm";
@@ -8,11 +7,7 @@ import type { AppointmentStatus } from "@/lib/types";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    await requireAdmin();
 
     const searchParams = request.nextUrl.searchParams;
     const fromDate = searchParams.get("from");
@@ -95,6 +90,9 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     console.error("Get admin appointments error:", error);
     return NextResponse.json(
       { error: "خطایی در دریافت نوبت‌ها رخ داد" },

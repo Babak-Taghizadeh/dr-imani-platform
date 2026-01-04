@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireUser, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { appointments } from "@/db/schema";
 import { eq, and, desc, sql } from "drizzle-orm";
@@ -26,12 +25,7 @@ const createAppointmentSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "user") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const session = await requireUser();
     const userId = session.user.id;
     const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1", 10);
@@ -69,6 +63,9 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     console.error("Get appointments error:", error);
     return NextResponse.json(
       { error: "خطایی در دریافت نوبت‌ها رخ داد" },
@@ -79,12 +76,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "user") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const session = await requireUser();
     const userId = session.user.id;
     const body = await request.json();
     const validatedData = createAppointmentSchema.parse(body);
@@ -184,6 +176,9 @@ export async function POST(request: NextRequest) {
       { status: 201 },
     );
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "اطلاعات وارد شده معتبر نیست", details: error.errors },

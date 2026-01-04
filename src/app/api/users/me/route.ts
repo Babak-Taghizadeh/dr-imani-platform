@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireUser, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -16,12 +15,7 @@ const updateProfileSchema = z.object({
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "user") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const session = await requireUser();
     const userId = session.user.id;
 
     const user = await db
@@ -43,6 +37,9 @@ export async function GET() {
 
     return NextResponse.json({ user: user[0] });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     console.error("Get user error:", error);
     return NextResponse.json(
       { error: "خطایی در دریافت اطلاعات کاربر رخ داد" },
@@ -53,12 +50,7 @@ export async function GET() {
 
 export async function PUT(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "user") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const session = await requireUser();
     const userId = session.user.id;
     const body = await request.json();
     const validatedData = updateProfileSchema.parse(body);
@@ -139,6 +131,9 @@ export async function PUT(request: NextRequest) {
       user: updatedUser,
     });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "اطلاعات وارد شده معتبر نیست", details: error.errors },

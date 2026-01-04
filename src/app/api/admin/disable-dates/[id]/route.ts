@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireAdmin, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { disabledDates, appointments } from "@/db/schema";
 import { and, gte, lte, eq } from "drizzle-orm";
@@ -12,11 +11,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    await requireAdmin();
 
     const { id } = await params;
     const body = await request.json();
@@ -82,6 +77,9 @@ export async function PUT(
       { status: 200 },
     );
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
         { error: "اطلاعات وارد شده معتبر نیست" },
@@ -102,11 +100,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    await requireAdmin();
 
     const { id } = await params;
 
@@ -132,6 +126,9 @@ export async function DELETE(
       { status: 200 },
     );
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     console.error("Delete disabled date error:", error);
     return NextResponse.json(
       { error: "خطایی در حذف تاریخ رخ داد" },

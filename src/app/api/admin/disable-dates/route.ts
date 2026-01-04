@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireAdmin, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { disabledDates, appointments } from "@/db/schema";
 import { and, gte, lte, eq } from "drizzle-orm";
@@ -15,11 +14,7 @@ const disableDatesSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    await requireAdmin();
 
     const body = await request.json();
     const validatedData = disableDatesSchema.parse(body);
@@ -70,6 +65,9 @@ export async function POST(request: NextRequest) {
       { status: 201 },
     );
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "اطلاعات وارد شده معتبر نیست", details: error.errors },
@@ -87,11 +85,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    await requireAdmin();
 
     const disabledRanges = await db
       .select()
@@ -100,6 +94,9 @@ export async function GET() {
 
     return NextResponse.json({ disabledDates: disabledRanges });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     console.error("Get disabled dates error:", error);
     return NextResponse.json(
       { error: "خطایی در دریافت تاریخ‌های غیرفعال رخ داد" },

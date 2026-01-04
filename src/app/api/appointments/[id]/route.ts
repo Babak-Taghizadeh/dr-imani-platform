@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireAuth, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { appointments, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -10,12 +9,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await requireAuth();
     const { id } = await params;
-
-    if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const role = session.user.role;
     const userId = session.user.id;
@@ -54,6 +49,9 @@ export async function GET(
       },
     });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     console.error("Get appointment error:", error);
     return NextResponse.json(
       { error: "خطایی در دریافت نوبت رخ داد" },

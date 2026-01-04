@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { requireUser, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { appointments } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -18,12 +17,7 @@ const initiateSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user || session.user.role !== "user") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const session = await requireUser();
     const userId = session.user.id;
     const body = await request.json();
     const validatedData = initiateSchema.parse(body);
@@ -80,7 +74,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (tokenResponse.status !== 1 || !tokenResponse.token) {
-      // TODO: CONSIDER ONLY LOGGING THE ERROR WHEN RESPONSE CODE IS -1 
+      // TODO: CONSIDER ONLY LOGGING THE ERROR WHEN RESPONSE CODE IS -1
       return NextResponse.json(
         {
           error: "خطا در ارتباط با درگاه پرداخت",
@@ -99,6 +93,9 @@ export async function POST(request: NextRequest) {
       token: tokenResponse.token,
     });
   } catch (error) {
+    if (isAuthError(error)) {
+      return error.response;
+    }
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "اطلاعات وارد شده معتبر نیست", details: error.errors },
