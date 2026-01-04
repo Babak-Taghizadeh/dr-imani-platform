@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { format, addDays, startOfToday } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,7 @@ import { toPersianNumber } from "@/lib/persian-number-utils";
 import { toast } from "sonner";
 import { Info } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface DatePickerProps {
   selectedDate?: string; // YYYY-MM-DD format (Gregorian)
@@ -26,6 +27,7 @@ interface DatePickerProps {
   }>; // YYYY-MM-DD format (Gregorian)
   minDaysAhead?: number;
   maxDaysAhead?: number;
+  appointmentType?: string; // Appointment type to check availability
 }
 
 interface ShamsiDateInfo {
@@ -39,6 +41,8 @@ interface ShamsiDateInfo {
   dayName: string;
   isHoliday: boolean;
   isSelectable: boolean; // Can be selected (not disabled by any reason)
+  hasAvailableSlots?: boolean; // Whether this date has any available time slots
+  isCheckingAvailability?: boolean; // Whether we're currently checking availability
 }
 
 export function DatePicker({
@@ -47,8 +51,11 @@ export function DatePicker({
   disabledDates = [],
   minDaysAhead = 0,
   maxDaysAhead = 30,
+  appointmentType,
 }: DatePickerProps) {
   const [visibleDates, setVisibleDates] = useState<ShamsiDateInfo[]>([]);
+  const datesRef = useRef<string>("");
+  const [dateStrings, setDateStrings] = useState<string>("");
 
   useEffect(() => {
     const today = startOfToday();
@@ -155,6 +162,8 @@ export function DatePicker({
         dayName: getShamsiDayName(gregorianDate),
         isHoliday,
         isSelectable: selectable,
+        hasAvailableSlots: undefined, // Will be checked separately
+        isCheckingAvailability: false,
       };
 
       // Only show available/selectable dates
@@ -162,7 +171,117 @@ export function DatePicker({
     }
 
     setVisibleDates(dates);
+    const newDateStrings = dates.map((d) => d.gregorianDateStr).join(",");
+    setDateStrings(newDateStrings);
+    // Reset ref when dates change
+    if (datesRef.current !== newDateStrings) {
+      datesRef.current = "";
+    }
   }, [minDaysAhead, maxDaysAhead, disabledDates]);
+
+  // Check availability for each date if appointmentType is provided
+  useEffect(() => {
+    if (!appointmentType || dateStrings === "") {
+      return;
+    }
+
+    // Skip if we already checked these dates
+    if (datesRef.current === dateStrings) {
+      return;
+    }
+
+    datesRef.current = dateStrings;
+
+    const checkAvailability = async () => {
+      // First, set all dates to checking state and capture current dates
+      setVisibleDates((prev) => {
+        if (prev.length === 0) {
+          return prev;
+        }
+
+        const prevDatesStr = prev.map((d) => d.gregorianDateStr).join(",");
+        if (prevDatesStr !== dateStrings) {
+          return prev; // Dates changed, skip
+        }
+
+        // Set all dates to checking state
+        return prev.map((date) => ({
+          ...date,
+          isCheckingAvailability: true,
+        }));
+      });
+
+      // Get current dates from visibleDates (will be captured in closure)
+      // We need to read from state, but since we can't await in useEffect properly,
+      // we'll use a ref or read directly
+      const currentDates = visibleDates;
+      if (currentDates.length === 0) {
+        return;
+      }
+
+      // Verify these are still the dates we want to check
+      const currentDatesStr = currentDates
+        .map((d) => d.gregorianDateStr)
+        .join(",");
+      if (currentDatesStr !== dateStrings) {
+        return; // Dates changed, skip
+      }
+
+      // Check availability for each date
+      const availabilityPromises = currentDates.map(async (dateInfo) => {
+        if (!dateInfo.isSelectable) {
+          return {
+            ...dateInfo,
+            hasAvailableSlots: false,
+            isCheckingAvailability: false,
+          };
+        }
+
+        try {
+          const res = await fetch(
+            `/api/appointments/availability?date=${dateInfo.gregorianDateStr}&appointmentType=${appointmentType}`,
+          );
+          const data = await res.json();
+
+          if (res.ok && data.slots) {
+            const hasAvailable = data.slots.some(
+              (slot: { available: boolean }) => slot.available,
+            );
+            return {
+              ...dateInfo,
+              hasAvailableSlots: hasAvailable,
+              isCheckingAvailability: false,
+            };
+          }
+          return {
+            ...dateInfo,
+            hasAvailableSlots: false,
+            isCheckingAvailability: false,
+          };
+        } catch {
+          return {
+            ...dateInfo,
+            hasAvailableSlots: false,
+            isCheckingAvailability: false,
+          };
+        }
+      });
+
+      const updatedDates = await Promise.all(availabilityPromises);
+
+      // Update state with results
+      setVisibleDates((prev) => {
+        const prevDatesStr = prev.map((d) => d.gregorianDateStr).join(",");
+        if (prevDatesStr !== dateStrings) {
+          return prev; // Dates changed, don't update
+        }
+        return updatedDates;
+      });
+    };
+
+    checkAvailability();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appointmentType, dateStrings]);
 
   const handleDateClick = (dateInfo: ShamsiDateInfo) => {
     if (!dateInfo.isSelectable) {
@@ -173,6 +292,15 @@ export function DatePicker({
       }
       return;
     }
+    // Check if date has available slots
+    if (dateInfo.hasAvailableSlots === false) {
+      toast.error("این تاریخ نوبت خالی ندارد");
+      return;
+    }
+    // If still checking, wait
+    if (dateInfo.isCheckingAvailability) {
+      return;
+    }
     onSelect(dateInfo.gregorianDateStr);
   };
 
@@ -181,7 +309,20 @@ export function DatePicker({
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
         {visibleDates.map((dateInfo) => {
           const isSelected = selectedDate === dateInfo.gregorianDateStr;
-          const isDisabled = !dateInfo.isSelectable;
+          const isDisabled =
+            !dateInfo.isSelectable ||
+            dateInfo.hasAvailableSlots === false ||
+            dateInfo.isCheckingAvailability;
+
+          // Show skeleton loader while checking availability
+          if (dateInfo.isCheckingAvailability) {
+            return (
+              <Skeleton
+                key={dateInfo.gregorianDateStr}
+                className="h-24 w-full rounded-md"
+              />
+            );
+          }
 
           return (
             <Button
@@ -231,6 +372,12 @@ export function DatePicker({
               >
                 {dateInfo.monthName}
               </span>
+              {/* Show "بدون نوبت خالی" for dates with no available slots */}
+              {dateInfo.hasAvailableSlots === false && (
+                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] whitespace-nowrap text-red-500 dark:text-red-400">
+                  بدون نوبت خالی
+                </span>
+              )}
             </Button>
           );
         })}
