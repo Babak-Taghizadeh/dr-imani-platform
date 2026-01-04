@@ -355,6 +355,7 @@ export function BookingForm() {
                           disabledDates={disabledDates}
                           minDaysAhead={0}
                           maxDaysAhead={16}
+                          appointmentType={form.watch("appointmentType")}
                         />
                       )}
                     </FormControl>
