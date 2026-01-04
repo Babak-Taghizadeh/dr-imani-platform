@@ -4,6 +4,11 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import {
+  checkRateLimit,
+  getClientIP,
+  RATE_LIMITS,
+} from "@/lib/rate-limit";
 
 const signupSchema = z.object({
   name: z.string().min(1, "نام الزامی است"),
@@ -14,6 +19,31 @@ const signupSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const clientIP = getClientIP(request);
+    const rateLimit = checkRateLimit(clientIP, RATE_LIMITS.SIGNUP);
+
+    if (!rateLimit.allowed) {
+      const retryAfter = Math.ceil(
+        (rateLimit.resetTime - Date.now()) / 1000,
+      );
+      return NextResponse.json(
+        {
+          error: "تعداد درخواست‌ها بیش از حد مجاز است",
+          retryAfter,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(retryAfter),
+            "X-RateLimit-Limit": String(RATE_LIMITS.SIGNUP.max),
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+            "X-RateLimit-Reset": String(rateLimit.resetTime),
+          },
+        },
+      );
+    }
+
     const body = await request.json();
     const validatedData = signupSchema.parse(body);
 
