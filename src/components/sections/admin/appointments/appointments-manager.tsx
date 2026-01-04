@@ -35,18 +35,16 @@ export function AppointmentsManager() {
   }, []);
 
   return (
-    <>
-      <div className="mb-6 space-y-4">
-        <AppointmentsFilterForm
-          onFilterChange={handleFilterChange}
-          onReset={handleReset}
-        />
-      </div>
+    <div className="space-y-6">
+      <AppointmentsFilterForm
+        onFilterChange={handleFilterChange}
+        onReset={handleReset}
+      />
       <AppointmentsDataWrapper
         filters={filters}
         page={page}
         onPageChange={setPage}
       />
-    </>
+    </div>
   );
 }

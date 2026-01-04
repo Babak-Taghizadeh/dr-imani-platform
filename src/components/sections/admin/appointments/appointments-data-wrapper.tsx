@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { AppointmentsTable } from "./appointments-table";
 import { AppointmentsTableEmpty } from "./appointments-table-empty";
 import { AppointmentsTableSkeleton } from "./appointments-table-skeleton";
-import { AppointmentsPagination } from "./appointments-pagination";
+import PaginationControls from "@/components/shared/pagination-controls";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import type {
@@ -97,10 +97,13 @@ export function AppointmentsDataWrapper({
   return (
     <>
       <AppointmentsTable appointments={appointments} />
-      <AppointmentsPagination
+      <PaginationControls
         currentPage={page}
         totalPages={totalPages}
+        mode="callback"
         onPageChange={onPageChange}
+        variant="full"
+        usePersianNumbers={true}
       />
     </>
   );

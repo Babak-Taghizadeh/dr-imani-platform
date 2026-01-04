@@ -7,7 +7,7 @@ import { AppointmentCard } from "./appointment-card";
 import { AppointmentsLoading } from "./appointments-loading";
 import { AppointmentsError } from "./appointments-error";
 import { AppointmentsEmpty } from "./appointments-empty";
-import { AppointmentsPagination } from "./appointments-pagination";
+import PaginationControls from "@/components/shared/pagination-controls";
 import type { AppointmentsResponse } from "@/types/types";
 
 const fetcher = async (url: string): Promise<AppointmentsResponse> => {
@@ -64,7 +64,15 @@ export function AppointmentsListClient() {
           <AppointmentCard key={appointment.id} appointment={appointment} />
         ))}
       </div>
-      <AppointmentsPagination currentPage={page} totalPages={totalPages} />
+      <PaginationControls
+        currentPage={page}
+        totalPages={totalPages}
+        mode="url"
+        preserveQueryParams={true}
+        variant="simple"
+        showPageInfo={true}
+        usePersianNumbers={true}
+      />
     </>
   );
 }
