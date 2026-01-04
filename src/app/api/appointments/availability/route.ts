@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/db";
 import { appointments, disabledDates } from "@/db/schema";
-import { eq, and, gte, lte } from "drizzle-orm";
+import { eq, and, gte, lte, or, sql } from "drizzle-orm";
 import { generateTimeSlots } from "@/lib/booking-utils";
 import { parse, format } from "date-fns";
 import type { AppointmentType } from "@/lib/types";
@@ -71,15 +71,20 @@ export async function GET(request: NextRequest) {
 
     // Get booked appointments for this date and appointment type
     // Online and in-clinic appointments can have the same time without conflict
+    // Only count PENDING and CONFIRMED appointments as booked
     const bookedAppointments = await db
       .select({
-        time: appointments.time,
+        time: sql<string>`to_char(${appointments.time}, 'HH24:MI')`.as("time"),
       })
       .from(appointments)
       .where(
         and(
           eq(appointments.date, format(selectedDate, "yyyy-MM-dd")),
           eq(appointments.appointmentType, appointmentType),
+          or(
+            eq(appointments.status, "PENDING"),
+            eq(appointments.status, "CONFIRMED"),
+          ),
         ),
       );
 
