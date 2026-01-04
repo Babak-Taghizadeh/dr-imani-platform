@@ -1,6 +1,6 @@
 import BlogTable from "./blogs-table";
 import PaginationControls from "@/components/shared/pagination-controls";
-import { Blog } from "@/lib/types";
+import { Blog } from "@/types/types";
 import { ModifyBlogModal } from "./modify-blog-modal";
 
 interface BlogsManagerProps {

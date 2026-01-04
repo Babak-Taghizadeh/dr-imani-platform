@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { QuizConfig } from "@/lib/types";
+import { QuizConfig } from "@/types/types";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 

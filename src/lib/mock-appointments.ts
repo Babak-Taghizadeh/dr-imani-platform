@@ -2,7 +2,7 @@ import type {
   Appointment,
   AppointmentWithUser,
   AppointmentsResponse,
-} from "@/lib/types";
+} from "@/types/types";
 
 // Mock data for testing appointments
 export const MOCK_APPOINTMENTS: Appointment[] = Array.from(

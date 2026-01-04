@@ -5,7 +5,7 @@ import type {
   Appointment,
   AppointmentWithUser,
   AppointmentStatus,
-} from "@/lib/types";
+} from "@/types/types";
 
 export const getAppointmentById = async (
   id: string,

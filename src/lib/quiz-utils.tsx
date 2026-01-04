@@ -1,5 +1,5 @@
 import { Brain, Clock, Users } from "lucide-react";
-import { QuizConfig, QuizResult, QuizOption } from "./types";
+import { QuizConfig, QuizResult, QuizOption } from "../types/types";
 
 export const getQuizIcon = (quizId: string) => {
   switch (quizId) {

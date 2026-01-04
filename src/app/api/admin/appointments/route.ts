@@ -3,7 +3,7 @@ import { requireAdmin, isAuthError } from "@/lib/api-auth-helpers";
 import { db } from "@/db/db";
 import { appointments, users } from "@/db/schema";
 import { eq, and, gte, lte, desc, asc, sql } from "drizzle-orm";
-import type { AppointmentStatus } from "@/lib/types";
+import type { AppointmentStatus } from "@/types/types";
 
 export async function GET(request: NextRequest) {
   try {

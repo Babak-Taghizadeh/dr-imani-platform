@@ -11,7 +11,7 @@ import { RefreshCw } from "lucide-react";
 import type {
   AdminAppointmentsResponse,
   AppointmentWithUser,
-} from "@/lib/types";
+} from "@/types/types";
 import type { AppointmentsFilterFormData } from "@/lib/validation-schema";
 
 interface AppointmentsDataWrapperProps {

@@ -1,7 +1,7 @@
 import QuizHeroSection from "@/components/sections/quiz/quiz-hero-section";
 import QuizGrid from "@/components/sections/quiz/quiz-grid";
 import { QUIZ_REGISTRY } from "@/lib/quiz-constants";
-import { QuizConfig } from "@/lib/types";
+import { QuizConfig } from "@/types/types";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { Blog } from "@/lib/types";
+import { Blog } from "@/types/types";
 import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 
 const BASE_URL = "https://drimanisleepclinic.com";

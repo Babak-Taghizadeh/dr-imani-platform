@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { QuizConfig, QuizOption, QuizResult } from "@/lib/types";
+import { QuizConfig, QuizOption, QuizResult } from "@/types/types";
 import { calculateQuizResult, isQuizCompleted } from "@/lib/quiz-utils";
 import { ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";

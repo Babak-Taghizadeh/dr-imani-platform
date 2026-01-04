@@ -1,4 +1,4 @@
-import { Direction } from "@/lib/types";
+import { Direction } from "@/types/types";
 
 const getInitialAnimation = (
   index: number,

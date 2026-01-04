@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Blog } from "@/lib/types";
+import { Blog } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";

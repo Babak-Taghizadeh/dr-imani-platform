@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import type { User } from "@/lib/types";
+import type { User } from "@/types/types";
 
 export const getUserById = async (userId: string): Promise<User | null> => {
   const userData = await db

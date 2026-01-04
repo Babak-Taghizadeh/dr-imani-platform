@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { QuizConfig } from "@/lib/types";
+import { QuizConfig } from "@/types/types";
 import QuizCard from "./quiz-card";
 
 interface QuizCardWrapperProps {

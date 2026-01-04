@@ -6,7 +6,7 @@ import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BlogFormData, blogFormSchema } from "@/lib/validation-schema";
-import { Blog } from "@/lib/types";
+import { Blog } from "@/types/types";
 import { useState, useEffect, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";

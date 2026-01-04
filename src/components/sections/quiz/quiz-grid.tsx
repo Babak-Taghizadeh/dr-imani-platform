@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import SectionHeader from "@/components/shared/section-header";
 import QuizCardWrapper from "@/components/sections/quiz/quiz-card-wrapper";
 import QuizInfoSection from "@/components/sections/quiz/quiz-info-section";
-import { QuizConfig } from "@/lib/types";
+import { QuizConfig } from "@/types/types";
 
 interface QuizGridProps {
   quizzes: QuizConfig[];

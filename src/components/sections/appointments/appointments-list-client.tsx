@@ -8,7 +8,7 @@ import { AppointmentsLoading } from "./appointments-loading";
 import { AppointmentsError } from "./appointments-error";
 import { AppointmentsEmpty } from "./appointments-empty";
 import { AppointmentsPagination } from "./appointments-pagination";
-import type { AppointmentsResponse } from "@/lib/types";
+import type { AppointmentsResponse } from "@/types/types";
 
 const fetcher = async (url: string): Promise<AppointmentsResponse> => {
   const res = await fetch(url);

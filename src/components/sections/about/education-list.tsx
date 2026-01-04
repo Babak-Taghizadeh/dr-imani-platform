@@ -1,6 +1,6 @@
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { GraduationCap, Building2, Calendar } from "lucide-react";
-import { EducationItem } from "@/lib/types";
+import { EducationItem } from "@/types/types";
 import { AnimatedSection } from "@/components/shared/animated-section";
 
 const EducationList = () => {

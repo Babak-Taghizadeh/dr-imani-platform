@@ -1,5 +1,5 @@
 import { format, addMinutes, isAfter, isBefore, isSameDay } from "date-fns";
-import type { AppointmentType } from "@/lib/types";
+import type { AppointmentType } from "@/types/types";
 
 export const SLOT_START_HOUR = parseInt(
   process.env.SLOT_START_HOUR || "14",

@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { ABOUT_ME_ITEMS } from "@/lib/constants";
 import { Briefcase, Calendar, Building2 } from "lucide-react";
-import { ExperienceItem } from "@/lib/types";
+import { ExperienceItem } from "@/types/types";
 import { AnimatedSection } from "@/components/shared/animated-section";
 
 const ExperienceList = () => {

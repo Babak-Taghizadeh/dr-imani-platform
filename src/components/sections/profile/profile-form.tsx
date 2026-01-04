@@ -21,7 +21,7 @@ import {
 } from "@/lib/validation-schema";
 import { toast } from "sonner";
 import Link from "next/link";
-import type { User } from "@/lib/types";
+import type { User } from "@/types/types";
 import SectionHeader from "../../shared/section-header";
 
 interface ProfileFormProps {

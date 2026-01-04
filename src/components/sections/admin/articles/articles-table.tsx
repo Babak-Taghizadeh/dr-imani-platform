@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Article } from "@/lib/types";
+import { Article } from "@/types/types";
 import { formatDistanceToNow } from "date-fns";
 import { faIR } from "date-fns/locale";
 import { ModifyArticleModal } from "./modify-article-modal";

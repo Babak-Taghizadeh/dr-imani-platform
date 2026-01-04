@@ -6,7 +6,7 @@ import Link from "next/link";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { toShamsi } from "@/lib/shamsi-utils";
 import { statusLabels } from "@/lib/appointment-constants";
-import type { Appointment } from "@/lib/types";
+import type { Appointment } from "@/types/types";
 
 interface AppointmentCardProps {
   appointment: Appointment;

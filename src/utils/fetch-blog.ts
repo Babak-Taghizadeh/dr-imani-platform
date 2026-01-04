@@ -1,4 +1,4 @@
-import { Blog } from "@/lib/types";
+import { Blog } from "@/types/types";
 import { notFound } from "next/navigation";
 
 const fetchBlog = async (slug: string): Promise<Blog> => {

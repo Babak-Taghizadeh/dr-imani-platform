@@ -15,7 +15,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { Article } from "@/lib/types";
+import { Article } from "@/types/types";
 import { FileIcon, Loader2, Upload, X, Link, LinkIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useState, useTransition } from "react";

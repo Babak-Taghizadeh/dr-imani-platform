@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { QuizConfig } from "@/lib/types";
+import { QuizConfig } from "@/types/types";
 import { ArrowLeft, Moon, Brain, Clock } from "lucide-react";
 import Link from "next/link";
 import { getQuizColor, getBorderColor } from "./quiz-styling-helpers";

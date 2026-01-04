@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion } from "motion/react";
 import { useState, useCallback } from "react";
 import { ABOUT_TABS } from "@/lib/constants";
-import { TabType } from "@/lib/types";
+import { TabType } from "@/types/types";
 
 const AboutCycle = () => {
   const [activeTab, setActiveTab] = useState<TabType>("تحصیلات");

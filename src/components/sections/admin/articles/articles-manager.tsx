@@ -1,4 +1,4 @@
-import { Article } from "@/lib/types";
+import { Article } from "@/types/types";
 import ArticlesTable from "./articles-table";
 import PaginationControls from "@/components/shared/pagination-controls";
 import { ModifyArticleModal } from "./modify-article-modal";

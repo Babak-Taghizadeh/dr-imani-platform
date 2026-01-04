@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../../ui/button";
-import { Article } from "@/lib/types";
+import { Article } from "@/types/types";
 import Link from "next/link";
 import { Download, ExternalLink } from "lucide-react";
 import useMediaQuery from "@/hooks/use-media-query";

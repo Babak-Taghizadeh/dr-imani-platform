@@ -5,7 +5,7 @@ import PaginationControls from "@/components/shared/pagination-controls";
 import SectionHeader from "@/components/shared/section-header";
 import NoContent from "@/components/shared/no-content";
 import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
-import { Blog } from "@/lib/types";
+import { Blog } from "@/types/types";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

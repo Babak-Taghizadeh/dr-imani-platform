@@ -3,7 +3,7 @@ import { ArticlesLoader } from "@/components/sections/articles/articles-loader";
 import NoContent from "@/components/shared/no-content";
 import PaginationControls from "@/components/shared/pagination-controls";
 import SectionHeader from "@/components/shared/section-header";
-import { Article } from "@/lib/types";
+import { Article } from "@/types/types";
 import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
 import { Metadata } from "next";
 import { Suspense } from "react";

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import type { Appointment, AppointmentWithUser } from "@/lib/types";
+import type { Appointment, AppointmentWithUser } from "@/types/types";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { toShamsi } from "@/lib/shamsi-utils";
 import { statusLabels } from "@/lib/appointment-constants";

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import WhatsAppIcon from "../../../public/icons/whatsapp.svg";
+import WhatsAppIcon from "../../../../public/icons/whatsapp.svg";
 import Link from "next/link";
 
 interface AppointmentTypeSelectorProps {

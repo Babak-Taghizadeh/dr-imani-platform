@@ -4,7 +4,7 @@ import { appointments, disabledDates } from "@/db/schema";
 import { eq, and, gte, lte, or, sql } from "drizzle-orm";
 import { generateTimeSlots } from "@/lib/booking-utils";
 import { parse, format } from "date-fns";
-import type { AppointmentType } from "@/lib/types";
+import type { AppointmentType } from "@/types/types";
 
 export async function GET(request: NextRequest) {
   try {

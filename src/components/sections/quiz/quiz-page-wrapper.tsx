@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { QuizConfig, QuizResult } from "@/lib/types";
+import { QuizConfig, QuizResult } from "@/types/types";
 import QuizTaker from "@/components/sections/quiz/quiz-taker";
 import QuizResults from "@/components/sections/quiz/quiz-results";
 

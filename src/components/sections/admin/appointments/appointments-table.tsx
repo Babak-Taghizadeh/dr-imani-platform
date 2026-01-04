@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { AppointmentWithUser } from "@/lib/types";
+import type { AppointmentWithUser } from "@/types/types";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { toShamsi } from "@/lib/shamsi-utils";
 
