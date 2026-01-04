@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db/db";
-import { appointments } from "@/db/schema";
-import { eq, and, lt } from "drizzle-orm";
+import { expirePendingAppointments } from "@/lib/expire-appointments";
 
-const PAYMENT_TTL_MINUTES = parseInt(
-  process.env.PAYMENT_TTL_MINUTES || "5",
-  10,
-);
 const CRON_SECRET = process.env.CRON_SECRET;
 
 export async function POST(request: NextRequest) {
@@ -19,45 +13,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Calculate expiry time threshold
-    const expiryThreshold = new Date();
-    expiryThreshold.setMinutes(
-      expiryThreshold.getMinutes() - PAYMENT_TTL_MINUTES,
-    );
-
-    // Find expired PENDING appointments
-    const expiredAppointments = await db
-      .select({ id: appointments.id })
-      .from(appointments)
-      .where(
-        and(
-          eq(appointments.status, "PENDING"),
-          lt(appointments.createdAt, expiryThreshold),
-        ),
-      );
-
-    if (expiredAppointments.length === 0) {
-      return NextResponse.json({
-        message: "No expired appointments found",
-        expiredCount: 0,
-      });
-    }
-
-    // Delete expired appointments (this frees up the slots)
-    const deletedIds = expiredAppointments.map((apt) => apt.id);
-    await db
-      .delete(appointments)
-      .where(
-        and(
-          eq(appointments.status, "PENDING"),
-          lt(appointments.createdAt, expiryThreshold),
-        ),
-      );
+    const result = await expirePendingAppointments();
 
     return NextResponse.json({
-      message: "Expired appointments deleted",
-      expiredCount: deletedIds.length,
-      expiredIds: deletedIds,
+      message:
+        result.expiredCount > 0
+          ? "Expired appointments deleted"
+          : "No expired appointments found",
+      expiredCount: result.expiredCount,
+      expiredIds: result.expiredIds,
     });
   } catch (error) {
     console.error("Expire payments job error:", error);
