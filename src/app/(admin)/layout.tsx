@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "../(main)/globals.css";
 import { Toaster } from "sonner";
-import { requireAdmin } from "@/lib/auth-guards";
 
 export const metadata: Metadata = {
   title: {
@@ -36,9 +35,6 @@ export default async function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Verify admin access at layout level (defense in depth)
-  await requireAdmin();
-
   return (
     <>
       {children}
