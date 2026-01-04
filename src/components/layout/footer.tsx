@@ -144,12 +144,13 @@ const Footer = () => {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://trustseal.enamad.ir/logo.aspx?id=667640&Code=P83wVmEyUmo2xYei039WuSModMLnf9px"
-                alt=""
+                alt="نماد اعتماد الکترونیکی"
                 referrerPolicy="origin"
                 {...({
                   code: "P83wVmEyUmo2xYei039WuSModMLnf9px",
                 } as React.HTMLAttributes<HTMLImageElement>)}
-                className="h-16 w-auto"
+                className="h-16 w-16"
+                loading="lazy"
               />
             </Link>
           </div>
