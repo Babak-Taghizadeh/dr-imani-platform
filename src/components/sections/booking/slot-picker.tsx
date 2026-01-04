@@ -37,7 +37,7 @@ export function SlotPicker({
           onClick={() => slot.available && onSelect(slot.time)}
           className={cn(
             "relative h-12",
-            !slot.available && "cursor-not-allowed !opacity-70",
+            !slot.available && "cursor-not-allowed !opacity-100",
             selectedTime === slot.time && "bg-primary text-primary-foreground",
           )}
         >
@@ -48,7 +48,9 @@ export function SlotPicker({
               <span className="text-muted-foreground">
                 {toPersianNumber(slot.time)}
               </span>
-              <span className="mt-0.5 text-[10px] text-red-500">رزرو شده</span>
+              <span className="text-xs font-bold tracking-wide text-red-500">
+                رزرو شده
+              </span>
             </span>
           )}
         </Button>
