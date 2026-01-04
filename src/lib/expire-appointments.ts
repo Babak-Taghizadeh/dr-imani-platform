@@ -1,0 +1,53 @@
+import { db } from "@/db/db";
+import { appointments } from "@/db/schema";
+import { eq, and, lt } from "drizzle-orm";
+
+const PAYMENT_TTL_MINUTES = parseInt(
+  process.env.PAYMENT_TTL_MINUTES || "5",
+  10,
+);
+
+export async function expirePendingAppointments() {
+  try {
+    // Calculate expiry time threshold
+    const expiryThreshold = new Date();
+    expiryThreshold.setMinutes(
+      expiryThreshold.getMinutes() - PAYMENT_TTL_MINUTES,
+    );
+
+    // Find expired PENDING appointments
+    const expiredAppointments = await db
+      .select({ id: appointments.id })
+      .from(appointments)
+      .where(
+        and(
+          eq(appointments.status, "PENDING"),
+          lt(appointments.createdAt, expiryThreshold),
+        ),
+      );
+
+    if (expiredAppointments.length === 0) {
+      return { expiredCount: 0, expiredIds: [] };
+    }
+
+    // Delete expired appointments (this frees up the slots)
+    const deletedIds = expiredAppointments.map((apt) => apt.id);
+    await db
+      .delete(appointments)
+      .where(
+        and(
+          eq(appointments.status, "PENDING"),
+          lt(appointments.createdAt, expiryThreshold),
+        ),
+      );
+
+    console.log(
+      `Expired ${deletedIds.length} PENDING appointment(s):`,
+      deletedIds,
+    );
+    return { expiredCount: deletedIds.length, expiredIds: deletedIds };
+  } catch (error) {
+    console.error("Expire appointments job error:", error);
+    throw error;
+  }
+}
