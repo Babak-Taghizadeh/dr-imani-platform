@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seed.ts",
-    "test:expire": "tsx scripts/test-expire-appointments.ts",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate"
   },
