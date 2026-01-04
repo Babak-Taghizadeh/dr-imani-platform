@@ -11,17 +11,17 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface AdminPaginationProps {
+interface AppointmentsPaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-export function AdminPagination({
+export function AppointmentsPagination({
   currentPage,
   totalPages,
   onPageChange,
-}: AdminPaginationProps) {
+}: AppointmentsPaginationProps) {
   if (totalPages <= 1) {
     return null;
   }
@@ -139,4 +139,3 @@ export function AdminPagination({
     </div>
   );
 }
-

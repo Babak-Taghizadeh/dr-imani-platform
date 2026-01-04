@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { db } from "@/db/db";
 import { disabledDates } from "@/db/schema";
-import { DisableDatesForm } from "@/components/sections/admin/disable-dates-form";
-import { DisabledDatesList } from "@/components/sections/admin/disabled-dates-list";
-import { DisabledDatesTableSkeleton } from "@/components/sections/admin/disabled-dates-table-skeleton";
+import { DisableDatesForm } from "@/components/sections/admin/disabled-dates/disable-dates-form";
+import { DisabledDatesList } from "@/components/sections/admin/disabled-dates/disabled-dates-list";
+import { DisabledDatesTableSkeleton } from "@/components/sections/admin/disabled-dates/disabled-dates-table-skeleton";
 import { Metadata } from "next";
 import { format } from "date-fns";
 import {

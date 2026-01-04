@@ -3,9 +3,9 @@
 import { useMemo } from "react";
 import useSWR from "swr";
 import { AppointmentsTable } from "./appointments-table";
-import { AppointmentsTableEmpty } from "@/components/sections/admin/appointments-table-empty";
+import { AppointmentsTableEmpty } from "./appointments-table-empty";
 import { AppointmentsTableSkeleton } from "./appointments-table-skeleton";
-import { AdminPagination } from "@/components/sections/admin/admin-pagination";
+import { AppointmentsPagination } from "./appointments-pagination";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import type {
@@ -97,7 +97,7 @@ export function AppointmentsDataWrapper({
   return (
     <>
       <AppointmentsTable appointments={appointments} />
-      <AdminPagination
+      <AppointmentsPagination
         currentPage={page}
         totalPages={totalPages}
         onPageChange={onPageChange}
