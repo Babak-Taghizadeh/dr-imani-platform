@@ -176,14 +176,13 @@ export function AppointmentsFilterForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="desc">تاریخ ایجاد (جدیدترین)</SelectItem>
-                  <SelectItem value="asc">تاریخ ایجاد (قدیمی‌ترین)</SelectItem>
+                  <SelectItem value="desc">تاریخ (جدیدترین)</SelectItem>
+                  <SelectItem value="asc">تاریخ (قدیمی‌ترین)</SelectItem>
                 </SelectContent>
               </Select>
             </FormItem>
           )}
         />
-        {/* TODO: UI conflict */}
         <div className="flex items-end lg:justify-center">
           <Button
             variant="outline"
