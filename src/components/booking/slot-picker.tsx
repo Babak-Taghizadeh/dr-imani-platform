@@ -26,10 +26,9 @@ export function SlotPicker({
   if (isLoading) {
     return <SlotPickerSkeleton />;
   }
-  console.log(slots);
 
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
       {slots.map((slot) => (
         <Button
           key={slot.time}
@@ -37,12 +36,21 @@ export function SlotPicker({
           disabled={!slot.available}
           onClick={() => slot.available && onSelect(slot.time)}
           className={cn(
-            "h-12",
-            !slot.available && "cursor-not-allowed opacity-50",
+            "relative h-12",
+            !slot.available && "cursor-not-allowed !opacity-70",
             selectedTime === slot.time && "bg-primary text-primary-foreground",
           )}
         >
-          {toPersianNumber(slot.time)}
+          {slot.available ? (
+            toPersianNumber(slot.time)
+          ) : (
+            <span className="flex flex-col items-center justify-center text-sm">
+              <span className="text-muted-foreground">
+                {toPersianNumber(slot.time)}
+              </span>
+              <span className="mt-0.5 text-[10px] text-red-500">رزرو شده</span>
+            </span>
+          )}
         </Button>
       ))}
     </div>
