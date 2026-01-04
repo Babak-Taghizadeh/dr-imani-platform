@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import SectionHeader from "../shared/section-header";
+import SectionHeader from "../../shared/section-header";
 
 export function ProfileFormSkeleton() {
   return (

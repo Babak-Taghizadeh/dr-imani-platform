@@ -3,9 +3,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField } from "@/components/ui/form";
-import { AuthInput } from "@/components/auth/auth-input";
-import { AuthSubmitButton } from "@/components/auth/auth-submit-button";
-import { AuthLayout } from "@/components/auth/auth-layout";
+import { AuthInput } from "@/components/sections/auth/auth-input";
+import { AuthSubmitButton } from "@/components/sections/auth/auth-submit-button";
+import { AuthLayout } from "@/components/sections/auth/auth-layout";
 import {
   forgotPasswordSchema,
   ForgotPasswordFormData,

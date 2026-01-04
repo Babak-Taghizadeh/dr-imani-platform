@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { AppointmentsHeader } from "@/components/appointments/appointments-header";
-import { AppointmentsListClient } from "@/components/appointments/appointments-list-client";
-import { AppointmentsLoading } from "@/components/appointments/appointments-loading";
+import { AppointmentsHeader } from "@/components/sections/appointments/appointments-header";
+import { AppointmentsListClient } from "@/components/sections/appointments/appointments-list-client";
+import { AppointmentsLoading } from "@/components/sections/appointments/appointments-loading";
 
 export default function UserAppointmentsPage() {
   return (

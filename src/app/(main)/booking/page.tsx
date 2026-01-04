@@ -1,5 +1,5 @@
-import { BookingForm } from "@/components/booking/booking-form";
-import { BookingHero } from "@/components/booking/booking-hero";
+import { BookingForm } from "@/components/sections/booking/booking-form";
+import { BookingHero } from "@/components/sections/booking/booking-hero";
 
 export default function BookingPage() {
   return (

@@ -2,8 +2,8 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Suspense } from "react";
-import { ProfileForm } from "@/components/profile/profile-form";
-import { ProfileFormSkeleton } from "@/components/profile/profile-form-skeleton";
+import { ProfileForm } from "@/components/sections/profile/profile-form";
+import { ProfileFormSkeleton } from "@/components/sections/profile/profile-form-skeleton";
 import { getUserById } from "@/utils/users-services";
 
 interface SessionUser {

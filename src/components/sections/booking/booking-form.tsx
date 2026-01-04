@@ -11,13 +11,13 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { AppointmentTypeSelector } from "@/components/booking/appointment-type-selector";
-import { AgeRangeSelector } from "@/components/booking/age-range-selector";
-import { DatePicker } from "@/components/booking/date-picker";
-import { SlotPicker } from "@/components/booking/slot-picker";
-import { StepProgressIndicator } from "@/components/booking/step-progress-indicator";
-import { StepNavigation } from "@/components/booking/step-navigation";
-import { ConfirmationSummary } from "@/components/booking/confirmation-summary";
+import { AppointmentTypeSelector } from "@/components/sections/booking/appointment-type-selector";
+import { AgeRangeSelector } from "@/components/sections/booking/age-range-selector";
+import { DatePicker } from "@/components/sections/booking/date-picker";
+import { SlotPicker } from "@/components/sections/booking/slot-picker";
+import { StepProgressIndicator } from "@/components/sections/booking/step-progress-indicator";
+import { StepNavigation } from "@/components/sections/booking/step-navigation";
+import { ConfirmationSummary } from "@/components/sections/booking/confirmation-summary";
 import { bookingSchema, BookingFormData } from "@/lib/validation-schema";
 import { toast } from "sonner";
 import { Users, CalendarDays, Clock, Tag } from "lucide-react";

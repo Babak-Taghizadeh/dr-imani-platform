@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { AuthInput } from "@/components/auth/auth-input";
+import { AuthInput } from "@/components/sections/auth/auth-input";
 import {
   updateProfileSchema,
   UpdateProfileFormData,
@@ -22,7 +22,7 @@ import {
 import { toast } from "sonner";
 import Link from "next/link";
 import type { User } from "@/lib/types";
-import SectionHeader from "../shared/section-header";
+import SectionHeader from "../../shared/section-header";
 
 interface ProfileFormProps {
   user: User;

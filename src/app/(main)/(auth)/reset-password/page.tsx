@@ -1,5 +1,5 @@
-import { ResetPasswordForm } from "@/components/auth/reset-password-form";
-import { AuthLayout } from "@/components/auth/auth-layout";
+import { ResetPasswordForm } from "@/components/sections/auth/reset-password-form";
+import { AuthLayout } from "@/components/sections/auth/auth-layout";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

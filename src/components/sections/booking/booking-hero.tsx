@@ -1,4 +1,4 @@
-import SectionHeader from "../shared/section-header";
+import SectionHeader from "../../shared/section-header";
 
 export function BookingHero() {
   return (

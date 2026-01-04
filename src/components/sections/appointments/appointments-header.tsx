@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRightCircle } from "lucide-react";
 import Link from "next/link";
-import SectionHeader from "../shared/section-header";
+import SectionHeader from "../../shared/section-header";
 
 export function AppointmentsHeader() {
   return (

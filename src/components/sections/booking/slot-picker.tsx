@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SlotPickerSkeleton } from "@/components/booking/slot-picker-skeleton";
+import { SlotPickerSkeleton } from "@/components/sections/booking/slot-picker-skeleton";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 
 interface TimeSlot {
