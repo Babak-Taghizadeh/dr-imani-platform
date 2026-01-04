@@ -45,7 +45,7 @@ export function DisabledDatesList({
             <TableRow>
               <TableHead>از تاریخ</TableHead>
               <TableHead>تا تاریخ</TableHead>
-              <TableHead>دلیل</TableHead>
+              <TableHead>توضیحات</TableHead>
               <TableHead className="text-right">عملیات</TableHead>
             </TableRow>
           </TableHeader>

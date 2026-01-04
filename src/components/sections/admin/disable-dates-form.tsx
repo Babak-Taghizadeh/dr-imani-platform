@@ -163,9 +163,12 @@ export function DisableDatesForm({
           name="reason"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>دلیل (اختیاری)</FormLabel>
+              <FormLabel>توضیحات (اختیاری)</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder="دلیل غیرفعال کردن این بازه" />
+                <Textarea
+                  {...field}
+                  placeholder="توضیحات غیرفعال کردن این بازه"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
