@@ -106,7 +106,10 @@ export function BookingForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appointmentType]);
 
-  const handleDateSelect = async (date: string) => {
+  const handleDateSelect = async (
+    date: string,
+    cachedSlots?: Array<{ time: string; available: boolean }>,
+  ) => {
     // Check if appointment type is selected
     const appointmentType = form.getValues("appointmentType");
     if (!appointmentType) {
@@ -128,6 +131,14 @@ export function BookingForm() {
 
     form.setValue("date", date);
     form.setValue("time", "");
+
+    // Use cached slots if available to avoid redundant API call
+    if (cachedSlots && cachedSlots.length > 0) {
+      setSlots(cachedSlots);
+      return;
+    }
+
+    // Fallback: fetch slots if not cached (shouldn't happen in normal flow)
     setLoadingSlots(true);
 
     try {
