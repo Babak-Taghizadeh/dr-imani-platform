@@ -45,7 +45,7 @@ export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
       <TableBody>
         {appointments.length > 0 ? (
           appointments.map((appointment) => (
-            <TableRow key={appointment.id}>
+            <TableRow key={appointment.id} className="hover:bg-blue-100">
               <TableCell>{appointment.userName || "-"}</TableCell>
               <TableCell>
                 {appointment.userPhone
