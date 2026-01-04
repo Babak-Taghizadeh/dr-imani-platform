@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import type { ShamsiDateInfo } from "@/hooks/use-visible-dates";
+import { Badge } from "@/components/ui/badge";
 
 interface DatePickerButtonProps {
   dateInfo: ShamsiDateInfo;
@@ -38,18 +39,13 @@ export function DatePickerButton({
       className={cn(
         "relative h-auto flex-col p-2 sm:p-3",
         isSelected && "bg-primary text-primary-foreground hover:bg-primary/90",
-        isDisabled && "cursor-not-allowed opacity-50 grayscale",
+        isDisabled && "cursor-not-allowed !opacity-100",
       )}
     >
-      {dateInfo.isHoliday && (
-        <span className="absolute top-1 left-1 text-[8px] text-orange-600 dark:text-orange-400">
-          ✨
-        </span>
-      )}
       <span
         className={cn(
           "text-[10px] sm:text-xs",
-          isDisabled ? "text-accent-foreground/50" : "text-accent-foreground",
+          isDisabled ? "text-accent-foreground/30" : "text-accent-foreground",
           isSelected && "text-primary-foreground",
         )}
       >
@@ -58,7 +54,7 @@ export function DatePickerButton({
       <span
         className={cn(
           "text-base font-semibold sm:text-lg",
-          isDisabled && "text-accent-foreground/50",
+          isDisabled && "text-accent-foreground/30",
         )}
       >
         {toPersianNumber(dateInfo.shamsiDay)}
@@ -66,7 +62,7 @@ export function DatePickerButton({
       <span
         className={cn(
           "text-[10px] sm:text-xs",
-          isDisabled ? "text-accent-foreground/50" : "text-accent-foreground",
+          isDisabled ? "text-accent-foreground/30" : "text-accent-foreground",
           isSelected && "text-primary-foreground",
         )}
       >
@@ -74,9 +70,12 @@ export function DatePickerButton({
       </span>
       {/* Show "بدون نوبت خالی" for dates with no available slots */}
       {dateInfo.hasAvailableSlots === false && (
-        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] whitespace-nowrap text-red-500 dark:text-red-400">
-          بدون نوبت خالی
-        </span>
+        <Badge
+          variant="destructive"
+          className="absolute -top-[26px] left-1/2 -translate-x-1/2 rounded-b-none !bg-red-600 text-sm opacity-100"
+        >
+          تکمیل شده
+        </Badge>
       )}
     </Button>
   );
