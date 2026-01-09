@@ -50,9 +50,7 @@ const WorkingDays = () => {
         </p>
 
         <Link
-          href="https://boghrat.com/dr/vida-imani"
-          rel="noopener noreferrer"
-          target="_blank"
+          href="/booking"
           className={cn(
             buttonVariants({ size: "sm", variant: "default" }),
             "group mt-2 w-fit self-end text-sm sm:mt-3 sm:text-base",

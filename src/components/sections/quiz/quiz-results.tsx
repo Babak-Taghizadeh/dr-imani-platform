@@ -162,13 +162,7 @@ const QuizResults = ({ result, quiz, onRestart }: QuizResultsProps) => {
           aria-label="دریافت نوبت اینترنتی"
           tabIndex={0}
         >
-          <Link
-            href="https://boghrat.com/dr/vida-imani"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            نوبت دهی اینترنتی
-          </Link>
+          <Link href="/booking">نوبت دهی اینترنتی</Link>
         </Button>
         <Button
           onClick={onRestart}
