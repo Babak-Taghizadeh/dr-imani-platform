@@ -60,11 +60,29 @@ async function handleCallback(request: NextRequest) {
     const amount = getParam("Amount");
     const terminalId = getParam("TerminalId");
 
-    // Validate required parameters
-    if (!refNum || !resNum || !amount || !state || !status) {
+    // Validate required parameters (including empty string check)
+    if (
+      !refNum ||
+      !resNum ||
+      !amount ||
+      !state ||
+      !status ||
+      refNum.trim() === "" ||
+      resNum.trim() === ""
+    ) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("پارامترهای پرداخت نامعتبر است")}`,
+          request.url,
+        ),
+      );
+    }
+
+    // Validate terminal ID matches expected
+    if (terminalId && terminalId !== SEP_TERMINAL_ID) {
+      return NextResponse.redirect(
+        new URL(
+          `/booking/payment/failure?error=${encodeURIComponent("ترمینال نامعتبر است")}`,
           request.url,
         ),
       );
@@ -94,7 +112,13 @@ async function handleCallback(request: NextRequest) {
       TerminalNumber: parseInt(SEP_TERMINAL_ID, 10),
     });
 
-    if (!verifyResponse.Success || verifyResponse.ResultCode !== 0) {
+    // Handle verify response
+    // ResultCode 0 = success, 2 = duplicate request (also acceptable as idempotent)
+    // Other codes indicate errors
+    if (
+      !verifyResponse.Success ||
+      (verifyResponse.ResultCode !== 0 && verifyResponse.ResultCode !== 2)
+    ) {
       await handleFailedPayment(resNum, refNum, {
         state: state ?? undefined,
         status: status ?? undefined,
@@ -129,17 +153,23 @@ async function handleCallback(request: NextRequest) {
 
     const appointment = appointmentData[0];
 
-    // Check if already processed (idempotency)
-    const existingPayment = await db
-      .select()
-      .from(paymentLogs)
-      .where(eq(paymentLogs.gatewayReference, refNum))
-      .limit(1);
-
-    if (existingPayment.length > 0) {
-      // Already processed, redirect to success
+    // Verify appointment is still in PENDING status
+    if (appointment.status !== "PENDING") {
+      // If already confirmed with the same RefNum, redirect to success (idempotent)
+      if (
+        appointment.status === "CONFIRMED" &&
+        appointment.paymentReference === refNum
+      ) {
+        return NextResponse.redirect(
+          new URL(`/appointments/${appointment.id}`, request.url),
+        );
+      }
+      // Otherwise, status is invalid
       return NextResponse.redirect(
-        new URL(`/appointments/${appointment.id}`, request.url),
+        new URL(
+          `/booking/payment/failure?error=${encodeURIComponent("نوبت در وضعیت نامعتبر است")}`,
+          request.url,
+        ),
       );
     }
 
@@ -162,33 +192,97 @@ async function handleCallback(request: NextRequest) {
       );
     }
 
-    // Update appointment status
-    await db
-      .update(appointments)
-      .set({
-        status: "CONFIRMED",
-        paymentReference: refNum,
-        updatedAt: new Date(),
-      })
-      .where(eq(appointments.id, appointment.id));
+    // Validate TerminalNumber from verify response matches expected
+    const verifiedTerminal =
+      verifyResponse.TransactionDetail?.TerminalNumber;
+    if (
+      verifiedTerminal &&
+      verifiedTerminal !== parseInt(SEP_TERMINAL_ID, 10)
+    ) {
+      await handleFailedPayment(resNum, refNum, {
+        state: state ?? undefined,
+        status: status ?? undefined,
+        amount: amount ?? undefined,
+        terminalId: terminalId ?? undefined,
+        verifyError: "ترمینال تایید شده با ترمینال انتظاری مطابقت ندارد",
+      });
 
-    // Create payment log
-    await db.insert(paymentLogs).values({
-      appointmentId: appointment.id,
-      amount: verifiedAmount,
-      gateway: "SEP",
-      gatewayReference: refNum,
-      status: "SUCCESS",
-      rawPayload: {
-        state,
-        status,
-        refNum,
-        resNum,
-        amount,
-        terminalId,
-        verifyResponse,
-      },
-    });
+      return NextResponse.redirect(
+        new URL(
+          `/booking/payment/failure?error=${encodeURIComponent("ترمینال تایید شده نامعتبر است")}`,
+          request.url,
+        ),
+      );
+    }
+
+    // Use transaction to ensure atomicity and prevent race conditions
+    let paymentAlreadyExists = false;
+    try {
+      await db.transaction(async (tx) => {
+        // Double-check locking: Check again inside transaction
+        const existingPayment = await tx
+          .select()
+          .from(paymentLogs)
+          .where(eq(paymentLogs.gatewayReference, refNum))
+          .limit(1);
+
+        if (existingPayment.length > 0) {
+          // Already processed, mark as existing and return early
+          paymentAlreadyExists = true;
+          return;
+        }
+
+        // Update appointment status
+        await tx
+          .update(appointments)
+          .set({
+            status: "CONFIRMED",
+            paymentReference: refNum,
+            updatedAt: new Date(),
+          })
+          .where(eq(appointments.id, appointment.id));
+
+        // Create payment log (unique constraint will prevent duplicates)
+        await tx.insert(paymentLogs).values({
+          appointmentId: appointment.id,
+          amount: verifiedAmount,
+          gateway: "SEP",
+          gatewayReference: refNum,
+          status: "SUCCESS",
+          rawPayload: {
+            state,
+            status,
+            refNum,
+            resNum,
+            amount,
+            terminalId,
+            verifyResponse,
+          },
+        });
+      });
+
+      // If payment was already processed (idempotent), redirect to success
+      if (paymentAlreadyExists) {
+        return NextResponse.redirect(
+          new URL(`/appointments/${appointment.id}`, request.url),
+        );
+      }
+    } catch (error) {
+      // If unique constraint violation (double payment attempt), redirect to success
+      if (
+        error instanceof Error &&
+        (error.message.includes("unique") ||
+          error.message.includes("duplicate") ||
+          error.message.includes("violates unique constraint"))
+      ) {
+        // Payment already processed, redirect to success (idempotent)
+        return NextResponse.redirect(
+          new URL(`/appointments/${appointment.id}`, request.url),
+        );
+      }
+      // Other transaction errors
+      throw error;
+    }
 
     // Redirect to appointment detail page
     return NextResponse.redirect(
@@ -221,11 +315,13 @@ async function handleFailedPayment(
       const appointment = appointmentData[0];
 
       // Create failed payment log
+      // Use a unique reference for failed payments to avoid constraint violations
+      const failedRefNum = refNum || `failed-${Date.now()}-${Math.random()}`;
       await db.insert(paymentLogs).values({
         appointmentId: appointment.id,
-        amount: parseInt(errorData.amount || "0", 10),
+        amount: parseInt(errorData.amount || "0", 10) || 0,
         gateway: "SEP",
-        gatewayReference: refNum || "unknown",
+        gatewayReference: failedRefNum,
         status: "FAILED",
         rawPayload: errorData,
       });
