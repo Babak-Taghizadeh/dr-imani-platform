@@ -24,10 +24,11 @@ export async function GET(request: NextRequest) {
 }
 
 async function handleCallback(request: NextRequest) {
-  try {
-    // Get callback parameters (from POST body or GET query)
-    let params: Record<string, string> = {};
+  // Get callback parameters (from POST body or GET query)
+  let params: Record<string, string> = {};
+  let resNum: string | null = null;
 
+  try {
     if (request.method === "POST") {
       try {
         const formData = await request.formData();
@@ -56,7 +57,7 @@ async function handleCallback(request: NextRequest) {
     const state = getParam("State");
     const status = getParam("Status");
     const refNum = getParam("RefNum");
-    const resNum = getParam("ResNum");
+    resNum = getParam("ResNum");
     const amount = getParam("Amount");
     const terminalId = getParam("TerminalId");
 
@@ -100,7 +101,7 @@ async function handleCallback(request: NextRequest) {
 
       return NextResponse.redirect(
         new URL(
-          `/booking/payment/failure?error=${encodeURIComponent("پرداخت ناموفق بود")}`,
+          `/booking/payment/failure?error=${encodeURIComponent("پرداخت ناموفق بود")}&appointmentId=${encodeURIComponent(resNum)}`,
           request.url,
         ),
       );
@@ -129,7 +130,7 @@ async function handleCallback(request: NextRequest) {
 
       return NextResponse.redirect(
         new URL(
-          `/booking/payment/failure?error=${encodeURIComponent(verifyResponse.ResultDescription || "تایید پرداخت ناموفق بود")}`,
+          `/booking/payment/failure?error=${encodeURIComponent(verifyResponse.ResultDescription || "تایید پرداخت ناموفق بود")}&appointmentId=${encodeURIComponent(resNum)}`,
           request.url,
         ),
       );
@@ -145,7 +146,7 @@ async function handleCallback(request: NextRequest) {
     if (appointmentData.length === 0) {
       return NextResponse.redirect(
         new URL(
-          `/booking/payment/failure?error=${encodeURIComponent("نوبت یافت نشد")}`,
+          `/booking/payment/failure?error=${encodeURIComponent("نوبت یافت نشد")}&appointmentId=${encodeURIComponent(resNum)}`,
           request.url,
         ),
       );
@@ -167,7 +168,7 @@ async function handleCallback(request: NextRequest) {
       // Otherwise, status is invalid
       return NextResponse.redirect(
         new URL(
-          `/booking/payment/failure?error=${encodeURIComponent("نوبت در وضعیت نامعتبر است")}`,
+          `/booking/payment/failure?error=${encodeURIComponent("نوبت در وضعیت نامعتبر است")}&appointmentId=${encodeURIComponent(appointment.id)}`,
           request.url,
         ),
       );
@@ -186,7 +187,7 @@ async function handleCallback(request: NextRequest) {
 
       return NextResponse.redirect(
         new URL(
-          `/booking/payment/failure?error=${encodeURIComponent("مبلغ پرداختی با مبلغ نوبت مطابقت ندارد")}`,
+          `/booking/payment/failure?error=${encodeURIComponent("مبلغ پرداختی با مبلغ نوبت مطابقت ندارد")}&appointmentId=${encodeURIComponent(appointment.id)}`,
           request.url,
         ),
       );
@@ -209,7 +210,7 @@ async function handleCallback(request: NextRequest) {
 
       return NextResponse.redirect(
         new URL(
-          `/booking/payment/failure?error=${encodeURIComponent("ترمینال تایید شده نامعتبر است")}`,
+          `/booking/payment/failure?error=${encodeURIComponent("ترمینال تایید شده نامعتبر است")}&appointmentId=${encodeURIComponent(appointment.id)}`,
           request.url,
         ),
       );
@@ -284,15 +285,21 @@ async function handleCallback(request: NextRequest) {
       throw error;
     }
 
-    // Redirect to appointment detail page
+    // Redirect to success page with appointment ID
     return NextResponse.redirect(
-      new URL(`/appointments/${appointment.id}?payment=success`, request.url),
+      new URL(
+        `/booking/payment/success?appointmentId=${encodeURIComponent(appointment.id)}`,
+        request.url,
+      ),
     );
   } catch (error) {
     console.error("Payment callback error:", error);
+    const appointmentIdParam = resNum
+      ? `&appointmentId=${encodeURIComponent(resNum)}`
+      : "";
     return NextResponse.redirect(
       new URL(
-        `/booking/payment/failure?error=${encodeURIComponent("خطایی در پردازش پرداخت رخ داد")}`,
+        `/booking/payment/failure?error=${encodeURIComponent("خطایی در پردازش پرداخت رخ داد")}${appointmentIdParam}`,
         request.url,
       ),
     );
@@ -323,7 +330,11 @@ async function handleFailedPayment(
         gateway: "SEP",
         gatewayReference: failedRefNum,
         status: "FAILED",
-        rawPayload: errorData,
+        rawPayload: {
+          ...errorData,
+          refNum: refNum || undefined,
+          resNum: resNum || undefined,
+        },
       });
     }
   } catch (error) {
