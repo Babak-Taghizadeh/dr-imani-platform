@@ -9,7 +9,7 @@ export function AppointmentsEmpty() {
         <CardTitle>نوبت‌های من</CardTitle>
       </CardHeader>
       <CardContent className="pt-6 text-center">
-        <p className="text-muted-foreground">هنوز نوبتی رزرو نکرده‌اید</p>
+        <p className="text-accent-foreground text-xl font-semibold">هنوز نوبتی رزرو نکرده‌اید</p>
         <Button asChild className="mt-4">
           <Link href="/booking">رزرو نوبت</Link>
         </Button>
