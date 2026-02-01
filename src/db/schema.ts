@@ -110,7 +110,9 @@ export const paymentLogs = pgTable("payment_logs", {
     .references(() => appointments.id, { onDelete: "cascade" }),
   amount: integer("amount").notNull(),
   gateway: varchar("gateway", { length: 50 }).notNull().default("SEP"),
-  gatewayReference: varchar("gateway_reference", { length: 255 }).notNull(),
+  gatewayReference: varchar("gateway_reference", { length: 255 })
+    .notNull()
+    .unique(),
   status: paymentStatusEnum("status").notNull(),
   rawPayload: jsonb("raw_payload"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

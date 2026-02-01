@@ -2,8 +2,13 @@ import { db } from "@/db/db";
 import { appointments } from "@/db/schema";
 import { eq, and, lt } from "drizzle-orm";
 
+// Default to 40 minutes to account for:
+// - SEP token expiry (20 minutes default)
+// - Payment processing time
+// - 30-minute verification window after payment
+// This ensures we don't expire appointments while payment is still possible
 const PAYMENT_TTL_MINUTES = parseInt(
-  process.env.PAYMENT_TTL_MINUTES || "5",
+  process.env.PAYMENT_TTL_MINUTES || "40",
   10,
 );
 
