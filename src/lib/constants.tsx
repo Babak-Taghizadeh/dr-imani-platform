@@ -14,6 +14,7 @@ import {
   BookOpen,
   Briefcase,
   Clock,
+  Contact,
   GraduationCap,
   MapPin,
   Monitor,
@@ -414,6 +415,11 @@ export const CONTACT_ITEMS: {
     icon: <PhoneIcon height={30} width={30} />,
     value: "https://wa.me/989302871635",
     desc: "۰۹۳۰۲۷۱۶۳۵",
+  },
+  {
+    title: "روبیکا",
+    icon: <Contact height={30} width={30} />,
+    desc: "۰۹۱۴۷۳۶۰۸۲۶",
   },
   {
     title: "آدرس",
