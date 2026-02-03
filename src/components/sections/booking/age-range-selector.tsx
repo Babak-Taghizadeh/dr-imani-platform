@@ -14,6 +14,9 @@ interface AgeRangeSelectorProps {
 }
 
 export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
+  const adultPrice = PRICE_OVER_15 / 10;
+  const childPrice = PRICE_UNDER_15 / 10;
+  const selectedPrice = calculatePrice(value!) / 10;
   return (
     <div className="space-y-10">
       <div className="flex flex-col gap-4 md:flex-row">
@@ -27,7 +30,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
           <div className="text-center md:p-6">
             <h3 className="font-semibold">زیر {toPersianNumber(15)} سال</h3>
             <p className="text-primary mt-2 text-lg font-bold md:text-2xl">
-              {PRICE_UNDER_15.toLocaleString("fa-IR")} تومان
+              {childPrice.toLocaleString("fa-IR")} تومان
             </p>
           </div>
         </Card>
@@ -41,7 +44,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
           <div className="text-center md:p-6">
             <h3 className="font-semibold">بالای {toPersianNumber(15)} سال</h3>
             <p className="text-primary mt-2 text-lg font-bold md:text-2xl">
-              {PRICE_OVER_15.toLocaleString("fa-IR")} تومان
+              {adultPrice.toLocaleString("fa-IR")} تومان
             </p>
           </div>
         </Card>
@@ -50,7 +53,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
         <div className="bg-muted rounded-lg p-4 text-center">
           <p className="text-accent-foreground text-sm">مبلغ قابل پرداخت:</p>
           <p className="text-primary mt-1 text-xl font-bold md:text-2xl">
-            {calculatePrice(value).toLocaleString("fa-IR")} تومان
+            {selectedPrice.toLocaleString("fa-IR")} تومان
           </p>
         </div>
       )}

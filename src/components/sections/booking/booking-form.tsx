@@ -234,7 +234,8 @@ export function BookingForm() {
       }
 
       // Redirect to payment gateway
-      window.location.href = paymentData.paymentUrl;
+      // window.location.href = paymentData.paymentUrl;
+      console.log(paymentData);
     } catch {
       toast.error("خطایی در رزرو نوبت رخ داد");
     }
