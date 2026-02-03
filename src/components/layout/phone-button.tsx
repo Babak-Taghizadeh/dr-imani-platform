@@ -3,27 +3,16 @@ import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { PhoneCall } from "lucide-react";
 
-interface PhoneButtonProps {
-  showText?: boolean;
-}
-
-export function PhoneButton({ showText = true }: PhoneButtonProps) {
+export function PhoneButton() {
   return (
     <Link
       href="tel:041-3335-0357"
-      className={cn(
-        buttonVariants(),
-        "rounded-full [@media(min-width:940px)]:px-4",
-      )}
+      className={cn(buttonVariants(), "hover:bg-primary/85")}
       rel="noopener noreferrer"
       target="_blank"
     >
+      <span className="font-bold">۰۴۱-۳۳۳۵۰۳۵۷</span>
       <PhoneCall width={20} height={20} />
-      {showText && (
-        <span className="hidden font-bold [@media(min-width:940px)]:inline-block">
-          ۰۴۱-۳۳۳۵۰۳۵۷
-        </span>
-      )}
     </Link>
   );
 }

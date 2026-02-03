@@ -35,7 +35,7 @@ export function UserMenu() {
       <Button
         asChild
         variant="outline"
-        className="hover:!text-foreground hidden gap-2 [@media(min-width:930px)]:flex"
+        className="hover:!text-foreground hidden gap-2 md:flex"
       >
         <Link href="/login">
           <User className="h-4 w-4" />
@@ -55,58 +55,56 @@ export function UserMenu() {
   }
 
   return (
-    <div className="hidden [@media(min-width:930px)]:block">
-      <DropdownMenu dir="rtl">
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className="hover:!text-foreground gap-2"
-            aria-label="منوی کاربر"
+    <DropdownMenu dir="rtl">
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          className="hover:!text-foreground gap-2"
+          aria-label="منوی کاربر"
+        >
+          <UserCircle className="h-4 w-4" />
+          <span className="hidden max-w-[120px] truncate sm:inline">
+            {userName}
+          </span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col gap-2">
+            <p className="text-accent-foreground text-xs leading-none">
+              حساب کاربری
+            </p>
+            <p className="text-sm leading-none font-medium">{userName}</p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link
+            href="/profile"
+            className="flex cursor-pointer items-center gap-2"
           >
-            <UserCircle className="h-4 w-4" />
-            <span className="hidden max-w-[120px] truncate sm:inline">
-              {userName}
-            </span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel className="font-normal">
-            <div className="flex flex-col gap-2">
-              <p className="text-accent-foreground text-xs leading-none">
-                حساب کاربری
-              </p>
-              <p className="text-sm leading-none font-medium">{userName}</p>
-            </div>
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link
-              href="/profile"
-              className="flex cursor-pointer items-center gap-2"
-            >
-              <User className="h-4 w-4" />
-              <span>پروفایل</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link
-              href="/profile/appointments"
-              className="flex cursor-pointer items-center gap-2"
-            >
-              <Calendar className="h-4 w-4" />
-              <span>نوبت‌های من</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={handleSignOut}
-            className="text-destructive focus:text-destructive flex cursor-pointer items-center gap-2"
+            <User className="h-4 w-4" />
+            <span>پروفایل</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="/profile/appointments"
+            className="flex cursor-pointer items-center gap-2"
           >
-            <LogOut className="h-4 w-4" />
-            <span>خروج</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+            <Calendar className="h-4 w-4" />
+            <span>نوبت‌های من</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={handleSignOut}
+          className="text-destructive focus:text-destructive flex cursor-pointer items-center gap-2"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>خروج</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
