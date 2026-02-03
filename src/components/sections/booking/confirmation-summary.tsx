@@ -24,7 +24,7 @@ export function ConfirmationSummary({ form }: ConfirmationSummaryProps) {
     ageRange === "UNDER_15"
       ? `زیر ${toPersianNumber(15)} سال`
       : `بالای ${toPersianNumber(15)} سال`;
-  const price = ageRange ? calculatePrice(ageRange) : 0;
+  const price = ageRange ? calculatePrice(ageRange) / 10 : 0;
 
   const summaryItems = [
     {
