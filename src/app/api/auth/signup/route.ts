@@ -4,11 +4,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-import {
-  checkRateLimit,
-  getClientIP,
-  RATE_LIMITS,
-} from "@/lib/rate-limit";
+import { checkRateLimit, getClientIP, RATE_LIMITS } from "@/lib/rate-limit";
 
 const signupSchema = z.object({
   name: z.string().min(1, "نام الزامی است"),
@@ -24,9 +20,7 @@ export async function POST(request: NextRequest) {
     const rateLimit = checkRateLimit(clientIP, RATE_LIMITS.SIGNUP);
 
     if (!rateLimit.allowed) {
-      const retryAfter = Math.ceil(
-        (rateLimit.resetTime - Date.now()) / 1000,
-      );
+      const retryAfter = Math.ceil((rateLimit.resetTime - Date.now()) / 1000);
       return NextResponse.json(
         {
           error: "تعداد درخواست‌ها بیش از حد مجاز است",
@@ -75,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Hash password
-    const saltRounds = parseInt(process.env.BCRYPT_ROUNDS || "10", 10);
+    const saltRounds = parseInt(process.env.BCRYPT_ROUNDS!);
     const passwordHash = await bcrypt.hash(validatedData.password, saltRounds);
 
     // Create user

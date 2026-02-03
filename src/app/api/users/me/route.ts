@@ -107,7 +107,7 @@ export async function PUT(request: NextRequest) {
       updateData.phoneNumber = validatedData.phoneNumber;
     }
     if (validatedData.password) {
-      const saltRounds = parseInt(process.env.BCRYPT_ROUNDS || "10", 10);
+      const saltRounds = parseInt(process.env.BCRYPT_ROUNDS!);
       updateData.passwordHash = await bcrypt.hash(
         validatedData.password,
         saltRounds,

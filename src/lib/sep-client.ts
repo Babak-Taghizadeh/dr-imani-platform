@@ -1,12 +1,6 @@
-const SEP_TOKEN_URL =
-  process.env.SEP_TOKEN_URL ||
-  "https://sep.shaparak.ir/onlinepg/onlinepg";
-const SEP_VERIFY_URL =
-  process.env.SEP_VERIFY_URL ||
-  "https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/VerifyTransaction";
-const SEP_PAYMENT_URL =
-  process.env.SEP_PAYMENT_URL ||
-  "https://sep.shaparak.ir/OnlinePG/OnlinePG";
+const SEP_TOKEN_URL = process.env.SEP_TOKEN_URL;
+const SEP_VERIFY_URL = process.env.SEP_VERIFY_URL;
+const SEP_PAYMENT_URL = process.env.SEP_PAYMENT_URL;
 
 export interface SEPTokenRequest {
   Action: string;
@@ -54,7 +48,7 @@ export async function requestSEPToken(
   params: SEPTokenRequest,
 ): Promise<SEPTokenResponse> {
   try {
-    const response = await fetch(SEP_TOKEN_URL, {
+    const response = await fetch(SEP_TOKEN_URL!, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +85,7 @@ export async function verifySEPTransaction(
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-      const response = await fetch(SEP_VERIFY_URL, {
+      const response = await fetch(SEP_VERIFY_URL!, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -119,7 +113,8 @@ export async function verifySEPTransaction(
       return data;
     } catch (error) {
       lastError = error as Error;
-      const isAbortError = error instanceof Error && error.name === "AbortError";
+      const isAbortError =
+        error instanceof Error && error.name === "AbortError";
       const isNetworkError =
         error instanceof TypeError ||
         (error instanceof Error && error.message.includes("fetch"));
@@ -152,4 +147,3 @@ export async function verifySEPTransaction(
 export function getSEPPaymentUrl(token: string): string {
   return `${SEP_PAYMENT_URL}?token=${token}`;
 }
-

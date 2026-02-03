@@ -6,11 +6,8 @@ import { eq } from "drizzle-orm";
 import { requestSEPToken, getSEPPaymentUrl } from "@/lib/sep-client";
 import { z } from "zod";
 
-const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID || "";
-const SEP_CALLBACK_URL =
-  process.env.SEP_CALLBACK_URL ||
-  `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payments/sep/callback`;
-
+const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
+const SEP_CALLBACK_URL = process.env.SEP_CALLBACK_URL;
 const initiateSchema = z.object({
   appointmentId: z.string().uuid("شناسه نوبت نامعتبر است"),
 });
@@ -56,7 +53,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!SEP_TERMINAL_ID) {
+    if (!SEP_TERMINAL_ID || !SEP_CALLBACK_URL) {
       return NextResponse.json(
         { error: "پیکربندی درگاه پرداخت کامل نیست" },
         { status: 500 },

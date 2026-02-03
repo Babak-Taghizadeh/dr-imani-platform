@@ -6,11 +6,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import crypto from "crypto";
 import { resetPasswordSchema } from "@/lib/validation-schema";
-import {
-  checkRateLimit,
-  getClientIP,
-  RATE_LIMITS,
-} from "@/lib/rate-limit";
+import { checkRateLimit, getClientIP, RATE_LIMITS } from "@/lib/rate-limit";
 
 function verifyResetToken(token: string): string | null {
   const secret = process.env.NEXTAUTH_SECRET;
@@ -59,9 +55,7 @@ export async function POST(request: NextRequest) {
     const rateLimit = checkRateLimit(clientIP, RATE_LIMITS.PASSWORD_RESET);
 
     if (!rateLimit.allowed) {
-      const retryAfter = Math.ceil(
-        (rateLimit.resetTime - Date.now()) / 1000,
-      );
+      const retryAfter = Math.ceil((rateLimit.resetTime - Date.now()) / 1000);
       return NextResponse.json(
         {
           error: "تعداد درخواست‌ها بیش از حد مجاز است",
@@ -106,7 +100,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Hash new password
-    const saltRounds = parseInt(process.env.BCRYPT_ROUNDS || "10", 10);
+    const saltRounds = parseInt(process.env.BCRYPT_ROUNDS!);
     const passwordHash = await bcrypt.hash(validatedData.password, saltRounds);
 
     // Update user password

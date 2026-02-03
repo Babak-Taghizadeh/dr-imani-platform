@@ -1,11 +1,6 @@
 import { format, addMinutes, isAfter, isBefore, isSameDay } from "date-fns";
 import type { AppointmentType } from "@/types/types";
 
-export const SLOT_START_HOUR = parseInt(
-  process.env.SLOT_START_HOUR || "14",
-  10,
-);
-export const SLOT_END_HOUR = parseInt(process.env.SLOT_END_HOUR || "18", 10);
 export const SLOT_INTERVAL_MINUTES = parseInt(
   process.env.SLOT_INTERVAL_MINUTES || "15",
   10,
@@ -44,8 +39,8 @@ export function generateTimeSlots(
     endMinute = 45;
   } else {
     // Fallback to environment variables or defaults (for backward compatibility)
-    startHour = SLOT_START_HOUR;
-    endHour = SLOT_END_HOUR;
+    startHour = 14;
+    endHour = 18;
     endMinute = 0;
   }
 
@@ -139,13 +134,6 @@ export function timeStringToDate(date: Date, timeString: string): Date {
   const result = new Date(date);
   result.setHours(hours, minutes, 0, 0);
   return result;
-}
-
-/**
- * Get clinic timezone (default: Asia/Tehran)
- */
-export function getClinicTimezone(): string {
-  return process.env.CLINIC_TIMEZONE || "Asia/Tehran";
 }
 
 /**
