@@ -5,6 +5,7 @@ import { appointments } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { requestSEPToken, getSEPPaymentUrl } from "@/lib/sep-client";
 import { z } from "zod";
+import { generatePaymentReference } from "@/lib/booking-utils";
 
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
 const SEP_CALLBACK_URL = process.env.SEP_CALLBACK_URL;
@@ -17,38 +18,27 @@ export async function POST(request: NextRequest) {
     const session = await requireUser();
     const userId = session.user.id;
     const body = await request.json();
-    const validatedData = initiateSchema.parse(body);
+    const { appointmentId } = initiateSchema.parse(body);
 
-    // Get appointment
     const appointmentData = await db
       .select()
       .from(appointments)
-      .where(eq(appointments.id, validatedData.appointmentId))
+      .where(eq(appointments.id, appointmentId))
       .limit(1);
-
-    if (appointmentData.length === 0) {
-      return NextResponse.json({ error: "نوبت یافت نشد" }, { status: 404 });
-    }
 
     const appointment = appointmentData[0];
 
-    // Verify ownership
+    if (!appointment) {
+      return NextResponse.json({ error: "نوبت یافت نشد" }, { status: 404 });
+    }
+
     if (appointment.userId !== userId) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Check if already confirmed
-    if (appointment.status === "CONFIRMED") {
-      return NextResponse.json(
-        { error: "این نوبت قبلاً پرداخت شده است" },
-        { status: 400 },
-      );
-    }
-
-    // Only allow payment for PENDING appointments
     if (appointment.status !== "PENDING") {
       return NextResponse.json(
-        { error: "این نوبت در وضعیت نامعتبر است" },
+        { error: "این نوبت در وضعیت قابل پرداخت نیست" },
         { status: 400 },
       );
     }
@@ -60,50 +50,54 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Request token from SEP
-    const tokenResponse = await requestSEPToken({
-      Action: "token",
-      TerminalId: SEP_TERMINAL_ID,
-      Amount: appointment.price,
-      ResNum: appointment.id,
-      // TODO: CONSIDER ADDING UNIQUE IDS ON EVERY REDIRECT DUE TO SEP REQUIREMENTS
-      RedirectUrl: SEP_CALLBACK_URL,
+    const paymentReference = generatePaymentReference(appointment.id);
+
+    let paymentToken: string;
+
+    await db.transaction(async (tx) => {
+      // 1. قفل منطقی نوبت
+      await tx
+        .update(appointments)
+        .set({
+          paymentReference,
+          status: "PAYMENT_INITIATED",
+          updatedAt: new Date(),
+        })
+        .where(eq(appointments.id, appointment.id));
+
+      console.log("token body", SEP_TERMINAL_ID, appointment.price, paymentReference, SEP_CALLBACK_URL);
+      // 2. درخواست توکن
+      const tokenResponse = await requestSEPToken({
+        action: "token",
+        TerminalId: SEP_TERMINAL_ID,
+        Amount: appointment.price,
+        ResNum: paymentReference,
+        RedirectUrl: SEP_CALLBACK_URL,
+      });
+
+
+
+      // 3. fail → rollback
+      if (tokenResponse.status !== 1 || !tokenResponse.token) {
+        console.error("SEP token failed", {
+          appointmentId: appointment.id,
+          paymentReference,
+          sepResponse: tokenResponse,
+        });
+        throw new Error(tokenResponse.errorDesc || "SEP token request failed");
+      }
+
+      paymentToken = tokenResponse.token;
     });
 
-    if (tokenResponse.status !== 1 || !tokenResponse.token) {
-      // TODO: CONSIDER ONLY LOGGING THE ERROR WHEN RESPONSE CODE IS -1
-      return NextResponse.json(
-        {
-          error: "خطا در ارتباط با درگاه پرداخت",
-          details: tokenResponse.errorDesc || "خطای نامشخص",
-        },
-        { status: 500 },
-      );
-    }
-
-    // Get payment URL
-    const paymentUrl = getSEPPaymentUrl(tokenResponse.token);
-
+    // 4. redirect
     return NextResponse.json({
-      paymentUrl,
-      // TODO: TOKEN IS NOT REQUIRED ON FRONT SIDE
-      token: tokenResponse.token,
+      paymentUrl: getSEPPaymentUrl(paymentToken!),
     });
   } catch (error) {
-    if (isAuthError(error)) {
-      return error.response;
-    }
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: "اطلاعات وارد شده معتبر نیست", details: error.errors },
-        { status: 400 },
-      );
-    }
+    if (isAuthError(error)) return error.response;
 
     console.error("Payment initiate error:", error);
-    return NextResponse.json(
-      { error: "خطایی در شروع پرداخت رخ داد" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "خطا در شروع پرداخت" }, { status: 500 });
   }
 }
