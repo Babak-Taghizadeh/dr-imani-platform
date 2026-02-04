@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
 
     // Get booked appointments for this date and appointment type
     // Online and in-clinic appointments can have the same time without conflict
-    // Only count PENDING and CONFIRMED appointments as booked
+    // Treat any non-canceled/failed appointment (PENDING, PAYMENT_INITIATED, PAID) as booked
     const bookedAppointments = await db
       .select({
         time: sql<string>`to_char(${appointments.time}, 'HH24:MI')`.as("time"),
@@ -81,9 +81,11 @@ export async function GET(request: NextRequest) {
         and(
           eq(appointments.date, format(selectedDate, "yyyy-MM-dd")),
           eq(appointments.appointmentType, appointmentType),
+          // Exclude only FAILED and CANCELED so these slots become available again
           or(
             eq(appointments.status, "PENDING"),
-            eq(appointments.status, "CONFIRMED"),
+            eq(appointments.status, "PAYMENT_INITIATED"),
+            eq(appointments.status, "PAID"),
           ),
         ),
       );
