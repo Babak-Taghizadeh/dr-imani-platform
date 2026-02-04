@@ -150,3 +150,7 @@ export function isAllowedBookingDay(date: Date): boolean {
   // Allowed days: 0 (Saturday), 2 (Monday), 4 (Wednesday) - excluding Friday (6)
   return persianDay === 0 || persianDay === 2 || persianDay === 4;
 }
+
+export function generatePaymentReference(appointmentId: string) {
+  return `APT-${appointmentId.slice(0, 8)}-${Date.now()}`;
+}
