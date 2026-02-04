@@ -3,7 +3,7 @@ const SEP_VERIFY_URL = process.env.SEP_VERIFY_URL;
 const SEP_PAYMENT_URL = process.env.SEP_PAYMENT_URL;
 
 export interface SEPTokenRequest {
-  Action: string;
+  action: string;
   TerminalId: string;
   Amount: number;
   ResNum: string;
