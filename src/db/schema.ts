@@ -47,7 +47,10 @@ export const ageRangeEnum = pgEnum("age_range", ["UNDER_15", "OVER_15"]);
 
 export const appointmentStatusEnum = pgEnum("appointment_status", [
   "PENDING",
-  "CONFIRMED",
+  "PAYMENT_INITIATED",
+  "PAID",
+  "FAILED",
+  "CANCELED",
 ]);
 
 export const paymentStatusEnum = pgEnum("payment_status", [
@@ -78,20 +81,25 @@ export const appointments = pgTable(
     date: date("date").notNull(),
     time: time("time").notNull(),
     durationMinutes: integer("duration_minutes").notNull().default(15),
+    /**
+     * PAYMENT
+     */
     status: appointmentStatusEnum("status").notNull().default("PENDING"),
-    // TODO: REPLACE WITH PAYMENT ID
-    paymentReference: varchar("payment_reference", { length: 255 }),
+    /** ResNum – شناسه پرداخت سمت پذیرنده */
+    paymentReference: varchar("payment_reference", { length: 50 }),
+    /** RefNum – رسید دیجیتال SEP */
+    sepRefNum: varchar("sep_ref_num", { length: 50 }),
+    /** زمان تأیید نهایی پرداخت */
+    paymentVerifiedAt: timestamp("payment_verified_at"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
-  (table) => {
-    return {
-      dateTimeIdx: index("date_time_idx").on(table.date, table.time),
-      userIdIdx: index("user_id_idx").on(table.userId),
-      dateIdx: index("date_idx").on(table.date),
-      statusIdx: index("status_idx").on(table.status),
-    };
-  },
+  (table) => ({
+    dateTimeIdx: index("date_time_idx").on(table.date, table.time),
+    userIdIdx: index("user_id_idx").on(table.userId),
+    statusIdx: index("status_idx").on(table.status),
+    paymentRefIdx: index("payment_ref_idx").on(table.paymentReference),
+  }),
 );
 
 export const disabledDates = pgTable("disabled_dates", {
