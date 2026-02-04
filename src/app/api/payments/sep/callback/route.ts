@@ -140,7 +140,7 @@ async function handleCallback(request: NextRequest) {
     const appointmentData = await db
       .select()
       .from(appointments)
-      .where(eq(appointments.id, resNum))
+      .where(eq(appointments.paymentReference, resNum))
       .limit(1);
 
     if (appointmentData.length === 0) {
@@ -156,10 +156,10 @@ async function handleCallback(request: NextRequest) {
 
     // Verify appointment is still in PENDING status
     if (appointment.status !== "PENDING") {
-      // If already confirmed with the same RefNum, redirect to success (idempotent)
+      // If already paid with the same RefNum, redirect to success (idempotent)
       if (
-        appointment.status === "CONFIRMED" &&
-        appointment.paymentReference === refNum
+        appointment.status === "PAID" &&
+        appointment.sepRefNum === refNum
       ) {
         return NextResponse.redirect(
           new URL(`/appointments/${appointment.id}`, request.url),
@@ -194,8 +194,7 @@ async function handleCallback(request: NextRequest) {
     }
 
     // Validate TerminalNumber from verify response matches expected
-    const verifiedTerminal =
-      verifyResponse.TransactionDetail?.TerminalNumber;
+    const verifiedTerminal = verifyResponse.TransactionDetail?.TerminalNumber;
     if (
       verifiedTerminal &&
       verifiedTerminal !== parseInt(SEP_TERMINAL_ID, 10)
@@ -237,8 +236,9 @@ async function handleCallback(request: NextRequest) {
         await tx
           .update(appointments)
           .set({
-            status: "CONFIRMED",
-            paymentReference: refNum,
+            status: "PAID",
+            sepRefNum: refNum,
+            paymentVerifiedAt: new Date(),
             updatedAt: new Date(),
           })
           .where(eq(appointments.id, appointment.id));
@@ -315,7 +315,7 @@ async function handleFailedPayment(
     const appointmentData = await db
       .select()
       .from(appointments)
-      .where(eq(appointments.id, resNum))
+      .where(eq(appointments.paymentReference, resNum))
       .limit(1);
 
     if (appointmentData.length > 0) {
