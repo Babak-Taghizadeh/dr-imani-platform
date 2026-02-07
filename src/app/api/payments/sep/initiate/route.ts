@@ -99,8 +99,6 @@ export async function POST(request: NextRequest) {
 
     const userPhoneNumber = userData[0].phoneNumber;
 
-    console.log(userPhoneNumber || "not found");
-
     const paymentReference = generatePaymentReference(appointment.id);
 
     let paymentToken: string;
@@ -124,8 +122,6 @@ export async function POST(request: NextRequest) {
         RedirectUrl: SEP_CALLBACK_URL,
         CellNumber: userPhoneNumber,
       });
-
-
 
       // 3. fail → rollback
       if (tokenResponse.status !== 1 || !tokenResponse.token) {
