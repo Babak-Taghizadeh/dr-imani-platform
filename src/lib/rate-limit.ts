@@ -40,6 +40,10 @@ export const RATE_LIMITS = {
    * Password reset: 3 per hour per IP
    */
   PASSWORD_RESET: { max: 3, window: 60 * 60 },
+  /**
+   * Payment initiation: 10 per minute per IP
+   */
+  PAYMENT_INIT: { max: 10, window: 60 },
 } as const;
 
 /**
