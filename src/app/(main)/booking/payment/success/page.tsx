@@ -57,7 +57,7 @@ export default async function PaymentSuccessPage({
                         مبلغ پرداختی:
                       </span>
                       <span className="font-semibold">
-                        {paymentInfo.amount.toLocaleString("fa-IR")} تومان
+                        {(paymentInfo.amount / 10).toLocaleString("fa-IR")} تومان
                       </span>
                     </div>
 
