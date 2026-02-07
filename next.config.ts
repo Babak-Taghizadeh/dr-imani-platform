@@ -31,7 +31,7 @@ const securityHeaders = [
       style-src-attr 'self' 'unsafe-inline';
       img-src 'self' blob: data: https://trustseal.enamad.ir;
       font-src 'self' https://fonts.gstatic.com;
-      connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;
+      connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://sep.shaparak.ir;
       worker-src 'self' blob:;
     `
       .replace(/\s+/g, " ")
