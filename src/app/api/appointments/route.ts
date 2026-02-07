@@ -7,14 +7,19 @@ import { calculatePrice } from "@/lib/price-calculator";
 import {
   isAllowedBookingDay,
   isValidTimeForAppointmentType,
+  generatePaymentReference,
 } from "@/lib/booking-utils";
 import { isIranianHoliday } from "@/lib/iranian-holidays";
 import { z } from "zod";
 import { parse } from "date-fns";
+import { requestSEPToken, getSEPPaymentUrl } from "@/lib/sep-client";
 
 interface DatabaseError extends Error {
   code?: string;
 }
+
+const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
+const SEP_CALLBACK_URL = process.env.SEP_CALLBACK_URL;
 
 const createAppointmentSchema = z.object({
   appointmentType: z.enum(["ONLINE_PHONE", "IN_CLINIC"]),
@@ -168,13 +173,76 @@ export async function POST(request: NextRequest) {
       })
       .returning();
 
-    return NextResponse.json(
-      {
-        message: "نوبت با موفقیت ایجاد شد",
-        appointment: newAppointment,
-      },
-      { status: 201 },
-    );
+    // APPOINTMENT CREATION BLOCK END
+
+    // ---- Payment initiation (moved from client) ----
+    if (!SEP_TERMINAL_ID || !SEP_CALLBACK_URL) {
+      return NextResponse.json(
+        { error: "پیکربندی درگاه پرداخت کامل نیست" },
+        { status: 500 },
+      );
+    }
+
+    if (process.env.NODE_ENV === "production") {
+      try {
+        const callbackUrl = new URL(SEP_CALLBACK_URL);
+        if (callbackUrl.protocol !== "https:") {
+          console.error(
+            "SEP_CALLBACK_URL must use HTTPS in production:",
+            SEP_CALLBACK_URL,
+          );
+          return NextResponse.json(
+            { error: "پیکربندی آدرس بازگشت پرداخت نامعتبر است" },
+            { status: 500 },
+          );
+        }
+      } catch {
+        console.error("SEP_CALLBACK_URL is not a valid URL:", SEP_CALLBACK_URL);
+        return NextResponse.json(
+          { error: "پیکربندی آدرس بازگشت پرداخت نامعتبر است" },
+          { status: 500 },
+        );
+      }
+    }
+
+    const paymentReference = generatePaymentReference(newAppointment.id);
+    let paymentToken: string;
+
+    await db.transaction(async (tx) => {
+      await tx
+        .update(appointments)
+        .set({
+          paymentReference,
+          status: "PAYMENT_INITIATED",
+          updatedAt: new Date(),
+        })
+        .where(eq(appointments.id, newAppointment.id));
+
+      const tokenResponse = await requestSEPToken({
+        action: "token",
+        TerminalId: SEP_TERMINAL_ID,
+        Amount: newAppointment.price,
+        ResNum: paymentReference,
+        RedirectUrl: SEP_CALLBACK_URL,
+      });
+
+      if (tokenResponse.status !== 1 || !tokenResponse.token) {
+        console.error("SEP token failed", {
+          appointmentId: newAppointment.id,
+          paymentReference,
+          sepResponse: tokenResponse,
+        });
+        throw new Error(tokenResponse.errorDesc || "SEP token request failed");
+      }
+
+      paymentToken = tokenResponse.token;
+    });
+
+    // Return payment URL as JSON - token request already came from server IP
+    // Client will handle redirect to payment gateway
+    return NextResponse.json({
+      paymentUrl: getSEPPaymentUrl(paymentToken!),
+    });
   } catch (error) {
     if (isAuthError(error)) {
       return error.response;
