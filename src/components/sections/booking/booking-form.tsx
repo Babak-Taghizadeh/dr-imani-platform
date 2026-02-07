@@ -217,26 +217,15 @@ export function BookingForm() {
         return;
       }
 
-      // Initiate payment
-      const paymentRes = await fetch("/api/payments/sep/initiate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          appointmentId: data.appointment.id,
-        }),
-      });
-
-      const paymentData = await paymentRes.json();
-
-      if (!paymentRes.ok || !paymentData.paymentUrl) {
-        toast.error(paymentData.error || "خطا در اتصال به درگاه پرداخت");
+      if (!data.paymentUrl) {
+        toast.error("خطا در اتصال به درگاه پرداخت");
         return;
       }
 
-      // Redirect to payment gateway
-      // window.location.href = paymentData.paymentUrl;
-      console.log(paymentData);
-    } catch {
+      // Redirect to payment gateway (token request already came from server IP)
+      window.location.href = data.paymentUrl;
+    } catch (error) {
+      console.error("Error creating appointment:", error);
       toast.error("خطایی در رزرو نوبت رخ داد");
     }
   };
