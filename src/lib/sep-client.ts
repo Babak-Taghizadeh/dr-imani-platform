@@ -1,6 +1,14 @@
 const SEP_TOKEN_URL = process.env.SEP_TOKEN_URL;
 const SEP_VERIFY_URL = process.env.SEP_VERIFY_URL;
+const SEP_REVERSE_URL = process.env.SEP_REVERSE_URL;
 const SEP_PAYMENT_URL = process.env.SEP_PAYMENT_URL;
+
+function requireSepEnv(name: string, value: string | undefined): string {
+  if (!value) {
+    throw new Error(`Missing required SEP environment variable: ${name}`);
+  }
+  return value;
+}
 
 export interface SEPTokenRequest {
   action: string;
@@ -41,6 +49,9 @@ export interface SEPVerifyResponse {
   Success: boolean;
 }
 
+// ReverseTransaction has the same response shape as VerifyTransaction
+export type SEPReverseResponse = SEPVerifyResponse;
+
 /**
  * Request a token from SEP gateway
  */
@@ -48,7 +59,9 @@ export async function requestSEPToken(
   params: SEPTokenRequest,
 ): Promise<SEPTokenResponse> {
   try {
-    const response = await fetch(SEP_TOKEN_URL!, {
+    const tokenUrl = requireSepEnv("SEP_TOKEN_URL", SEP_TOKEN_URL);
+
+    const response = await fetch(tokenUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,9 +96,11 @@ export async function verifySEPTransaction(
     try {
       // Create AbortController for timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second timeout
 
-      const response = await fetch(SEP_VERIFY_URL!, {
+      const verifyUrl = requireSepEnv("SEP_VERIFY_URL", SEP_VERIFY_URL);
+
+      const response = await fetch(verifyUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,8 +157,38 @@ export async function verifySEPTransaction(
 }
 
 /**
+ * Reverse a previously verified transaction with SEP gateway
+ */
+export async function reverseSEPTransaction(
+  params: SEPVerifyRequest,
+): Promise<SEPReverseResponse> {
+  try {
+    const reverseUrl = requireSepEnv("SEP_REVERSE_URL", SEP_REVERSE_URL);
+
+    const response = await fetch(reverseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    });
+
+    if (!response.ok) {
+      throw new Error(`SEP reverse API error: ${response.status}`);
+    }
+
+    const data: SEPReverseResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error("SEP reverse request error:", error);
+    throw error;
+  }
+}
+
+/**
  * Get payment redirect URL
  */
 export function getSEPPaymentUrl(token: string): string {
-  return `${SEP_PAYMENT_URL}?token=${token}`;
+  const paymentUrl = requireSepEnv("SEP_PAYMENT_URL", SEP_PAYMENT_URL);
+  return `${paymentUrl}?token=${encodeURIComponent(token)}`;
 }
