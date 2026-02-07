@@ -1,13 +1,13 @@
 import { db } from "@/db/db";
 import { appointments, paymentLogs } from "@/db/schema";
-import { eq, and, isNotNull } from "drizzle-orm";
+import { eq, and, isNotNull, or } from "drizzle-orm";
 import { verifySEPTransaction } from "./sep-client";
 
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID || "";
 
 /**
  * Reconciles payment edge cases:
- * 1. Appointments with paymentReference but status still PENDING
+ * 1. Appointments with sepRefNum set but status still not marked as PAID
  * 2. Verifies and updates if payment was successful
  */
 export async function reconcilePayments() {
@@ -17,19 +17,23 @@ export async function reconcilePayments() {
             return { reconciledCount: 0, reconciledIds: [] };
         }
 
-        // Find appointments with paymentReference but status still PENDING
-        // This shouldn't happen, but could in edge cases (race conditions, errors)
+        // Find appointments with a recorded SEP RefNum but non-PAID status.
+        // This shouldn't happen, but could in edge cases (race conditions, errors).
         const appointmentsToReconcile = await db
             .select({
                 id: appointments.id,
                 paymentReference: appointments.paymentReference,
+                sepRefNum: appointments.sepRefNum,
                 price: appointments.price,
             })
             .from(appointments)
             .where(
                 and(
-                    eq(appointments.status, "PENDING"),
-                    isNotNull(appointments.paymentReference),
+                    or(
+                        eq(appointments.status, "PENDING"),
+                        eq(appointments.status, "PAYMENT_INITIATED"),
+                    ),
+                    isNotNull(appointments.sepRefNum),
                 ),
             );
 
@@ -40,13 +44,13 @@ export async function reconcilePayments() {
         const reconciledIds: string[] = [];
 
         for (const appointment of appointmentsToReconcile) {
-            const paymentReference = appointment.paymentReference;
-            if (!paymentReference) continue;
+            const refNum = appointment.sepRefNum;
+            if (!refNum) continue;
 
             try {
                 // Attempt to verify the payment
                 const verifyResponse = await verifySEPTransaction({
-                    RefNum: paymentReference,
+                    RefNum: refNum,
                     TerminalNumber: parseInt(SEP_TERMINAL_ID, 10),
                 });
 
@@ -62,7 +66,7 @@ export async function reconcilePayments() {
                     const existingPayment = await db
                         .select()
                         .from(paymentLogs)
-                        .where(eq(paymentLogs.gatewayReference, paymentReference))
+                        .where(eq(paymentLogs.gatewayReference, refNum))
                         .limit(1);
 
                     await db.transaction(async (tx) => {
@@ -70,7 +74,9 @@ export async function reconcilePayments() {
                         await tx
                             .update(appointments)
                             .set({
-                                status: "CONFIRMED",
+                                status: "PAID",
+                                sepRefNum: refNum,
+                                paymentVerifiedAt: new Date(),
                                 updatedAt: new Date(),
                             })
                             .where(eq(appointments.id, appointment.id));
@@ -81,7 +87,7 @@ export async function reconcilePayments() {
                                 appointmentId: appointment.id,
                                 amount: transactionDetail.OrginalAmount,
                                 gateway: "SEP",
-                                gatewayReference: paymentReference,
+                                gatewayReference: refNum,
                                 status: "SUCCESS",
                                 rawPayload: {
                                     reconciled: true,
