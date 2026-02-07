@@ -98,7 +98,14 @@ export interface QuizResult {
 // Appointment Types
 export type AppointmentType = "ONLINE_PHONE" | "IN_CLINIC";
 export type AgeRange = "UNDER_15" | "OVER_15";
-export type AppointmentStatus = "PENDING" | "CONFIRMED";
+
+// Must stay in sync with appointmentStatusEnum in db/schema.ts
+export type AppointmentStatus =
+  | "PENDING"
+  | "PAYMENT_INITIATED"
+  | "PAID"
+  | "FAILED"
+  | "CANCELED";
 
 export interface Appointment {
   id: string;

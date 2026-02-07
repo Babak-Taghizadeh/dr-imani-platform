@@ -135,7 +135,7 @@ export const appointmentsFilterSchema = z.object({
       z.literal(""),
     ])
     .optional(),
-  status: z.union([z.enum(["PENDING", "CONFIRMED"]), z.literal("")]).optional(),
+  status: z.union([z.enum(["PENDING", "PAID"]), z.literal("")]).optional(),
   appointmentType: z
     .union([z.enum(["ONLINE_PHONE", "IN_CLINIC"]), z.literal("")])
     .optional(),

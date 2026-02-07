@@ -1,6 +1,6 @@
 import { db } from "@/db/db";
 import { appointments } from "@/db/schema";
-import { eq, and, lt } from "drizzle-orm";
+import { eq, and, lt, or } from "drizzle-orm";
 
 // Default to 40 minutes to account for:
 // - SEP token expiry (20 minutes default)
@@ -26,8 +26,11 @@ export async function expirePendingAppointments() {
       .from(appointments)
       .where(
         and(
-          eq(appointments.status, "PENDING"),
           lt(appointments.createdAt, expiryThreshold),
+          or(
+            eq(appointments.status, "PENDING"),
+            eq(appointments.status, "PAYMENT_INITIATED"),
+          ),
         ),
       );
 
@@ -41,8 +44,11 @@ export async function expirePendingAppointments() {
       .delete(appointments)
       .where(
         and(
-          eq(appointments.status, "PENDING"),
           lt(appointments.createdAt, expiryThreshold),
+          or(
+            eq(appointments.status, "PENDING"),
+            eq(appointments.status, "PAYMENT_INITIATED"),
+          ),
         ),
       );
 

@@ -28,10 +28,7 @@ export async function GET(request: NextRequest) {
     if (toDate) {
       conditions.push(lte(appointments.date, toDate));
     }
-    if (
-      statusParam &&
-      (statusParam === "PENDING" || statusParam === "CONFIRMED")
-    ) {
+    if (statusParam && (statusParam === "PENDING" || statusParam === "PAID")) {
       conditions.push(
         eq(appointments.status, statusParam as AppointmentStatus),
       );

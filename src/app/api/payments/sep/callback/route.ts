@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/db";
 import { appointments, paymentLogs } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { verifySEPTransaction } from "@/lib/sep-client";
+import { verifySEPTransaction, reverseSEPTransaction } from "@/lib/sep-client";
 
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID || "";
 
@@ -29,6 +29,16 @@ async function handleCallback(request: NextRequest) {
   let resNum: string | null = null;
 
   try {
+    if (!SEP_TERMINAL_ID) {
+      console.error("SEP_TERMINAL_ID is not configured for callback handling");
+      return NextResponse.redirect(
+        new URL(
+          `/booking/payment/failure?error=${encodeURIComponent("درگاه پرداخت به درستی پیکربندی نشده است")}`,
+          request.url,
+        ),
+      );
+    }
+
     if (request.method === "POST") {
       try {
         const formData = await request.formData();
@@ -120,6 +130,13 @@ async function handleCallback(request: NextRequest) {
       !verifyResponse.Success ||
       (verifyResponse.ResultCode !== 0 && verifyResponse.ResultCode !== 2)
     ) {
+      console.error("SEP verify failed", {
+        refNum,
+        resNum,
+        resultCode: verifyResponse.ResultCode,
+        resultDescription: verifyResponse.ResultDescription,
+      });
+
       await handleFailedPayment(resNum, refNum, {
         state: state ?? undefined,
         status: status ?? undefined,
@@ -154,8 +171,8 @@ async function handleCallback(request: NextRequest) {
 
     const appointment = appointmentData[0];
 
-    // Verify appointment is still in PENDING status
-    if (appointment.status !== "PENDING") {
+    // Verify appointment is still in a payable status
+    if (appointment.status !== "PENDING" && appointment.status !== "PAYMENT_INITIATED") {
       // If already paid with the same RefNum, redirect to success (idempotent)
       if (
         appointment.status === "PAID" &&
@@ -177,6 +194,16 @@ async function handleCallback(request: NextRequest) {
     // Verify amount matches
     const verifiedAmount = verifyResponse.TransactionDetail?.OrginalAmount || 0;
     if (verifiedAmount !== appointment.price) {
+      // Attempt to reverse the transaction since we won't honor it
+      try {
+        await reverseSEPTransaction({
+          RefNum: refNum,
+          TerminalNumber: parseInt(SEP_TERMINAL_ID, 10),
+        });
+      } catch (reverseError) {
+        console.error("SEP reverse failed for amount mismatch:", reverseError);
+      }
+
       await handleFailedPayment(resNum, refNum, {
         state: state ?? undefined,
         status: status ?? undefined,
@@ -199,6 +226,16 @@ async function handleCallback(request: NextRequest) {
       verifiedTerminal &&
       verifiedTerminal !== parseInt(SEP_TERMINAL_ID, 10)
     ) {
+      // Attempt to reverse the transaction since we won't honor it
+      try {
+        await reverseSEPTransaction({
+          RefNum: refNum,
+          TerminalNumber: parseInt(SEP_TERMINAL_ID, 10),
+        });
+      } catch (reverseError) {
+        console.error("SEP reverse failed for terminal mismatch:", reverseError);
+      }
+
       await handleFailedPayment(resNum, refNum, {
         state: state ?? undefined,
         status: status ?? undefined,

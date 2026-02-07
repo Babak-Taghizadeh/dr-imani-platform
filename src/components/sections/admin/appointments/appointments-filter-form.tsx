@@ -131,7 +131,7 @@ export function AppointmentsFilterForm({
                 <SelectContent>
                   <SelectItem value="all">همه</SelectItem>
                   <SelectItem value="PENDING">در انتظار پرداخت</SelectItem>
-                  <SelectItem value="CONFIRMED">تأیید شده</SelectItem>
+                  <SelectItem value="PAID">تأیید شده</SelectItem>
                 </SelectContent>
               </Select>
             </FormItem>

@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for existing CONFIRMED appointments in this date range
-    // (PENDING appointments will expire and be deleted, so we only check CONFIRMED)
+    // Check for existing PAID appointments in this date range
+    // (PENDING appointments will expire and be deleted, so we only check PAID)
     const existingAppointments = await db
       .select()
       .from(appointments)
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
         and(
           gte(appointments.date, validatedData.startDate),
           lte(appointments.date, validatedData.endDate),
-          eq(appointments.status, "CONFIRMED"),
+          eq(appointments.status, "PAID"),
         ),
       );
 

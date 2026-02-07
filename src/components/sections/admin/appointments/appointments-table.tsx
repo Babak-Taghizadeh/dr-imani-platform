@@ -25,7 +25,10 @@ const statusLabels: Record<
   }
 > = {
   PENDING: { label: "در انتظار پرداخت", variant: "outline" },
-  CONFIRMED: { label: "تأیید شده", variant: "default" },
+  PAYMENT_INITIATED: { label: "در حال پرداخت", variant: "secondary" },
+  PAID: { label: "تأیید شده", variant: "default" },
+  FAILED: { label: "پرداخت ناموفق", variant: "destructive" },
+  CANCELED: { label: "لغو شده", variant: "secondary" },
 };
 
 export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
