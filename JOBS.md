@@ -91,6 +91,41 @@ Then in crontab:
 - **Purpose:** Handles edge cases where `paymentReference` exists but status is still `PENDING`
 - **Why:** Prevents stuck appointments due to race conditions or errors
 
+### 3. SEP Payment Flow Notes
+
+- The normal flow is:
+  - Appointment created with status `PENDING`
+  - `/api/payments/sep/initiate` sets status to `PAYMENT_INITIATED` and requests a SEP token
+  - SEP redirects back to `/api/payments/sep/callback` with `ResNum` (our `paymentReference`) and `RefNum` (SEP receipt)
+  - Callback verifies via SEP `VerifyTransaction`, then marks the appointment as `PAID` and writes a `payment_logs` entry
+- The reconciliation job is a safety net for rare cases where:
+  - `sepRefNum` is stored but the appointment status is not `PAID` (e.g. DB error after verify)
+  - In this case the job re-calls `VerifyTransaction` and fixes the status/logs if the payment is valid
+- If SEP reports success but the amount or terminal doesn’t match what we expect, the system:
+  - Calls SEP `ReverseTransaction` to request a refund
+  - Marks the payment as failed and does **not** confirm the appointment
+
+### Operational Guidance
+
+- **Monitoring:**
+  - Watch logs for:
+    - `Expire appointments job error`
+    - `Payment reconciliation job error`
+    - `SEP verify failed` and `SEP reverse failed` messages
+  - Track counts of:
+    - `expiredCount` and `reconciledCount` in job responses
+    - Payment failures vs. successes in `payment_logs`
+- **Alerting:**
+  - Alert if:
+    - Jobs endpoints start returning non-2xx for more than a few runs
+    - `reconciledCount` spikes unexpectedly (could signal callback issues)
+    - Repeated `SEP reverse failed` errors appear
+- **Manual Reconciliation:**
+  - For disputes or inconsistencies not auto-fixed by the job:
+    - Use SEP’s reporting portal (`https://report.sep.ir`) with `MID` and `RefNum`
+    - Compare against application `payment_logs` and `appointments` tables
+    - Manually adjust appointment status (e.g. set to `PAID` or `CANCELED`) via admin tooling or SQL as needed
+
 ## Environment Variables
 
 ```env
