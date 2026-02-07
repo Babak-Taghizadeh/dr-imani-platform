@@ -8,7 +8,26 @@ import {
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from "next";
 import { getPaymentLogByAppointmentId } from "@/utils/payment-services";
+
+export const metadata: Metadata = {
+  title: "پرداخت موفق",
+  description:
+    "پرداخت نوبت با موفقیت انجام شد. جزئیات نوبت را در پروفایل خود مشاهده کنید.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: "پرداخت موفق",
+    description: "پرداخت نوبت کلینیک خواب دکتر ایمانی با موفقیت انجام شد",
+    url: "/booking/payment/success",
+  },
+  alternates: {
+    canonical: "/booking/payment/success",
+  },
+};
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { formatDatePersian } from "@/lib/persian-number-utils";
 import { Separator } from "@/components/ui/separator";

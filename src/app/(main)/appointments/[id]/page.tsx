@@ -2,9 +2,37 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { AppointmentDetailClient } from "@/components/sections/appointments/appointment-detail-client";
 import { AppointmentDetailSkeleton } from "@/components/sections/appointments/appointment-detail-skeleton";
 import { getAppointmentById } from "@/utils/appointments-services";
+
+interface AppointmentDetailPageParams {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: AppointmentDetailPageParams): Promise<Metadata> {
+  const { id } = await params;
+  return {
+    title: `جزئیات نوبت ${id}`,
+    description:
+      "مشاهده جزئیات، وضعیت و اطلاعات نوبت رزرو شده در کلینیک خواب دکتر ایمانی",
+    robots: {
+      index: false,
+      follow: true,
+    },
+    openGraph: {
+      title: "جزئیات نوبت",
+      description: "اطلاعات نوبت رزرو شده در کلینیک خواب دکتر ایمانی",
+      url: `/appointments/${id}`,
+    },
+    alternates: {
+      canonical: `/appointments/${id}`,
+    },
+  };
+}
 
 interface SessionUser {
   id: string;

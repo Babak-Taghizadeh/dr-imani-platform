@@ -1,7 +1,26 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import { AppointmentsHeader } from "@/components/sections/appointments/appointments-header";
 import { AppointmentsListClient } from "@/components/sections/appointments/appointments-list-client";
 import { AppointmentsLoading } from "@/components/sections/appointments/appointments-loading";
+
+export const metadata: Metadata = {
+  title: "نوبت‌های من",
+  description:
+    "مشاهده لیست نوبت‌های رزرو شده، جزئیات و وضعیت هر نوبت در کلینیک خواب دکتر ایمانی",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: "نوبت‌های من",
+    description: "مشاهده و مدیریت نوبت‌های رزرو شده در کلینیک خواب دکتر ایمانی",
+    url: "/profile/appointments",
+  },
+  alternates: {
+    canonical: "/profile/appointments",
+  },
+};
 
 export default function UserAppointmentsPage() {
   return (

@@ -2,6 +2,25 @@ import { ResetPasswordForm } from "@/components/sections/auth/reset-password-for
 import { AuthLayout } from "@/components/sections/auth/auth-layout";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "بازنشانی رمز عبور",
+  description:
+    "تنظیم رمز عبور جدید برای حساب کاربری کلینیک خواب دکتر ایمانی",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: "بازنشانی رمز عبور",
+    description: "تنظیم رمز عبور جدید",
+    url: "/reset-password",
+  },
+  alternates: {
+    canonical: "/reset-password",
+  },
+};
 
 interface ResetPasswordPageProps {
   searchParams?: Promise<{ token?: string }>;

@@ -8,7 +8,26 @@ import {
 import { Button } from "@/components/ui/button";
 import { XCircle } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from "next";
 import { getPaymentLogByAppointmentId } from "@/utils/payment-services";
+
+export const metadata: Metadata = {
+  title: "پرداخت ناموفق",
+  description:
+    "پرداخت انجام نشد. می‌توانید دوباره تلاش کنید یا با پشتیبانی تماس بگیرید.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: "پرداخت ناموفق",
+    description: "پرداخت نوبت انجام نشد. تلاش مجدد یا تماس با پشتیبانی",
+    url: "/booking/payment/failure",
+  },
+  alternates: {
+    canonical: "/booking/payment/failure",
+  },
+};
 import { toPersianNumber } from "@/lib/persian-number-utils";
 import { formatDatePersian } from "@/lib/persian-number-utils";
 import { Separator } from "@/components/ui/separator";
