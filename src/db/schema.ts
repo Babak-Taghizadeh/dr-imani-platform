@@ -94,12 +94,12 @@ export const appointments = pgTable(
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
-  (table) => ({
-    dateTimeIdx: index("date_time_idx").on(table.date, table.time),
-    userIdIdx: index("user_id_idx").on(table.userId),
-    statusIdx: index("status_idx").on(table.status),
-    paymentRefIdx: index("payment_ref_idx").on(table.paymentReference),
-  }),
+  (table) => [
+    index("date_time_idx").on(table.date, table.time),
+    index("user_id_idx").on(table.userId),
+    index("status_idx").on(table.status),
+    index("payment_ref_idx").on(table.paymentReference),
+  ],
 );
 
 export const disabledDates = pgTable("disabled_dates", {
