@@ -3,6 +3,9 @@ import { Metadata } from "next";
 import { AppointmentsHeader } from "@/components/sections/appointments/appointments-header";
 import { AppointmentsListClient } from "@/components/sections/appointments/appointments-list-client";
 import { AppointmentsLoading } from "@/components/sections/appointments/appointments-loading";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "نوبت‌های من",
@@ -22,7 +25,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function UserAppointmentsPage() {
+export default async function UserAppointmentsPage() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "user") {
+    redirect("/login");
+  }
   return (
     <div className="container mx-auto max-w-4xl px-4 py-4 sm:px-6 sm:py-8">
       <AppointmentsHeader />

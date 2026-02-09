@@ -7,22 +7,7 @@ export const middleware = async (req: NextRequest) => {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const role = (token as JWT | null)?.role;
 
-  const isAdmin = role === "admin";
-  const isUser = role === "user";
-
-  const isAdminRoute = req.nextUrl.pathname.startsWith("/admin");
-  const isUserProtectedRoute =
-    req.nextUrl.pathname.startsWith("/profile") ||
-    req.nextUrl.pathname.startsWith("/booking") ||
-    req.nextUrl.pathname.startsWith("/appointments");
-
-  // Admin routes require admin role
-  if (isAdminRoute && !isAdmin) {
-    return NextResponse.redirect(new URL("/signin", req.url));
-  }
-
-  // User protected routes require user role
-  if (isUserProtectedRoute && !isUser) {
+  if (req.nextUrl.pathname.startsWith("/admin") && role !== "admin") {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -30,10 +15,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/profile/:path*",
-    "/booking/:path*",
-    "/appointments/:path*",
-  ],
+  matcher: ["/admin/:path*"],
 };

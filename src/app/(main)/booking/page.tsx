@@ -1,6 +1,9 @@
 import { BookingForm } from "@/components/sections/booking/booking-form";
 import { BookingHero } from "@/components/sections/booking/booking-hero";
+import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "رزرو نوبت",
@@ -16,8 +19,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "رزرو نوبت",
-    description:
-      "رزرو آنلاین نوبت کلینیک تخصصی خواب دکتر ایمانی در تبریز",
+    description: "رزرو آنلاین نوبت کلینیک تخصصی خواب دکتر ایمانی در تبریز",
     url: "/booking",
     images: [
       {
@@ -33,7 +35,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BookingPage() {
+export default async function BookingPage() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "user") {
+    redirect("/login");
+  }
   return (
     <div className="from-background to-muted/20 min-h-screen bg-gradient-to-b">
       <BookingHero />
