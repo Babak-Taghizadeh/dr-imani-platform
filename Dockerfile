@@ -12,7 +12,6 @@ RUN apk add --no-cache \
 FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm install --os=linux --libc=musl --cpu=x64 sharp
 RUN npm ci
 
 FROM base AS builder
