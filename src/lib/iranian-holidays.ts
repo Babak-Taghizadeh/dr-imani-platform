@@ -57,8 +57,13 @@ const FIXED_HOLIDAYS = [
  * @returns true if it's a holiday, false otherwise
  */
 export function isIranianHoliday(date: Date): boolean {
-  const shamsiDate = toShamsi(date);
-  const [, month, day] = shamsiDate.split("/").map(Number);
+  const jDate = jalaali.toJalaali(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+  );
+  const month = jDate.jm;
+  const day = jDate.jd;
 
   return FIXED_HOLIDAYS.some((h) => h.month === month && h.day === day);
 }
