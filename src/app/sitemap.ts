@@ -1,10 +1,8 @@
 import { MetadataRoute } from "next";
-import { Blog } from "@/types/types";
-import { fetchPaginatedData } from "@/utils/fetch-paginated-data";
+import { blogs } from "@/db/schema";
+import { db } from "@/db/db";
 
 const BASE_URL = "https://drimanisleepclinic.com";
-const MAX_PAGINATION_ITERATIONS = 20;
-const ITEMS_PER_PAGE = 50;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -65,34 +63,6 @@ async function fetchBlogEntries(): Promise<MetadataRoute.Sitemap> {
   return entries;
 }
 
-async function fetchAllBlogs(): Promise<Blog[]> {
-  const allBlogs: Blog[] = [];
-  let currentPage = 1;
-  let totalPages = 1;
-
-  while (
-    currentPage <= totalPages &&
-    currentPage <= MAX_PAGINATION_ITERATIONS
-  ) {
-    try {
-      const { blogs: items, totalPages: fetchedTotal } =
-        await fetchPaginatedData<Blog>(
-          "blogs",
-          "blogs",
-          currentPage,
-          ITEMS_PER_PAGE,
-        );
-
-      allBlogs.push(...items);
-      totalPages = fetchedTotal;
-      currentPage++;
-
-      if (currentPage > 1 && items.length === 0) break;
-    } catch (error) {
-      console.error(`Error fetching blogs page ${currentPage}:`, error);
-      break;
-    }
-  }
-
-  return allBlogs;
+async function fetchAllBlogs() {
+  return await db.select().from(blogs);
 }
