@@ -11,36 +11,31 @@ import {
 } from "../../ui/drawer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
 import { NAV_ITEMS } from "@/lib/constants";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import { Calendar, User, LogOut, UserCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "sonner";
 import { BookingButton } from "../booking-button";
 
 const MobileHeader = () => {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  // const { data: session, status } = useSession();
+  // const router = useRouter();
 
-  const handleSignOut = async () => {
-    try {
-      await signOut({ redirect: false });
-      toast.success("با موفقیت خارج شدید");
-      router.push("/");
-    } catch {
-      toast.error("خطایی در خروج رخ داد");
-    }
-  };
+  // const handleSignOut = async () => {
+  //   try {
+  //     await signOut({ redirect: false });
+  //     toast.success("با موفقیت خارج شدید");
+  //     router.push("/");
+  //   } catch {
+  //     toast.error("خطایی در خروج رخ داد");
+  //   }
+  // };
 
-  const isAuthenticated = status === "authenticated" && session;
-  const userRole = session?.user?.role ?? null;
-  const userName = session?.user?.name || "کاربر";
+  // const isAuthenticated = status === "authenticated" && session;
+  // const userRole = session?.user?.role ?? null;
+  // const userName = session?.user?.name || "کاربر";
 
   return (
     <Drawer>
@@ -103,7 +98,7 @@ const MobileHeader = () => {
           <Separator className="bg-background/20" />
 
           {/* User Menu Items */}
-          {isAuthenticated && userRole === "user" ? (
+          {/* {isAuthenticated && userRole === "user" ? (
             <>
               <div className="text-background/60 flex items-center gap-2 px-2 py-1 text-sm">
                 <UserCircle className="h-4 w-4" />
@@ -162,7 +157,7 @@ const MobileHeader = () => {
                 <span>ورود</span>
               </Link>
             </DrawerClose>
-          )}
+          )} */}
         </nav>
         <DrawerFooter className="items-center">
           <DrawerClose asChild>

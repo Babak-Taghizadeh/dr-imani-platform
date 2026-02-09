@@ -35,11 +35,11 @@ export function UserMenu() {
       <Button
         asChild
         variant="outline"
-        className="hover:!text-foreground hidden gap-2 md:flex"
+        className="hover:!text-foreground flex gap-2"
       >
         <Link href="/login">
           <User className="h-4 w-4" />
-          <span className="hidden sm:inline">ورود</span>
+          <span>ورود</span>
         </Link>
       </Button>
     );
@@ -59,11 +59,11 @@ export function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="hover:!text-foreground gap-2"
+          className="hover:!text-foreground gap-2 p-2!"
           aria-label="منوی کاربر"
         >
           <UserCircle className="h-4 w-4" />
-          <span className="hidden max-w-[120px] truncate sm:inline">
+          <span className="hidden max-w-[80px] truncate sm:max-w-[120px] [@media(min-width:370px)]:inline">
             {userName}
           </span>
         </Button>
