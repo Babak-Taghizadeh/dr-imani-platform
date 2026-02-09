@@ -255,7 +255,7 @@ export function BookingForm() {
               exit="exit"
               variants={stepVariants}
               transition={{ duration: 0.3 }}
-              className="min-h-[480px] space-y-6"
+              className="min-h-[400px] space-y-6"
             >
               <div className="flex items-center gap-3">
                 <div className="bg-primary/10 relative z-0 flex h-12 w-12 items-center justify-center rounded-full">
@@ -292,7 +292,7 @@ export function BookingForm() {
               exit="exit"
               variants={stepVariants}
               transition={{ duration: 0.3 }}
-              className="min-h-[480px] space-y-6"
+              className="min-h-[400px] space-y-6"
             >
               <div className="flex items-center gap-3">
                 <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
@@ -329,7 +329,7 @@ export function BookingForm() {
               exit="exit"
               variants={stepVariants}
               transition={{ duration: 0.3 }}
-              className="flex min-h-[480px] flex-col space-y-6"
+              className="flex min-h-[400px] flex-col space-y-6"
             >
               <div className="flex items-center gap-3">
                 <div className="bg-primary/10 relative z-0 flex h-12 w-12 items-center justify-center rounded-full">
@@ -376,7 +376,7 @@ export function BookingForm() {
               exit="exit"
               variants={stepVariants}
               transition={{ duration: 0.3 }}
-              className="min-h-[480px] space-y-6"
+              className="min-h-[400px] space-y-6"
             >
               <div className="flex items-center gap-3">
                 <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
