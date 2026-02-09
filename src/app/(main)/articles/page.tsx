@@ -59,6 +59,8 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
     "articles",
     "articles",
     page,
+    6,
+    { cache: "no-store" },
   );
 
   return (

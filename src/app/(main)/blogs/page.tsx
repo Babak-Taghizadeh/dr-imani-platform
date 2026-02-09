@@ -59,6 +59,8 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
     "blogs",
     "blogs",
     page,
+    6,
+    { cache: "no-store" },
   );
 
   const publishedBlogs = blogs.filter((b) => b.status === "منتشر شده");
