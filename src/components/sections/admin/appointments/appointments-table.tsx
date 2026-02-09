@@ -32,6 +32,7 @@ const statusLabels: Record<
 };
 
 export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
+  console.log(appointments);
   return (
     <Table>
       <TableHeader>
@@ -43,6 +44,7 @@ export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
           <TableHead>زمان</TableHead>
           <TableHead>مبلغ</TableHead>
           <TableHead>وضعیت</TableHead>
+          <TableHead>کد پیگیری</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -76,6 +78,7 @@ export function AppointmentsTable({ appointments }: AppointmentsTableProps) {
                     appointment.status}
                 </Badge>
               </TableCell>
+              <TableCell>{appointment.paymentReference || "-"}</TableCell>
             </TableRow>
           ))
         ) : (
