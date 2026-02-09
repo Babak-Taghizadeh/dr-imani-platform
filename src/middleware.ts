@@ -8,7 +8,7 @@ export const middleware = async (req: NextRequest) => {
   const role = (token as JWT | null)?.role;
 
   if (req.nextUrl.pathname.startsWith("/admin") && role !== "admin") {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/signin", req.url));
   }
 
   return NextResponse.next();
