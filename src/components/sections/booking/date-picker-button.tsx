@@ -68,8 +68,16 @@ export function DatePickerButton({
       >
         {dateInfo.monthName}
       </span>
+      {dateInfo.hasAvailableSlots === false && dateInfo.isHoliday && (
+        <Badge
+          variant="destructive"
+          className="absolute -top-[26px] left-1/2 -translate-x-1/2 rounded-b-none !bg-red-600 text-sm opacity-100"
+        >
+          تعطیل
+        </Badge>
+      )}
       {/* Show "بدون نوبت خالی" for dates with no available slots */}
-      {dateInfo.hasAvailableSlots === false && (
+      {dateInfo.hasAvailableSlots === false && !dateInfo.isHoliday && (
         <Badge
           variant="destructive"
           className="absolute -top-[26px] left-1/2 -translate-x-1/2 rounded-b-none !bg-red-600 text-sm opacity-100"
