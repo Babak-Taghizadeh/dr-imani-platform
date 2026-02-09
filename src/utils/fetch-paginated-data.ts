@@ -9,21 +9,21 @@ export const fetchPaginatedData = async <T>(
   key: string,
   page = 1,
   limit = 6,
-  options?: RequestInit,
+  options?: RequestInit & {
+    next?: { revalidate?: number; tags?: string[] };
+  },
 ): Promise<FetchPaginatedDataResult<T>> => {
   try {
     const baseUrl =
       process.env.NODE_ENV === "production"
         ? `http://${process.env.HOSTNAME || "localhost"}:${process.env.PORT || 3000}`
         : "http://localhost:3000";
-        
+
     const url = new URL(`${baseUrl}/api/${endpoint}`);
     url.searchParams.append("page", page.toString());
     url.searchParams.append("limit", limit.toString());
 
     const res = await fetch(url.toString(), {
-      cache: "no-store",
-      next: { tags: [key] },
       ...options,
     });
 
