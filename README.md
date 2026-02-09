@@ -24,6 +24,13 @@ A modern full-stack platform for Dr. Imani’s sleep clinic, designed to improve
 - 📱 **Fully responsive** design
 - 🧪 **Type-safe** form validation with Zod + React Hook Form
 - ⚙️ **Modular** and clean codebase, ready for expansion
+- ⏰ **Background jobs** for payment reconciliation and appointment expiration (VPS cron—see [JOBS.md](./JOBS.md))
+
+---
+
+## Background Jobs
+
+Background jobs (expire pending appointments, reconcile payments) run via VPS system cron. See [JOBS.md](./JOBS.md) for setup instructions.
 
 ---
 
