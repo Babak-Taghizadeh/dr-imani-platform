@@ -5,6 +5,8 @@ import { eq } from "drizzle-orm";
 import { verifySEPTransaction, reverseSEPTransaction } from "@/lib/sep-client";
 
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID || "";
+const APP_URL =
+  process.env.NEXT_PUBLIC_APP_URL || "https://drimanisleepclinic.com";
 
 interface PaymentErrorData {
   state?: string;
@@ -34,7 +36,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("درگاه پرداخت به درستی پیکربندی نشده است")}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -84,7 +86,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("پارامترهای پرداخت نامعتبر است")}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -94,7 +96,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("ترمینال نامعتبر است")}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -112,7 +114,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("پرداخت ناموفق بود")}&appointmentId=${encodeURIComponent(resNum)}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -148,7 +150,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent(verifyResponse.ResultDescription || "تایید پرداخت ناموفق بود")}&appointmentId=${encodeURIComponent(resNum)}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -164,7 +166,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("نوبت یافت نشد")}&appointmentId=${encodeURIComponent(resNum)}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -172,21 +174,21 @@ async function handleCallback(request: NextRequest) {
     const appointment = appointmentData[0];
 
     // Verify appointment is still in a payable status
-    if (appointment.status !== "PENDING" && appointment.status !== "PAYMENT_INITIATED") {
+    if (
+      appointment.status !== "PENDING" &&
+      appointment.status !== "PAYMENT_INITIATED"
+    ) {
       // If already paid with the same RefNum, redirect to success (idempotent)
-      if (
-        appointment.status === "PAID" &&
-        appointment.sepRefNum === refNum
-      ) {
+      if (appointment.status === "PAID" && appointment.sepRefNum === refNum) {
         return NextResponse.redirect(
-          new URL(`/appointments/${appointment.id}`, request.url),
+          new URL(`/appointments/${appointment.id}`, APP_URL),
         );
       }
       // Otherwise, status is invalid
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("نوبت در وضعیت نامعتبر است")}&appointmentId=${encodeURIComponent(appointment.id)}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -215,7 +217,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("مبلغ پرداختی با مبلغ نوبت مطابقت ندارد")}&appointmentId=${encodeURIComponent(appointment.id)}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -233,7 +235,10 @@ async function handleCallback(request: NextRequest) {
           TerminalNumber: parseInt(SEP_TERMINAL_ID, 10),
         });
       } catch (reverseError) {
-        console.error("SEP reverse failed for terminal mismatch:", reverseError);
+        console.error(
+          "SEP reverse failed for terminal mismatch:",
+          reverseError,
+        );
       }
 
       await handleFailedPayment(resNum, refNum, {
@@ -247,7 +252,7 @@ async function handleCallback(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/booking/payment/failure?error=${encodeURIComponent("ترمینال تایید شده نامعتبر است")}&appointmentId=${encodeURIComponent(appointment.id)}`,
-          request.url,
+          APP_URL,
         ),
       );
     }
@@ -302,7 +307,7 @@ async function handleCallback(request: NextRequest) {
       // If payment was already processed (idempotent), redirect to success
       if (paymentAlreadyExists) {
         return NextResponse.redirect(
-          new URL(`/appointments/${appointment.id}`, request.url),
+          new URL(`/appointments/${appointment.id}`, APP_URL),
         );
       }
     } catch (error) {
@@ -315,7 +320,7 @@ async function handleCallback(request: NextRequest) {
       ) {
         // Payment already processed, redirect to success (idempotent)
         return NextResponse.redirect(
-          new URL(`/appointments/${appointment.id}`, request.url),
+          new URL(`/appointments/${appointment.id}`, APP_URL),
         );
       }
       // Other transaction errors
@@ -326,7 +331,7 @@ async function handleCallback(request: NextRequest) {
     return NextResponse.redirect(
       new URL(
         `/booking/payment/success?appointmentId=${encodeURIComponent(appointment.id)}`,
-        request.url,
+        APP_URL,
       ),
     );
   } catch (error) {
@@ -337,7 +342,7 @@ async function handleCallback(request: NextRequest) {
     return NextResponse.redirect(
       new URL(
         `/booking/payment/failure?error=${encodeURIComponent("خطایی در پردازش پرداخت رخ داد")}${appointmentIdParam}`,
-        request.url,
+        APP_URL,
       ),
     );
   }
