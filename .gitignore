@@ -12,6 +12,12 @@
 
 # testing
 /coverage
+.cursor/*
+drizzle/*
+*.tar
+MISSING_ENV_VARS.md
+.cursorignore
+payment-guide.txt
 
 # next.js
 /.next/
