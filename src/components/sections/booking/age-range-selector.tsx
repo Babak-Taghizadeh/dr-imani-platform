@@ -2,8 +2,8 @@
 import { Card } from "@/components/ui/card";
 import {
   calculatePrice,
-  PRICE_UNDER_15,
-  PRICE_OVER_15,
+  PRICE_UNDER_10,
+  PRICE_OVER_10,
 } from "@/lib/price-calculator";
 import { cn } from "@/lib/utils";
 import { toPersianNumber } from "@/lib/persian-number-utils";
@@ -14,8 +14,8 @@ interface AgeRangeSelectorProps {
 }
 
 export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
-  const adultPrice = PRICE_OVER_15 / 10;
-  const childPrice = PRICE_UNDER_15 / 10;
+  const adultPrice = PRICE_OVER_10 / 10;
+  const childPrice = PRICE_UNDER_10 / 10;
   const selectedPrice = calculatePrice(value!) / 10;
   return (
     <div className="space-y-10">
@@ -28,7 +28,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
           onClick={() => onChange("UNDER_15")}
         >
           <div className="text-center md:p-6">
-            <h3 className="font-semibold">زیر {toPersianNumber(15)} سال</h3>
+            <h3 className="font-semibold">زیر {toPersianNumber(10)} سال</h3>
             <p className="text-primary mt-2 text-lg font-bold md:text-2xl">
               {childPrice.toLocaleString("fa-IR")} تومان
             </p>
@@ -42,7 +42,7 @@ export function AgeRangeSelector({ value, onChange }: AgeRangeSelectorProps) {
           onClick={() => onChange("OVER_15")}
         >
           <div className="text-center md:p-6">
-            <h3 className="font-semibold">بالای {toPersianNumber(15)} سال</h3>
+            <h3 className="font-semibold">بالای {toPersianNumber(10)} سال</h3>
             <p className="text-primary mt-2 text-lg font-bold md:text-2xl">
               {adultPrice.toLocaleString("fa-IR")} تومان
             </p>
