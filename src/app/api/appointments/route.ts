@@ -101,12 +101,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate that the date is on an allowed day (even days including Saturday, but excluding Friday)
+    // Validate that the date is on an allowed booking day (Sunday, Monday, Wednesday)
     if (!isAllowedBookingDay(appointmentDate)) {
       return NextResponse.json(
         {
           error:
-            "نوبت‌گیری فقط در روزهای زوج (شنبه، دوشنبه، چهارشنبه) امکان‌پذیر است",
+            "نوبت‌گیری فقط در روزهای یکشنبه، دوشنبه و چهارشنبه امکان‌پذیر است",
         },
         { status: 400 },
       );
@@ -125,14 +125,15 @@ export async function POST(request: NextRequest) {
       !isValidTimeForAppointmentType(
         validatedData.time,
         validatedData.appointmentType,
+        appointmentDate,
       )
     ) {
       return NextResponse.json(
         {
           error:
             validatedData.appointmentType === "ONLINE_PHONE"
-              ? "زمان انتخاب شده برای نوبت آنلاین معتبر نیست. زمان‌های مجاز: 12:00 تا 13:45"
-              : "زمان انتخاب شده برای نوبت حضوری معتبر نیست. زمان‌های مجاز: 14:00 تا 17:45",
+              ? "زمان انتخاب شده برای نوبت آنلاین معتبر نیست. لطفاً یکی از بازه‌های زمانی مجاز را انتخاب کنید."
+              : "زمان انتخاب شده برای نوبت حضوری معتبر نیست. لطفاً یکی از بازه‌های زمانی مجاز را انتخاب کنید.",
         },
         { status: 400 },
       );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import {
   useVisibleDates,
@@ -69,6 +69,20 @@ export function DatePicker({
     [onSelect],
   );
 
+  const showDisabledAlert = useMemo(() => {
+    if (!disabledDates || disabledDates.length === 0) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const threshold = new Date(today);
+    threshold.setDate(threshold.getDate() + 14);
+
+    return disabledDates.some(({ startDate, endDate }) => {
+      const start = new Date(`${startDate}T00:00:00`);
+      const end = new Date(`${endDate}T23:59:59`);
+      return start <= threshold && end >= today;
+    });
+  }, [disabledDates]);
+
   return (
     <div className="flex flex-1 flex-col space-y-4">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
@@ -90,7 +104,9 @@ export function DatePicker({
           );
         })}
       </div>
-      <DisabledDatesAlert disabledDates={disabledDates} />
+      {showDisabledAlert && (
+        <DisabledDatesAlert disabledDates={disabledDates} />
+      )}
     </div>
   );
 }

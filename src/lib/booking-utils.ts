@@ -17,38 +17,73 @@ export interface TimeSlot {
  * @param appointmentType - The type of appointment (ONLINE_PHONE or IN_CLINIC)
  * @returns Array of time slots
  */
+interface AppointmentTimeRange {
+  startMinutes: number;
+  endMinutes: number;
+}
+
+function getAppointmentTimeRange(
+  date: Date,
+  appointmentType?: AppointmentType,
+): AppointmentTimeRange | null {
+  const jsDay = date.getDay(); // JS: 0=Sunday, 1=Monday, 2=Tuesday, 3=Wednesday, 4=Thursday, 5=Friday, 6=Saturday
+
+  if (appointmentType === "IN_CLINIC") {
+    if (jsDay === 0) {
+      // Sunday: 09:30 - 11:30 window, last start at 11:15
+      return { startMinutes: 9 * 60 + 30, endMinutes: 11 * 60 + 15 };
+    }
+    if (jsDay === 1 || jsDay === 3) {
+      // Monday/Wednesday: 15:00 - 17:00 window, last start at 16:45
+      return { startMinutes: 15 * 60, endMinutes: 16 * 60 + 45 };
+    }
+    return null;
+  }
+
+  if (appointmentType === "ONLINE_PHONE") {
+    if (jsDay === 0) {
+      // Sunday: 11:30 - 12:30 window, last start at 12:15
+      return { startMinutes: 11 * 60 + 30, endMinutes: 12 * 60 + 15 };
+    }
+    if (jsDay === 1 || jsDay === 3) {
+      // Monday/Wednesday: 14:00 - 15:00 window, last start at 14:45
+      return { startMinutes: 14 * 60, endMinutes: 14 * 60 + 45 };
+    }
+    return null;
+  }
+
+  return {
+    startMinutes: 14 * 60,
+    endMinutes: 18 * 60,
+  };
+}
+
 export function generateTimeSlots(
   date: Date,
   appointmentType?: AppointmentType,
 ): TimeSlot[] {
   const slots: TimeSlot[] = [];
+  const range = getAppointmentTimeRange(date, appointmentType);
 
-  let startHour: number;
-  let endHour: number;
-  let endMinute: number;
-
-  if (appointmentType === "ONLINE_PHONE") {
-    // Online: 12:00 to 14:00 (last slot at 13:45)
-    startHour = 12;
-    endHour = 13;
-    endMinute = 45;
-  } else if (appointmentType === "IN_CLINIC") {
-    // In-clinic: 14:00 to 16:00 (last slot at 15:45)
-    startHour = 14;
-    endHour = 15;
-    endMinute = 45;
-  } else {
-    // Fallback to environment variables or defaults (for backward compatibility)
-    startHour = 14;
-    endHour = 18;
-    endMinute = 0;
+  if (!range) {
+    return slots;
   }
 
   const startTime = new Date(date);
-  startTime.setHours(startHour, 0, 0, 0);
+  startTime.setHours(
+    Math.floor(range.startMinutes / 60),
+    range.startMinutes % 60,
+    0,
+    0,
+  );
 
   const endTime = new Date(date);
-  endTime.setHours(endHour, endMinute, 0, 0);
+  endTime.setHours(
+    Math.floor(range.endMinutes / 60),
+    range.endMinutes % 60,
+    0,
+    0,
+  );
 
   let currentTime = new Date(startTime);
 
@@ -57,22 +92,19 @@ export function generateTimeSlots(
     const currentTimeStr = format(currentTime, "HH:mm");
     const endTimeStr = format(endTime, "HH:mm");
 
-    // Add slot if it's within the valid range (inclusive of end time)
     if (currentTimeStr <= endTimeStr) {
       slots.push({
         time: currentTimeStr,
-        available: true, // Will be updated based on availability
+        available: true,
       });
     }
 
-    // Stop if we've reached or passed the end time
     if (currentTimeStr >= endTimeStr) {
       break;
     }
 
     currentTime = addMinutes(currentTime, SLOT_INTERVAL_MINUTES);
 
-    // Safety check to prevent infinite loops
     if (slots.length > 100) {
       break;
     }
@@ -85,28 +117,32 @@ export function generateTimeSlots(
  * Validate if a time slot is valid for a given appointment type
  * @param time - Time string in HH:mm format
  * @param appointmentType - The type of appointment
+ * @param date - The appointment date used to determine the daily schedule
  * @returns true if the time is valid for the appointment type
  */
 export function isValidTimeForAppointmentType(
   time: string,
   appointmentType: AppointmentType,
+  date?: Date,
 ): boolean {
   const [hours, minutes] = time.split(":").map(Number);
   const timeInMinutes = hours * 60 + minutes;
 
-  if (appointmentType === "ONLINE_PHONE") {
-    // Online: 12:00 (720 minutes) to 13:45 (825 minutes)
-    const startMinutes = 12 * 60; // 720
-    const endMinutes = 13 * 60 + 45; // 825
-    return timeInMinutes >= startMinutes && timeInMinutes <= endMinutes;
-  } else if (appointmentType === "IN_CLINIC") {
-    // In-clinic: 14:00 (840 minutes) to 15:50 (950 minutes)
-    const startMinutes = 14 * 60; // 840
-    const endMinutes = 15 * 60 + 45; // 945
-    return timeInMinutes >= startMinutes && timeInMinutes <= endMinutes;
+  const range = date
+    ? getAppointmentTimeRange(date, appointmentType)
+    : appointmentType === "ONLINE_PHONE"
+      ? { startMinutes: 12 * 60, endMinutes: 13 * 60 + 45 }
+      : appointmentType === "IN_CLINIC"
+        ? { startMinutes: 14 * 60, endMinutes: 15 * 60 + 45 }
+        : null;
+
+  if (!range) {
+    return false;
   }
 
-  return false;
+  return (
+    timeInMinutes >= range.startMinutes && timeInMinutes <= range.endMinutes
+  );
 }
 
 /**
@@ -137,9 +173,9 @@ export function timeStringToDate(date: Date, timeString: string): Date {
 }
 
 /**
- * Check if a date is on an allowed day for booking (even days including Saturday, but excluding Friday)
+ * Check if a date is on an allowed day for booking.
  * Persian week: Saturday=0, Sunday=1, Monday=2, Tuesday=3, Wednesday=4, Thursday=5, Friday=6
- * Allowed: Saturday (0), Monday (2), Wednesday (4)
+ * Allowed: Sunday (1), Monday (2), Wednesday (4)
  * @param date - Date object to check
  * @returns true if the date is on an allowed day
  */
@@ -147,8 +183,8 @@ export function isAllowedBookingDay(date: Date): boolean {
   const jsDay = date.getDay(); // JS: 0=Sunday, 1=Monday, ..., 6=Saturday
   // Convert to Persian day: 0=Saturday, 1=Sunday, 2=Monday, 3=Tuesday, 4=Wednesday, 5=Thursday, 6=Friday
   const persianDay = jsDay === 6 ? 0 : jsDay + 1;
-  // Allowed days: 0 (Saturday), 2 (Monday), 4 (Wednesday) - excluding Friday (6)
-  return persianDay === 0 || persianDay === 2 || persianDay === 4;
+  // Allowed days: 1 (Sunday), 2 (Monday), 4 (Wednesday)
+  return persianDay === 1 || persianDay === 2 || persianDay === 4;
 }
 
 export function generatePaymentReference(appointmentId: string) {

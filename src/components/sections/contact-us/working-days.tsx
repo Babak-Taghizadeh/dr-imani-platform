@@ -34,7 +34,6 @@ const WorkingDays = () => {
                       : "bg-background/10 text-background/50"
                   }`}
                 >
-                  <span className="hidden sm:inline-block">{day.short}</span>
                   <span className="text-[0.65rem] leading-tight sm:mt-1 sm:text-sm sm:font-medium">
                     {day.name.split("‌").join("")}{" "}
                   </span>
@@ -43,12 +42,6 @@ const WorkingDays = () => {
             </div>
           </div>
         </div>
-
-        <p className="text-secondary/80 px-1 text-xs sm:px-0 sm:text-sm">
-          روزهای زوج
-          <span className="hidden sm:inline"> (شنبه، دوشنبه و چهارشنبه)</span>
-        </p>
-
         <Link
           href="/booking"
           className={cn(

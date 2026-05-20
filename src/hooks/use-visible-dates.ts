@@ -101,7 +101,7 @@ export function useVisibleDates({
       const gregorianDate = addDays(today, i);
       const gregorianDateStr = format(gregorianDate, "yyyy-MM-dd");
 
-      // Only show working days (Saturday, Monday, Wednesday)
+      // Only show working days (Sunday, Monday, Wednesday)
       if (!isAllowedBookingDay(gregorianDate)) {
         continue; // Skip non-working days completely
       }
