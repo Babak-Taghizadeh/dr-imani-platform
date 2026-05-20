@@ -12,7 +12,6 @@
 
 # testing
 /coverage
-.cursor/*
 drizzle/*
 *.tar
 MISSING_ENV_VARS.md
