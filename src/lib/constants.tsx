@@ -113,7 +113,8 @@ export const FOOTER_ITEMS: Record<
       value: "tel:041-3335-0357",
     },
     {
-      title: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه ششم",
+      title:
+        "تبریز، آبرسان به سمت بیمارستان شمس، نرسیده به چراغ قرمز، نبش کوچه فروردین، ساختمان نهال، طبقه پنجم",
       icon: <SewingPinIcon width={20} height={20} />,
     },
   ],
@@ -419,12 +420,12 @@ export const CONTACT_ITEMS: {
   {
     title: "روبیکا",
     icon: <Contact height={30} width={30} />,
-    desc: "۰۹۱۴۷۳۶۰۸۲۶",
+    desc: "۰۹۱۴۷۳۶۰۸۲۷",
   },
   {
     title: "آدرس",
-    desc: "تبریز، خیابان آزادی، سه راه گلگشت، ساختمان گلگشت، طبقه ششم",
-    value: "https://neshan.org/maps/places/_bA9vXYCMD41#c38.059-46.318-21z-0p",
+    desc: "تبریز، آبرسان به سمت بیمارستان شمس، نرسیده به چراغ قرمز، نبش کوچه فروردین، ساختمان نهال، طبقه پنجم",
+    value: "https://neshan.org/maps/places/_bAlhTNC4kaH#c38.071-46.326-19z-0p",
     icon: <MapPin height={30} width={30} />,
   },
 ];
@@ -439,7 +440,7 @@ export const PERSIAN_WEEKDAYS = [
   { id: 6, name: "جمعه", short: "ج" },
 ];
 
-export const EVEN_DAYS = [0, 2, 4];
+export const EVEN_DAYS = [1, 2, 4];
 
 export const REASONS_ITEMS = [
   {
